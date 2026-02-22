@@ -5,6 +5,12 @@ import pandas as pd
 from pymongo import MongoClient
 from pymongo.errors import AutoReconnect
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
 
 # ----------------------------
 # FastAPI App
@@ -18,10 +24,6 @@ model_package = joblib.load("app/model/best_sleep_model.pkl")
 pipeline = model_package["pipeline"]
 label_encoder = model_package["label_encoder"]
 
-# ----------------------------
-# MongoDB Connection (single client)
-# ----------------------------
-MONGO_URI = "mongodb+srv://sleepsense_user:SleepSense0619@sleepsensecluster.p5zbrth.mongodb.net/?appName=SleepSenseCluster"
 
 # Persistent global client, db, collection
 client = MongoClient(
