@@ -1,17 +1,19 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Predict from "./pages/Predict";
-import Result from "./pages/Result";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import LandingPage from "./pages/LandingPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/predict" element={<Predict />} />
-        <Route path="/result" element={<Result />} />
+
+        <Route path="/" element={<LandingPage />} />
+
+        <Route path="/signup" element={<SignupPage />} />
+
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 

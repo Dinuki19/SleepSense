@@ -1,11 +1,21 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Root Variables (change colors here if needed) */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Main text color */
+  color: #213547;
+
+  /* Main page background */
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,56 +23,62 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Full page layout */
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  /* Soft blue to white linear gradient */
+  background: linear-gradient(
+    90deg,          /* left to right */
+    #A2C3FF 0%,     /* soft light blue start */
+    #D9E6FF 25%,    /* lighter blue middle */
+    #F8FAFF 75%,    /* almost white */
+    #FFFFFF 100%     /* pure white at the end */
+  );
+  
+}
+/* Root container (React app) */
+#root {
+  width: 100%;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Links */
+a {
+  font-weight: 500;
+  color: #3b6bdc; /* Change for navigation links */
+  text-decoration: none;
 }
 
+a:hover {
+  color: #2f55b5;
+}
+
+/* Headings */
+h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+/* Buttons */
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Input fields */
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
