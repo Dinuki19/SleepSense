@@ -5,62 +5,34 @@
   box-sizing: border-box;
 }
 
-/* Root Variables (change colors here if needed) */
+/* Root Variables */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  /* Main text color */
   color: #213547;
-
-  /* Main page background */
   background-color: #ffffff;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Full page layout */
+/* Body Gradient */
 body {
-  /* Soft blue to white linear gradient */
-  background: linear-gradient(
-    90deg,          /* left to right */
-    #A2C3FF 0%,     /* soft light blue start */
-    #D9E6FF 25%,    /* lighter blue middle */
-    #F8FAFF 75%,    /* almost white */
-    #FFFFFF 100%     /* pure white at the end */
-  );
-  
+  background: linear-gradient(90deg, #A2C3FF 0%, #D9E6FF 25%, #F8FAFF 75%, #FFFFFF 100%);
 }
-/* Root container (React app) */
-#root {
-  width: 100%;
-  min-height: 100vh;
-}
+
+/* Root container */
+#root { width: 100%; min-height: 100vh; }
 
 /* Links */
-a {
-  font-weight: 500;
-  color: #3b6bdc; /* Change for navigation links */
-  text-decoration: none;
-}
-
-a:hover {
-  color: #2f55b5;
-}
+a { font-weight: 500; color: #3b6bdc; text-decoration: none; }
+a:hover { color: #2f55b5; }
 
 /* Headings */
-h1 {
-  font-size: 3rem;
-  line-height: 1.2;
-}
-
-h2 {
-  font-size: 2rem;
-}
+h1 { font-size: 3rem; line-height: 1.2; }
+h2 { font-size: 2rem; }
 
 /* Buttons */
 button {
@@ -72,6 +44,9 @@ button {
   font-family: inherit;
   cursor: pointer;
 }
+
+/* Logo */
+.logo { width: 100px; height: auto; }
 
 /* Input fields */
 input {

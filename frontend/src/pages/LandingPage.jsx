@@ -1,56 +1,36 @@
 import { useNavigate } from "react-router-dom";
+import landingIllustration from "../assets/Landing_illustration.svg";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function LandingPage() {
   const navigate = useNavigate();
 
   return (
     <div>
-
-      {/* Navbar */}
-      <nav style={styles.nav}>
-        <h2>SleepSense</h2>
-        <div>
-          <button style={styles.link}>Home</button>
-          <button style={styles.link}>Dashboard</button>
-          <button style={styles.link}>History</button>
-          <button style={styles.link}>Profile</button>
-        </div>
-      </nav>
+      <Header />
 
       {/* Hero Section */}
       <div style={styles.hero}>
         <div>
           <h1>Understand and Predict Your Sleep Health</h1>
-          <p>
-            Analyze your sleep patterns and get insights to improve your rest.
-          </p>
+          <p>Analyze your sleep patterns and get insights to improve your rest.</p>
 
-          <button
-            style={styles.primaryBtn}
-            onClick={() => navigate("/signup")}
-          >
+          <button style={styles.primaryBtn} onClick={() => navigate("/signup")}>
             Sign up
           </button>
 
-          <button
-            style={styles.secondaryBtn}
-            onClick={() => navigate("/login")}
-          >
+          <button style={styles.secondaryBtn} onClick={() => navigate("/login")}>
             Login
           </button>
         </div>
 
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/1048/1048953.png"
-          alt="sleep"
-          width="300"
-        />
+        <img src={landingIllustration} alt="sleep" width="600" />
       </div>
 
       {/* Features */}
       <div style={styles.features}>
         <h2>How SleepSense Helps You</h2>
-
         <div style={styles.featureGrid}>
           <div>
             <h3>Sleep Prediction</h3>
@@ -69,31 +49,12 @@ function LandingPage() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer style={styles.footer}>
-        <p>About | Contact | Privacy</p>
-        <p>© 2026 SleepSense</p>
-      </footer>
-
+      <Footer />
     </div>
   );
 }
 
 const styles = {
-  nav: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "15px 40px",
-    background: "#f5f5f5"
-  },
-
-  link: {
-    margin: "0 10px",
-    background: "none",
-    border: "none",
-    cursor: "pointer"
-  },
-
   hero: {
     display: "flex",
     justifyContent: "space-between",
@@ -128,13 +89,6 @@ const styles = {
     display: "flex",
     justifyContent: "space-around",
     marginTop: "30px"
-  },
-
-  footer: {
-    textAlign: "center",
-    padding: "20px",
-    background: "#3b6bdc",
-    color: "white"
   }
 };
 
