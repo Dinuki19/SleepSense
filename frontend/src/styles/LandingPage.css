@@ -67,7 +67,7 @@
 /* FEATURES SECTION */
 
 .features {
-  padding: 90px 10%;
+  padding: 80px 10%;
   text-align: center;
   background: #73b6f2;
 }
@@ -85,7 +85,7 @@
 }
 
 .feature-card {
-  width: 260px;
+  width: 300px;
 
   padding: 30px;
 
