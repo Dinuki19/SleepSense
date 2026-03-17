@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import "../styles/SignupPage.css";
 
 function SignupPage() {
   const navigate = useNavigate();
@@ -19,16 +20,16 @@ function SignupPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    // navigate("/login"); // temporarily commented to avoid blank page if /login is missing
+    // navigate("/login");
   };
 
   return (
-    <div>
+    <div className="signup-page">
       <Header />
 
-      <div style={styles.container}>
+      <div className="signup-container">
         {/* Left Panel */}
-        <div style={styles.left}>
+        <div className="left-panel">
           <h1>SleepSense</h1>
           <p>Start understanding your sleep health today.</p>
 
@@ -40,7 +41,7 @@ function SignupPage() {
         </div>
 
         {/* Right Panel */}
-        <div style={styles.right}>
+        <div className="right-panel">
           <h2>Create an Account</h2>
 
           <form onSubmit={handleSubmit}>
@@ -51,6 +52,10 @@ function SignupPage() {
 
             <button type="submit">Sign Up</button>
           </form>
+
+          <p className="login-link">
+            Already have an account? <span onClick={() => navigate("/login")}>Login</span>
+          </p>
         </div>
       </div>
 
@@ -58,11 +63,5 @@ function SignupPage() {
     </div>
   );
 }
-
-const styles = {
-  container: { display: "flex", height: "100vh" },
-  left: { flex: 1, background: "#6c8bd9", color: "white", padding: "60px" },
-  right: { flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "60px" }
-};
 
 export default SignupPage;
