@@ -46,7 +46,7 @@ function DashboardPage() {
               </p>
               <button
                 className="btn-start"
-                onClick={() => navigate("/new-prediction")}
+                onClick={() => navigate("/predict")}
               >
                 Start Prediction
               </button>
