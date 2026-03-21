@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .routes.predict import router as predict_router
+from app.routes.auth import router as auth_router
+
 
 app = FastAPI(title="SleepSense Prediction API")
 
@@ -17,3 +19,4 @@ def read_root():
     return {"message": "SleepSense backend is running!"}
 
 app.include_router(predict_router)
+app.include_router(auth_router)

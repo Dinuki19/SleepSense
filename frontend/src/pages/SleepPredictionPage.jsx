@@ -1,5 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import "../styles/SleepPredictionPage.css";
 
 function SleepPredictionPage() {
   // Form state
@@ -55,9 +58,11 @@ function SleepPredictionPage() {
   };
 
   return (
+    <div className="sleep-prediction-page">
+      <Header />
     <div className="sleep-form-container">
-      <h2>Sleep Disorder Prediction</h2>
       <form onSubmit={handleSubmit}>
+      <h2>Sleep Disorder Prediction</h2>
         {/* Personal Info */}
         <input type="text" name="Gender" placeholder="Gender" onChange={handleChange} required />
         <input type="number" name="Age" placeholder="Age" onChange={handleChange} required />
@@ -96,6 +101,8 @@ function SleepPredictionPage() {
           </ul>
         </div>
       )}
+    </div>
+    <Footer />
     </div>
   );
 }

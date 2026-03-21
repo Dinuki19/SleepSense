@@ -7,7 +7,7 @@ from app.services.heart_rate_service import estimate_heart_rate
 from app.services.steps_service import estimate_daily_steps
 
 # Load model once
-model_package = joblib.load("app/model/best_sleep_model.pkl")
+model_package = joblib.load("app/models/best_sleep_model.pkl")
 pipeline = model_package["pipeline"]
 label_encoder = model_package["label_encoder"]
 

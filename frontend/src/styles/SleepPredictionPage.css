@@ -1,0 +1,85 @@
+/* Page background */
+.sleep-prediction-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+}
+
+/* Center container */
+.sleep-form-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* Card style */
+.sleep-form-container form {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Title */
+.sleep-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+/* Inputs */
+.sleep-form-container input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+/* Input focus */
+.sleep-form-container input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 4px rgba(99, 102, 241, 0.5);
+}
+
+/* Button */
+.sleep-form-container button {
+  width: 100%;
+  padding: 12px;
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sleep-form-container button:hover {
+  background: #3b82f6;
+}
+
+/* Prediction result */
+.prediction-result {
+  margin-top: 20px;
+  background: #f1f5f9;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.prediction-result h3 {
+  color: #16a34a;
+  margin-bottom: 10px;
+}
+
+.prediction-result ul {
+  padding-left: 20px;
+}
