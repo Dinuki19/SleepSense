@@ -14,21 +14,46 @@ client = MongoClient(
     serverSelectionTimeoutMS=5000
 )
 
+# Database
 db = client.sleepdb
+
+# Collections
+users_collection = db.users
 predictions_collection = db.predictions
 
 
-def get_predictions_collection():
-    global client, db, predictions_collection
+def reconnect():
+    global client, db, users_collection, predictions_collection
+
+    client = MongoClient(
+        MONGO_URI,
+        tls=True,
+        tlsAllowInvalidCertificates=False,
+        serverSelectionTimeoutMS=5000
+    )
+
+    db = client.sleepdb
+    users_collection = db.users
+    predictions_collection = db.predictions
+
+
+# Get Users Collection
+def get_users_collection():
+    global client
     try:
         client.admin.command("ping")
     except AutoReconnect:
-        client = MongoClient(
-            MONGO_URI,
-            tls=True,
-            tlsAllowInvalidCertificates=False
-        )
-        db = client.sleepdb
-        predictions_collection = db.predictions
+        reconnect()
+
+    return users_collection
+
+
+# Get Predictions Collection
+def get_predictions_collection():
+    global client
+    try:
+        client.admin.command("ping")
+    except AutoReconnect:
+        reconnect()
 
     return predictions_collection
