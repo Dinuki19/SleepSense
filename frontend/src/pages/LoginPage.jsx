@@ -3,6 +3,7 @@ import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/LoginPage.css";
+import API from "../api/api";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -16,9 +17,27 @@ function LoginPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    try {
+      const response = await API.post("/auth/login", {
+      email: formData.email,
+      password: formData.password
+      });
+
+      // ✅ Save token
+      localStorage.setItem("token", response.data.access_token);
+
+      alert("Login successful ✅");
+
+      // ✅ Redirect to dashboard
+      navigate("/dashboard");
+
+    } catch (err) {
+      console.error(err);
+      alert("Invalid email or password ❌");
+    }
   };
 
   return (
