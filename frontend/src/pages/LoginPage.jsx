@@ -18,27 +18,29 @@ function LoginPage() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await API.post("/auth/login", {
+  try {
+    const response = await API.post("/auth/login", {
       email: formData.email,
       password: formData.password
-      });
+    });
 
-      // ✅ Save token
-      localStorage.setItem("token", response.data.access_token);
+    // ✅ Save token
+    localStorage.setItem("token", response.data.access_token);
 
-      alert("Login successful ✅");
+    // ✅ SAVE username (THIS IS MISSING)
+    localStorage.setItem("username", response.data.username);
 
-      // ✅ Redirect to dashboard
-      navigate("/dashboard");
+    alert("Login successful ✅");
 
-    } catch (err) {
-      console.error(err);
-      alert("Invalid email or password ❌");
-    }
-  };
+    navigate("/dashboard");
+
+  } catch (err) {
+    console.error(err);
+    alert("Invalid email or password ❌");
+  }
+};
 
   return (
     <div className="login-page">

@@ -1,0 +1,93 @@
+/* ResultPage.css */
+
+/* Overall page styling */
+.result-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Container for all result content */
+.result-container {
+  flex: 1;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* Card styling for prediction, explanation, recommendations, summary */
+.result-card {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Main heading */
+.result-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1a1a1a;
+}
+
+/* Prediction styling */
+.result-card h2 span {
+  color: #ff4d4f; /* Red highlight for prediction */
+  font-weight: bold;
+}
+
+/* Note under prediction */
+.note {
+  font-size: 0.9rem;
+  color: #888888;
+  margin-top: 8px;
+}
+
+/* Subheadings */
+.result-card h3 {
+  margin-bottom: 12px;
+  color: #333333;
+}
+
+/* Lists inside recommendations or summary */
+.result-card ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.result-card li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* Try Again button styling */
+.result-container button {
+  display: block;
+  margin: 20px auto 0 auto;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #4a90e2;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.result-container button:hover {
+  background-color: #357ab8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .result-container {
+    margin: 20px;
+    padding: 15px;
+  }
+  .result-card {
+    padding: 15px;
+  }
+}

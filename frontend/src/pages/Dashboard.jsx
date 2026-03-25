@@ -1,40 +1,49 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/DashboardPage.css";
 
 function DashboardPage() {
   const navigate = useNavigate();
+  const [predictions, setPredictions] = useState([]);
+  const [username, setUsername] = useState("User");
 
-  // Mock data – replace with real data from your context/API
-  const user = { name: "Dhinuki" };
-  const stats = {
-    totalPredictions: 5,
-    lastResult: "Insomnia",
-    riskLevel: "Moderate",
-  };
-  const recentPredictions = [
-    { date: "Feb 10", result: "Insomnia" },
-    { date: "Feb 02", result: "None" },
-    { date: "Jan 25", result: "Sleep Apnea" },
-    { date: "Jan 17", result: "None" },
-  ];
+  useEffect(() => {
+    setUsername(localStorage.getItem("username") || "User");
+
+    const fetchPredictions = async () => {
+      try {
+        const res = await axios.get("http://127.0.0.1:8000/predictions", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setPredictions(res.data);
+      } catch (err) {
+        console.error("Failed to fetch predictions:", err);
+      }
+    };
+
+    fetchPredictions();
+  }, []);
+
+  const totalPredictions = predictions.length;
+  const lastPrediction = predictions[0];
 
   return (
     <div className="dashboard-page">
       <Header />
 
       <div className="dashboard-layout">
-        {/* ── LEFT COLUMN ── */}
+        {/* LEFT COLUMN */}
         <div className="dashboard-left">
-
-          {/* Welcome + CTA banner */}
           <div className="welcome-banner">
-            <div className="welcome-text">
-              <h2>Welcome back, {user.name} 👋</h2>
-              <p>Here's your sleep health overview.</p>
-            </div>
+            <h2>Welcome back, {username}!</h2>
+            <p>Here's your sleep health overview.</p>
           </div>
+          
 
           {/* Start Prediction card */}
           <div className="prediction-card">
@@ -65,26 +74,26 @@ function DashboardPage() {
               <span className="stat-label">Total Predictions</span>
               <div className="stat-value">
                 <span className="stat-icon bars">📊</span>
-                <strong>{stats.totalPredictions}</strong>
+                <strong>{totalPredictions}</strong>
               </div>
             </div>
             <div className="stat-card">
               <span className="stat-label">Last Result</span>
               <div className="stat-value">
                 <span className="stat-icon">🛏️</span>
-                <strong>{stats.lastResult}</strong>
+                <strong>{lastPrediction?.prediction || "N/A"}</strong>
               </div>
             </div>
             <div className="stat-card">
               <span className="stat-label">Risk Level</span>
               <div className="stat-value">
                 <span className="stat-icon warning">⚠️</span>
-                <strong className="risk-moderate">{stats.riskLevel}</strong>
+                <strong>{lastPrediction ? "Moderate" : "N/A"}</strong>
               </div>
             </div>
           </div>
 
-          {/* Recent Predictions table */}
+          {/* Recent Predictions Table */}
           <div className="table-card">
             <div className="table-card-header">
               <h4>Recent Predictions</h4>
@@ -94,26 +103,20 @@ function DashboardPage() {
               <thead>
                 <tr>
                   <th>Date</th>
-                  <th>Result</th>
+                  <th>Prediction</th>
                   <th>View</th>
                 </tr>
               </thead>
+
               <tbody>
-                {recentPredictions.map((p, i) => (
+                {predictions.map((p, i) => (
                   <tr key={i}>
-                    <td>{p.date}</td>
-                    <td>{p.result}</td>
+                    <td>{new Date(p.timestamp).toLocaleString()}</td>
+                    <td>{p.prediction}</td>
                     <td>
-                      {i < recentPredictions.length - 1 ? (
-                        <button className="btn-view">View &rsaquo;</button>
-                      ) : (
-                        <button
-                          className="btn-full-history"
-                          onClick={() => navigate("/history")}
-                        >
-                          View Full History
-                        </button>
-                      )}
+                      <button className="btn-view" onClick={() => navigate("/result", { state: { result: p, userInput: p.input } })}>
+                        View &rsaquo;
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -121,17 +124,13 @@ function DashboardPage() {
             </table>
           </div>
         </div>
+        
 
-        {/* ── RIGHT COLUMN ── */}
+        {/* RIGHT COLUMN */}
         <div className="dashboard-right">
-
-          {/* Sleep Disorder Info */}
           <div className="info-card">
             <h4>What is Sleep Disorder?</h4>
-            <p>
-              Learn about sleep disorders, their causes, and how they can
-              affect your health.
-            </p>
+            <p>Learn about sleep disorders, their causes, and how they can affect your health.</p>
             <div className="video-wrapper">
               <iframe
                 src="https://www.youtube.com/embed/k-GG1drfPu4"
@@ -139,33 +138,6 @@ function DashboardPage() {
                 frameBorder="0"
                 allowFullScreen
               />
-            </div>
-            <p className="video-caption">
-              Learn about sleep disorders, their causes, and how they can
-              affect your health.
-            </p>
-          </div>
-
-          {/* Recent Predictions (right panel) */}
-          <div className="table-card">
-            <div className="table-card-header">
-              <span className="header-icon">📋</span>
-              <h4>Recent Predictions</h4>
-              <span className="dots">•••</span>
-            </div>
-            <div className="mini-predictions">
-              {recentPredictions.slice(0, 2).map((p, i) => (
-                <div className="mini-prediction-row" key={i}>
-                  <span>{p.date}</span>
-                  <button className="btn-view">View &rsaquo;</button>
-                </div>
-              ))}
-              <button
-                className="btn-full-history"
-                onClick={() => navigate("/history")}
-              >
-                View Full History
-              </button>
             </div>
           </div>
         </div>

@@ -21,31 +21,33 @@ function SignupPage() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    // ✅ Password validation
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match ❌");
-      return;
-    }
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match ❌");
+    return;
+  }
 
-    try {
-      await API.post("/auth/signup", {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
+  try {
+    const response = await API.post("/auth/signup", {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    });
 
-      alert("User created successfully ✅");
+    // ✅ SAVE username
+    localStorage.setItem("username", response.data.username);
 
-      // ✅ Redirect to login
-      navigate("/login");
+    alert("User created successfully ✅");
 
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.detail || "Signup failed ❌");
-    }
-  };
+    // ✅ Go directly to dashboard (better UX)
+    navigate("/dashboard");
+
+  } catch (err) {
+    console.error(err);
+    alert(err.response?.data?.detail || "Signup failed ❌");
+  }
+};
 
   return (
     <div className="signup-page">
@@ -93,7 +95,7 @@ function SignupPage() {
 
           <p className="login-link">
             Already have an account?{" "}
-            <span onClick={() => navigate("/login")}>Login</span>
+            <span onClick={() => navigate("/dashboard")}>Login</span>
           </p>
         </div>
       </div>

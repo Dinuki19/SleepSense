@@ -4,6 +4,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import SleepPredictionPage from "./pages/SleepPredictionPage";
+import ResultPage from "./pages/ResultPage";
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/predict" element={<SleepPredictionPage />} />
-        
+        <Route path="/result" element={<ResultPage />} />
       </Routes>
     </BrowserRouter>
   );

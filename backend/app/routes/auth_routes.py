@@ -26,7 +26,10 @@ async def signup(user: UserCreate):
 
     await users_collection.insert_one(new_user)
 
-    return {"message": "User created successfully"}
+    return {
+    "message": "User created successfully",
+    "username": user.name
+    }
 
 # ----------------- LOGIN -----------------
 @router.post("/login")
@@ -44,4 +47,5 @@ async def login(user: UserLogin):
         "name": db_user["name"]
     }
     token = create_access_token(token_data)
-    return {"access_token": token, "token_type": "bearer"}
+    return {"access_token": token, "token_type": "bearer", "username": db_user["name"]}
+

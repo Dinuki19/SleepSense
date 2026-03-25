@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
 class SleepInput(BaseModel):
     Gender: str
     Age: int
@@ -9,12 +10,13 @@ class SleepInput(BaseModel):
     Quality_of_Sleep: float
     Physical_Activity_Level: int
     Stress_Level: int
+    Height: float
+    Weight: float
 
-    Height: float   # NEW
-    Weight: float   # NEW
-
-    # Optional features (for later)
+    # Optional features
     Heart_Rate: Optional[int] = None
     Daily_Steps: Optional[int] = None
     Systolic: Optional[int] = None
     Diastolic: Optional[int] = None
+
+    
