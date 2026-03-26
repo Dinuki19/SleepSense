@@ -80,3 +80,15 @@
 .login-link span:hover {
   text-decoration: underline;
 }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+}

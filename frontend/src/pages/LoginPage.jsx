@@ -10,37 +10,63 @@ function LoginPage() {
 
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    login: "",
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Reset login error when user types
+    setErrors({ ...errors, login: "" });
+
+    // Optional: live email validation
+    if (name === "email") {
+      setErrors({
+        ...errors,
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+          ? ""
+          : "Enter a valid email address",
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await API.post("/auth/login", {
-      email: formData.email,
-      password: formData.password
-    });
+    // Reset login error before submit
+    setErrors({ ...errors, login: "" });
 
-    // ✅ Save token
-    localStorage.setItem("token", response.data.access_token);
+    // Optional: final check before API call
+    if (!formData.email || !formData.password) {
+      setErrors({ ...errors, login: "Please fill in all fields" });
+      return;
+    }
 
-    // ✅ SAVE username (THIS IS MISSING)
-    localStorage.setItem("username", response.data.username);
+    try {
+      const response = await API.post("/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
 
-    alert("Login successful ✅");
+      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("username", response.data.username);
 
-    navigate("/dashboard");
-
-  } catch (err) {
-    console.error(err);
-    alert("Invalid email or password ❌");
-  }
-};
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
+      setErrors({
+        ...errors,
+        login: err.response?.data?.detail || "Invalid email or password ❌",
+      });
+    }
+  };
 
   return (
     <div className="login-page">
@@ -51,21 +77,30 @@ function LoginPage() {
           <h2>Welcome Back</h2>
 
           <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              onChange={handleChange}
-              required
-            />
+            <div className="form-group">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              {errors.email && <span className="error">{errors.email}</span>}
+            </div>
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              required
-            />
+            <div className="form-group">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {errors.login && <span className="error login-error">{errors.login}</span>}
 
             <button type="submit">Login</button>
           </form>
