@@ -1,6 +1,7 @@
 import logo from "../assets/logo.svg";
 import "./Header.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
@@ -13,21 +14,10 @@ function Header() {
       </div>
 
       <div className="header-menu">
-        <button className="header-link" onClick={() => navigate("/")}>
-          Home
-        </button>
-
-        <button className="header-link" onClick={() => navigate("/dashboard")}>
-          Dashboard
-        </button>
-
-        <button className="header-link" onClick={() => navigate("/history")}>
-          History
-        </button>
-
-        <button className="header-link" onClick={() => navigate("/profile")}>
-          Profile
-        </button>
+      <Link className="header-link" to="/">Home</Link>
+      <Link className="header-link" to="/dashboard">Dashboard</Link>
+      <Link className="header-link" to="/history">History</Link>
+      <Link className="header-link" to="/profile">Profile</Link>
       </div>
     </nav>
   );

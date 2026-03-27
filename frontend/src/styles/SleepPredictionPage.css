@@ -32,7 +32,7 @@
   color: #1e293b;
 }
 
-/* Inputs */
+/* Inputs (text, number, optional features) */
 .sleep-form-container input {
   width: 100%;
   padding: 10px 12px;
@@ -41,10 +41,40 @@
   border: 1px solid #cbd5e1;
   font-size: 14px;
   transition: 0.2s;
+  box-sizing: border-box;
 }
 
-/* Input focus */
-.sleep-form-container input:focus {
+/* Remove arrows from number inputs */
+.sleep-form-container input[type=number]::-webkit-outer-spin-button,
+.sleep-form-container input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.sleep-form-container input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* Selects (Gender, Occupation) */
+.sleep-form-container select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  transition: 0.2s;
+  box-sizing: border-box;
+  appearance: none;          
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #fff url('data:image/svg+xml;utf8,<svg fill="gray" height="10" width="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 10,0 5,5"/></svg>') no-repeat right 10px center;
+  background-size: 10px;
+}
+
+/* Focus style for Inputs and Selects */
+.sleep-form-container input:focus,
+.sleep-form-container select:focus {
   outline: none;
   border-color: #6366f1;
   box-shadow: 0 0 4px rgba(99, 102, 241, 0.5);

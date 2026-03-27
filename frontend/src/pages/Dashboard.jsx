@@ -136,8 +136,9 @@ function DashboardPage() {
                 src="https://www.youtube.com/embed/k-GG1drfPu4"
                 title="Sleep Disorders"
                 frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-              />
+                />
             </div>
           </div>
         </div>

@@ -78,9 +78,43 @@ function SleepPredictionPage() {
           <h2>Sleep Disorder Prediction</h2>
 
           {/* Personal Info */}
-          <input type="text" name="Gender" placeholder="Gender" onChange={handleChange} required />
+          <select name="Gender" onChange={handleChange} required>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          </select>
           <input type="number" name="Age" placeholder="Age" onChange={handleChange} required />
-          <input type="text" name="Occupation" placeholder="Occupation" onChange={handleChange} required />
+          <select name="Occupation" onChange={handleChange} required>
+  <option value="">Select Occupation</option>
+  <option value="Student">Student</option>
+  <option value="Office Worker">Office Worker</option>
+  <option value="Manual Labor">Manual Labor</option>
+  <option value="Retired">Retired</option>
+  <option value="Nurse">Nurse</option>
+  <option value="Doctor">Doctor</option>
+  <option value="Engineer">Engineer</option>
+  <option value="Lawyer">Lawyer</option>
+  <option value="Teacher">Teacher</option>
+  <option value="Accountant">Accountant</option>
+  <option value="Salesperson">Salesperson</option>
+  <option value="Scientist">Scientist</option>
+  <option value="Software Engineer">Software Engineer</option>
+  <option value="Sales Representative">Sales Representative</option>
+  <option value="Manager">Manager</option>
+  <option value="Other">Other</option>
+</select>
+
+{/* Show text input if "Other" is selected */}
+{formData.Occupation === "Other" && (
+  <input
+    type="text"
+    name="Other_Occupation"
+    placeholder="Enter your occupation"
+    onChange={handleChange}
+    required
+  />
+)}
+
 
           {/* Sleep Info */}
           <input type="number" step="0.1" name="Sleep_Duration" placeholder="Sleep Duration (hours)" onChange={handleChange} required />

@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
-  background: #b4dafd;
+  padding: 20px 40px;
+  background: #dce7f1;
 }
 
 /* Left side: logo + title */
@@ -23,19 +23,26 @@
 .header-title {
   font-size: 22px;
   font-weight: 600;
+  color: rgb(3, 14, 74);
 }
 
 /* Right side menu */
 .header-menu {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
 }
 
-/* Buttons */
+/* Links */
 .header-link {
-  background: none;
-  border: none;
+  text-decoration: none;
+  color: rgb(3, 14, 74); 
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
   cursor: pointer;
-  font-size: 16px;
+}
+
+.header-link:hover {
+  color: #4357d7;
 }
