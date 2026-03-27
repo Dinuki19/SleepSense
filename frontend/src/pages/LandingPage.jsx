@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import illustrationLeft from "../assets/Landing_illustration.svg";
-import illustrationRight from "../assets/sleep.jpg";
+import illustrationRight from "../assets/Sleep.svg";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/LandingPage.css";

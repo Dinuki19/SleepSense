@@ -1,10 +1,5 @@
-/* ═══════════════════════════════════════════════════
-   LandingPage.css  –  Sleep Sense landing page styles
-   ═══════════════════════════════════════════════════ */
-
-/* ── CSS variables ─────────────────────────────────────────────── */
 :root {
-  --clr-hero-from: #1a237e;
+  --clr-hero-from: #121e88;
   --clr-hero-to: #3949ab;
   --clr-cloud: #c5cae9;
   --clr-body-bg: #f0f2fc;
@@ -64,7 +59,7 @@ body {
 .hero::after {
   content: "";
   position: absolute;
-  bottom: -2px;
+  bottom: -20px;
   left: 0;
   right: 0;
   height: 70px;
@@ -99,22 +94,22 @@ body {
 
 /* Left illustration: upper-left, blending into hero */
 .hero-illus--left {
-  width: 400px;
-  left: 0;
-  top: 20px;
+  width: 450px;
+  left: 40px;
+  top: 50px;
   bottom: 0;
-  height: 100%;
+  height: 150%;
   object-position: left top;
 }
 
 /* Right illustration: lower-right, offset downward */
 .hero-illus--right {
   width: 400px;
-  right: 30px;;
-  bottom: 0;
-  top: 40px;
+  right: 40px;
+  bottom: 50px;
+  top: 10px;
   height: 90%;
-  object-position: right bottom;
+  object-position: right top;
 }
 
 /* ── Hero text content ──────────────────────────────────────────── */
