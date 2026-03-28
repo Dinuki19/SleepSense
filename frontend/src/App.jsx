@@ -4,7 +4,9 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import SleepPredictionPage from "./pages/SleepPredictionPage";
-import ResultPage from "./pages/ResultPage";
+import SleepApneaPage from "./pages/SleepApnea";
+import InsomniaPage from "./pages/Insomnia";
+import HealthyPage from "./pages/Healthy";
 
 
 function App() {
@@ -16,7 +18,10 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/predict" element={<SleepPredictionPage />} />
-        <Route path="/result" element={<ResultPage />} />
+        <Route path="/insomnia" element={<InsomniaPage />} />
+        <Route path="/sleep-apnea" element={<SleepApneaPage />} />
+        <Route path="/healthy" element={<HealthyPage />} />
+    
       </Routes>
     </BrowserRouter>
   );

@@ -1,93 +1,144 @@
-/* ResultPage.css */
-
-/* Overall page styling */
+/* Base Page */
 .result-page {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: #f5f7fa;
-  font-family: 'Arial', sans-serif;
+  background: #f8fafc; /* neutral light background */
+  transition: all 0.3s ease;
 }
 
-/* Container for all result content */
+/* Container */
 .result-container {
-  flex: 1;
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
+  max-width: 750px;
+  margin: auto;
+  padding: 40px 20px;
 }
 
-/* Card styling for prediction, explanation, recommendations, summary */
-.result-card {
-  background-color: #ffffff;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Main heading */
+/* Page Titles (prediction text) */
 .result-container h1 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #1a1a1a;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
-/* Prediction styling */
-.result-card h2 span {
-  color: #ff4d4f; /* Red highlight for prediction */
-  font-weight: bold;
+/* Only prediction text colors */
+h1.insomnia-text {
+  color: #0284c7; /* blue for insomnia */
 }
 
-/* Note under prediction */
-.note {
-  font-size: 0.9rem;
-  color: #888888;
-  margin-top: 8px;
+h1.apnea-text {
+  color: #dc2626; /* red for sleep apnea */
 }
 
-/* Subheadings */
+h1.healthy-text {
+  color: #16a34a; /* green for healthy */
+}
+
+/* Cards */
+.result-card {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* Card titles */
 .result-card h3 {
-  margin-bottom: 12px;
-  color: #333333;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
-/* Lists inside recommendations or summary */
+/* Lists */
 .result-card ul {
-  list-style-type: disc;
   padding-left: 20px;
 }
 
 .result-card li {
-  margin-bottom: 8px;
-  line-height: 1.5;
+  margin-bottom: 6px;
 }
 
-/* Try Again button styling */
-.result-container button {
+/* Buttons */
+.button {
   display: block;
-  margin: 20px auto 0 auto;
+  margin: 25px auto;
   padding: 12px 24px;
-  font-size: 1rem;
   border: none;
-  border-radius: 8px;
-  background-color: #4a90e2;
-  color: #ffffff;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #4f46e5; /* default button color */
+  color: white;
+  transition: all 0.3s ease;
 }
 
-.result-container button:hover {
-  background-color: #357ab8;
+.button:hover {
+  background: #4338ca;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .result-container {
-    margin: 20px;
-    padding: 15px;
+/* Optional: iframe styling (for videos) */
+.result-card iframe {
+  border-radius: 12px;
+  margin-top: 10px;
+  width: 100%;
+  height: 250px;
+  border: none;
+}
+
+/* Layout with side video (optional) */
+.result-layout {
+  display: flex;
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.result-main {
+  flex: 2;
+}
+
+.result-sidebar {
+  flex: 1;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+/* Video card */
+.video-card {
+  background: white;
+  padding-bottom: 60%;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.video-card h3 {
+  margin-bottom: 10px;
+}
+
+.video-card iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  border: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+  .result-layout {
+    flex-direction: column;
   }
-  .result-card {
-    padding: 15px;
+
+  .result-sidebar {
+    position: static;
   }
 }
