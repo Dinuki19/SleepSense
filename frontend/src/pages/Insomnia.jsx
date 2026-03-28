@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/ResultPage.css";
+import SleepChart from "../components/SleepChart";
 
 function InsomniaPage() {
   const location = useLocation();
@@ -69,6 +70,18 @@ function InsomniaPage() {
             <li>Avoid screens before bedtime</li>
             <li>Practice relaxation techniques</li>
             <li>Reduce caffeine intake</li>
+          </ul>
+        </div>
+        <div className="result-card">
+          <h3>Your Input Summary</h3>
+          <SleepChart userInput={userInput} />
+          <ul>
+            <li>Sleep Duration: {userInput?.Sleep_Duration ?? "-"} hours</li>
+            <li>Stress Level: {userInput?.Stress_Level ?? "-"}</li>
+            <li>Quality of Sleep: {userInput?.Quality_of_Sleep ?? "-"}</li>
+            <li>
+              Physical Activity: {userInput?.Physical_Activity_Level ?? "-"} min/day
+            </li>
           </ul>
         </div>
 
