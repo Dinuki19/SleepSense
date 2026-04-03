@@ -111,7 +111,16 @@ function DashboardPage() {
               <tbody>
                 {predictions.map((p, i) => (
                   <tr key={i}>
-                    <td>{new Date(p.timestamp).toLocaleString()}</td>
+                    <td>{new Date(p.timestamp).toLocaleString("en-LK", {
+                    timeZone: "Asia/Colombo",
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true
+                    }).replace(",", "").replace("/", ".").replace("/", ".").replace(" AM", " A.M.").replace(" PM", " P.M.")}
+                    </td>
                     <td>{p.prediction}</td>
                     <td>
                       <button className="btn-view" onClick={() => navigate("/result", { state: { result: p, userInput: p.input } })}>

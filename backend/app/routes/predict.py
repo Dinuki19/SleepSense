@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
-from datetime import datetime
+from datetime import datetime, timedelta
 from app.schemas.sleep_schema import SleepInput
 from app.services.predict_service import make_prediction
 from app.database.db import get_predictions_collection
 from app.auth import get_current_user
-
 
 router = APIRouter()
 
@@ -13,6 +12,7 @@ router = APIRouter()
 async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
     """
     Generate AI prediction and save it linked to the logged-in user.
+    Timestamp is saved in Sri Lanka local time.
     """
     try:
         # 1️⃣ Get prediction from your service
@@ -20,16 +20,17 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
 
         # 2️⃣ Prepare MongoDB document
         prediction_doc = {
-                    "user_id": user["sub"],
-                    "user_name": user.get("name"),
-                    "input": input_df.to_dict(orient="records")[0],
-                    "prediction": prediction_label,
-                    "timestamp": datetime.utcnow()
+            "user_id": user["sub"],
+            "user_name": user.get("name"),
+            "input": input_df.to_dict(orient="records")[0],
+            "prediction": prediction_label,
+            "timestamp": datetime.utcnow() + timedelta(hours=5, minutes=30)  # Sri Lanka local time
         }
 
         # 3️⃣ Save to MongoDB
         coll = get_predictions_collection()
-        await coll.insert_one(prediction_doc)
+        result = await coll.insert_one(prediction_doc)
+        print("Inserted ID:", result.inserted_id)
 
         # 4️⃣ Return prediction to frontend
         return {
@@ -39,6 +40,7 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
+
 
 # ----------------- Fetch all predictions for logged-in user -----------------
 @router.get("/predictions")
