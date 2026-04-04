@@ -19,7 +19,7 @@ def get_risk_level(prediction: str):
     return "Unknown"
 
 # ----------------- AI Prediction + Save -----------------
-@router.post("/")  # ✅ Changed from "/predict" to "/" so frontend POST /predict works
+@router.post("/")  # Frontend POST /predict
 async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
     try:
         # Make prediction
@@ -42,14 +42,14 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
         # Save to MongoDB
         coll = get_predictions_collection()
         result = await coll.insert_one(prediction_doc)
-        prediction_doc["_id"] = str(result.inserted_id)  # Return _id for frontend
+        prediction_doc["_id"] = str(result.inserted_id)  # Convert ObjectId to string for frontend
 
-        return prediction_doc  # Return full prediction object
+        return prediction_doc
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
 
-# ----------------- Fetch predictions -----------------
+# ----------------- Fetch recent predictions for user -----------------
 @router.get("/predictions")
 async def get_user_predictions(user: dict = Depends(get_current_user), limit: int = 5):
     coll = get_predictions_collection()
@@ -62,13 +62,34 @@ async def get_user_predictions(user: dict = Depends(get_current_user), limit: in
 
     return predictions
 
-# ----------------- Delete prediction -----------------
+# ----------------- Delete a prediction -----------------
 @router.delete("/prediction/{id}")
 async def delete_prediction(id: str, user: dict = Depends(get_current_user)):
     coll = get_predictions_collection()
-    result = await coll.delete_one({"_id": ObjectId(id), "user_id": user["sub"]})
+    try:
+        obj_id = ObjectId(id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid ID format")
+
+    result = await coll.delete_one({"_id": obj_id, "user_id": user["sub"]})
 
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Prediction not found")
 
     return {"message": "Prediction deleted successfully"}
+
+# ----------------- Fetch single prediction for view -----------------
+@router.get("/prediction/{id}")
+async def get_prediction(id: str, user: dict = Depends(get_current_user)):
+    coll = get_predictions_collection()
+    try:
+        obj_id = ObjectId(id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid ID format")
+
+    pred = await coll.find_one({"_id": obj_id, "user_id": user["sub"]})
+    if not pred:
+        raise HTTPException(status_code=404, detail="Prediction not found")
+
+    pred["_id"] = str(pred["_id"])  # Convert ObjectId to string for frontend
+    return pred

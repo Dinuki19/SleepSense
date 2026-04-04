@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/DashboardPage.css";
+import API from "../api/api";
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -13,9 +13,10 @@ function DashboardPage() {
   // ----------------- Fetch predictions -----------------
   const fetchPredictions = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/predict/predictions", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const res = await API.get("http://127.0.0.1:8000/predict/predictions", {
+  headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
+     });
+
       setPredictions(res.data);
     } catch (err) {
       console.error("Failed to fetch predictions:", err);
@@ -52,9 +53,7 @@ function DashboardPage() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://127.0.0.1:8000/predict/prediction/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await API.delete(`http://127.0.0.1:8000/predict/prediction/${id}`);
       // Remove only deleted prediction
       setPredictions((prev) => prev.filter((p) => p._id !== id));
     } catch (err) {
@@ -156,11 +155,10 @@ function DashboardPage() {
                     </td>
                     <td>{p.prediction}</td>
                     <td>
-                      <button
-                        className="btn-view"
-                        onClick={() => navigate("/result", { state: { result: p, userInput: p.input } })}
+                      <button className="btn-view"
+                      onClick={() => navigate(`/prediction/${p._id}`)}
                       >
-                        View &rsaquo;
+                      View &rsaquo;
                       </button>
                       <button className="btn-delete" onClick={() => handleDelete(p._id)}>
                         Remove

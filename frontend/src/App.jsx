@@ -7,6 +7,7 @@ import SleepPredictionPage from "./pages/SleepPredictionPage";
 import SleepApneaPage from "./pages/SleepApnea";
 import InsomniaPage from "./pages/Insomnia";
 import HealthyPage from "./pages/Healthy";
+import PredictionDetail from "./pages/PredictionDetail";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/insomnia" element={<InsomniaPage />} />
         <Route path="/sleep-apnea" element={<SleepApneaPage />} />
         <Route path="/healthy" element={<HealthyPage />} />
+        <Route path="/prediction/:id" element={<PredictionDetail />} />
     
       </Routes>
     </BrowserRouter>

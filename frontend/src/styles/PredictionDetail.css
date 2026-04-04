@@ -1,28 +1,28 @@
 /* Base Page */
-.result-page {
+.prediction-detail-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #f8fafc; /* neutral light background */
+  background: #eef2f7; /* same as dashboard background */
   transition: all 0.3s ease;
 }
 
 /* Container */
-.result-container {
-  max-width: 750px;
+.prediction-detail-container {
+  max-width: 900px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* Page Titles (prediction text) */
-.result-container h1 {
+/* Prediction Title */
+.prediction-detail-container h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   font-size: 2rem;
   font-weight: 700;
 }
 
-/* Only prediction text colors */
+/* Prediction colors */
 h1.insomnia-text {
   color: #0284c7; /* blue for insomnia */
 }
@@ -36,65 +36,64 @@ h1.healthy-text {
 }
 
 /* Cards */
-.result-card {
-  background: #ffffff;
+.prediction-card-detail {
+  background: #fff;
   padding: 22px;
   border-radius: 16px;
   margin-bottom: 20px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.result-card:hover {
+.prediction-card-detail:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
 }
 
 /* Card titles */
-.result-card h3 {
+.prediction-card-detail h3 {
   margin-bottom: 10px;
   font-weight: 600;
 }
 
-/* Lists */
-.result-card ul {
+/* Lists for inputs */
+.prediction-card-detail ul {
   padding-left: 20px;
 }
 
-.result-card li {
+.prediction-card-detail li {
   margin-bottom: 6px;
 }
 
+/* Chart container */
+.prediction-chart {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f1f5f9;
+  border-radius: 14px;
+}
+
 /* Buttons */
-.button {
+.button-back {
   display: block;
-  margin: 25px auto;
+  margin: 25px auto 0;
   padding: 12px 24px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  background: #191a89; /* default button color */
+  background: #191a89;
   color: white;
   transition: all 0.3s ease;
 }
 
-.button:hover {
+.button-back:hover {
   background: #4338ca;
 }
 
-/* Optional: iframe styling (for videos) */
-.result-card iframe {
-  border-radius: 12px;
-  margin-top: 10px;
-  width: 100%;
-  height: 250px;
-  border: none;
-}
-
-/* Layout with side video (optional) */
-.result-layout {
+/* Sidebar (optional video / info) */
+.prediction-detail-layout {
   display: flex;
   gap: 30px;
   max-width: 1200px;
@@ -102,11 +101,11 @@ h1.healthy-text {
   padding: 40px 20px;
 }
 
-.result-main {
+.prediction-main {
   flex: 2;
 }
 
-.result-sidebar {
+.prediction-sidebar {
   flex: 1;
   position: sticky;
   top: 100px;
@@ -134,11 +133,11 @@ h1.healthy-text {
 
 /* Mobile Responsive */
 @media (max-width: 900px) {
-  .result-layout {
+  .prediction-detail-layout {
     flex-direction: column;
   }
 
-  .result-sidebar {
+  .prediction-sidebar {
     position: static;
   }
 }
