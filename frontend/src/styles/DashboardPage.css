@@ -80,7 +80,7 @@
 }
 
 .btn-start {
-  background-color:rgba(51, 80, 242, 0.45);
+  background-color:#191a89;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -91,10 +91,6 @@
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
-.btn-start:hover {
-  background-color: #191a89;
-  transform: translateY(-1px);
-}
 
 /* Decorative illustration circles */
 .prediction-card-illustration {
@@ -260,7 +256,7 @@
    Buttons
 ───────────────────────────────────────── */
 .btn-view {
-  background-color: rgba(92, 107, 192, 0.45);
+  background-color: #191a89;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -272,8 +268,24 @@
   white-space: nowrap;
 }
 
-.btn-view:hover {
-  background-color: #191a89;
+
+
+.btn-delete {
+  margin-left: 8px;
+  background-color: #d9363e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-delete:hover {
+  background-color: #c33940; 
 }
 
 .btn-full-history {
@@ -289,10 +301,6 @@
   white-space: nowrap;
 }
 
-.btn-full-history:hover {
-  border-color: #191a89;
-  color: rgb(3, 14, 74);
-}
 
 /* ─────────────────────────────────────────
    Right Column – Info Card
