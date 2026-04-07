@@ -82,28 +82,28 @@ function SignupPage() {
 
     setErrors(finalErrors);
 
-    if (Object.keys(finalErrors).length === 0) {
-      // Inside handleSubmit, after successful signup:
+     if (Object.keys(finalErrors).length === 0) {
     try {
-    const response = await API.post("/auth/signup", {
-  name: formData.name,
-  email: formData.email,
-  password: formData.password,
-});
+      const response = await API.post("/auth/signup", {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
 
-// Wrap username in a user object for dashboard
-localStorage.setItem(
-  "user",
-  JSON.stringify({ name: response.data.username })
-);
+      // Store token and user data
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ name: response.data.username })
+      );
 
-navigate("/dashboard");
-} catch (err) {
-  console.error(err);
-  setErrors({ ...errors, email: err.response?.data?.detail || "Signup failed" });
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
+      setErrors({ ...errors, email: err.response?.data?.detail || "Signup failed" });
     }
-    }
-  };
+  }
+};
 
   return (
     <div className="signup-page">
