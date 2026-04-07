@@ -83,19 +83,25 @@ function SignupPage() {
     setErrors(finalErrors);
 
     if (Object.keys(finalErrors).length === 0) {
-      try {
-        const response = await API.post("/auth/signup", {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        });
+      // Inside handleSubmit, after successful signup:
+    try {
+    const response = await API.post("/auth/signup", {
+  name: formData.name,
+  email: formData.email,
+  password: formData.password,
+});
 
-        localStorage.setItem("user", JSON.stringify(response.data.user || response.data));
-        navigate("/dashboard");
-      } catch (err) {
-        console.error(err);
-        setErrors({ ...errors, email: err.response?.data?.detail || "Signup failed" });
-      }
+// Wrap username in a user object for dashboard
+localStorage.setItem(
+  "user",
+  JSON.stringify({ name: response.data.username })
+);
+
+navigate("/dashboard");
+} catch (err) {
+  console.error(err);
+  setErrors({ ...errors, email: err.response?.data?.detail || "Signup failed" });
+    }
     }
   };
 
@@ -163,7 +169,7 @@ function SignupPage() {
 
           <p className="login-link">
             Already have an account?{" "}
-            <span onClick={() => navigate("/dashboard")}>Login</span>
+            <span onClick={() => navigate("/login")}>Login</span>
           </p>
         </div>
       </div>

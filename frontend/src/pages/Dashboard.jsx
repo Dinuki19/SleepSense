@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/DashboardPage.css";
 import API from "../api/api";
+import { jwtDecode } from "jwt-decode";
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -13,24 +14,56 @@ function DashboardPage() {
   // ----------------- Fetch predictions -----------------
   const fetchPredictions = async () => {
     try {
-      const res = await API.get("http://127.0.0.1:8000/predict/predictions", {
-  headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
-     });
+      const token = localStorage.getItem("access_token");
 
-      setPredictions(res.data);
+      const res = await API.get(
+        "http://127.0.0.1:8000/predict/predictions",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      // Decode token to get logged-in user ID
+      const decoded = jwtDecode(token);
+      const loggedUserId = decoded.sub;
+
+      // Filter + Sort predictions (latest first)
+      const filteredPredictions = res.data
+        .filter((p) => String(p.user_id) === String(loggedUserId))
+        .sort(
+          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        );
+
+      setPredictions(filteredPredictions);
     } catch (err) {
       console.error("Failed to fetch predictions:", err);
     }
   };
 
   useEffect(() => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  setUsername(user?.name || "User");
-  fetchPredictions();
-}, []);
+    // Redirect if not logged in
+    if (!localStorage.getItem("access_token")) {
+      navigate("/login");
+      return;
+    }
+
+    // Safe user retrieval
+    const storedUser = localStorage.getItem("user");
+    let user = storedUser ? JSON.parse(storedUser) : null;
+
+    if (!user) {
+      const username = localStorage.getItem("username");
+      user = username ? { name: username } : null;
+    }
+
+    setUsername(user?.name || "User");
+
+    // Fetch predictions
+    fetchPredictions();
+  }, []);
 
   const totalPredictions = predictions.length;
-  const lastPrediction = predictions[0];
+  const lastPrediction = predictions?.[0];
 
   // ----------------- Risk Level -----------------
   const getRiskLevel = (prediction) => {
@@ -50,13 +83,20 @@ function DashboardPage() {
 
   // ----------------- Delete Function -----------------
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this prediction?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this prediction?"
+    );
     if (!confirmDelete) return;
 
     try {
-      await API.delete(`http://127.0.0.1:8000/predict/prediction/${id}`);
+      await API.delete(
+        `http://127.0.0.1:8000/predict/prediction/${id}`
+      );
+
       // Remove only deleted prediction
-      setPredictions((prev) => prev.filter((p) => p._id !== id));
+      setPredictions((prev) =>
+        prev.filter((p) => p._id !== id)
+      );
     } catch (err) {
       console.error("Delete failed:", err);
     }
@@ -78,8 +118,13 @@ function DashboardPage() {
           <div className="prediction-card">
             <div className="prediction-card-text">
               <h3>Start New Sleep Prediction</h3>
-              <p>Enter your latest sleep and lifestyle data to receive AI-based insights.</p>
-              <button className="btn-start" onClick={() => navigate("/predict")}>
+              <p>
+                Enter your latest sleep and lifestyle data to receive AI-based insights.
+              </p>
+              <button
+                className="btn-start"
+                onClick={() => navigate("/predict")}
+              >
                 Start Prediction
               </button>
             </div>
@@ -100,6 +145,7 @@ function DashboardPage() {
                 <strong>{totalPredictions}</strong>
               </div>
             </div>
+
             <div className="stat-card">
               <span className="stat-label">Last Result</span>
               <div className="stat-value">
@@ -107,18 +153,24 @@ function DashboardPage() {
                 <strong>{lastPrediction?.prediction || "N/A"}</strong>
               </div>
             </div>
+
             <div className="stat-card">
               <span className="stat-label">Risk Level</span>
               <div className="stat-value">
                 <span className="stat-icon">
-                  {lastPrediction ? getRiskIcon(lastPrediction.risk_level) : "❔"}
+                  {lastPrediction
+                    ? getRiskIcon(lastPrediction.risk_level)
+                    : "❔"}
                 </span>
-                <strong>{lastPrediction?.risk_level || getRiskLevel(lastPrediction?.prediction)}</strong>
+                <strong>
+                  {lastPrediction?.risk_level ||
+                    getRiskLevel(lastPrediction?.prediction)}
+                </strong>
               </div>
             </div>
           </div>
 
-          {/* Recent Predictions Table */}
+          {/* Table */}
           <div className="table-card">
             <div className="table-card-header">
               <h4>Recent Predictions</h4>
@@ -135,8 +187,8 @@ function DashboardPage() {
               </thead>
 
               <tbody>
-                {predictions.map((p, i) => (
-                  <tr key={i}>
+                {predictions.map((p) => (
+                  <tr key={p._id}>
                     <td>
                       {new Date(p.timestamp)
                         .toLocaleString("en-LK", {
@@ -154,14 +206,23 @@ function DashboardPage() {
                         .replace(" AM", " A.M.")
                         .replace(" PM", " P.M.")}
                     </td>
+
                     <td>{p.prediction}</td>
+
                     <td>
-                      <button className="btn-view"
-                      onClick={() => navigate(`/prediction/${p._id}`)}
+                      <button
+                        className="btn-view"
+                        onClick={() =>
+                          navigate(`/prediction/${p._id}`)
+                        }
                       >
-                      View &rsaquo;
+                        View &rsaquo;
                       </button>
-                      <button className="btn-delete" onClick={() => handleDelete(p._id)}>
+
+                      <button
+                        className="btn-delete"
+                        onClick={() => handleDelete(p._id)}
+                      >
                         Remove
                       </button>
                     </td>
@@ -176,7 +237,10 @@ function DashboardPage() {
         <div className="dashboard-right">
           <div className="info-card">
             <h4>What is Sleep Disorder?</h4>
-            <p>Learn about sleep disorders, their causes, and how they can affect your health.</p>
+            <p>
+              Learn about sleep disorders, their causes, and how they can affect your health.
+            </p>
+
             <div className="video-wrapper">
               <iframe
                 src="https://www.youtube.com/embed/k-GG1drfPu4"

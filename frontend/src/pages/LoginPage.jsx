@@ -51,15 +51,17 @@ function LoginPage() {
 
     try {
       const response = await API.post("/auth/login", {
-        email: formData.email,
-        password: formData.password,
-      });
-      
-      
-      localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("username", response.data.username);
+  email: formData.email,
+  password: formData.password,
+});
 
-      navigate("/dashboard");
+localStorage.setItem("access_token", response.data.access_token);
+localStorage.setItem(
+  "user",
+  JSON.stringify({ name: response.data.username })
+);
+
+navigate("/dashboard");
     } catch (err) {
       console.error(err);
       setErrors({
