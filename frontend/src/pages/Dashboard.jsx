@@ -24,9 +24,10 @@ function DashboardPage() {
   };
 
   useEffect(() => {
-    setUsername(localStorage.getItem("username") || "User");
-    fetchPredictions();
-  }, []);
+  const user = JSON.parse(localStorage.getItem("user"));
+  setUsername(user?.name || "User");
+  fetchPredictions();
+}, []);
 
   const totalPredictions = predictions.length;
   const lastPrediction = predictions[0];

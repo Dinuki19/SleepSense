@@ -90,7 +90,7 @@ function SignupPage() {
           password: formData.password,
         });
 
-        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("user", JSON.stringify(response.data.user || response.data));
         navigate("/dashboard");
       } catch (err) {
         console.error(err);
