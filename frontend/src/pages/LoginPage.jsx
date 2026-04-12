@@ -55,7 +55,7 @@ function LoginPage() {
   password: formData.password,
 });
 
-localStorage.setItem("access_token", response.data.access_token);
+localStorage.setItem("token", response.data.token);
 localStorage.setItem(
   "user",
   JSON.stringify({ name: response.data.username })

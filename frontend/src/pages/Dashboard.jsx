@@ -14,7 +14,7 @@ function DashboardPage() {
   // ----------------- Fetch predictions -----------------
   const fetchPredictions = async () => {
     try {
-      const token = localStorage.getItem("access_token");
+      const token = localStorage.getItem("token");
 
       const res = await API.get(
         "http://127.0.0.1:8000/predict/predictions",
@@ -42,7 +42,7 @@ function DashboardPage() {
 
   useEffect(() => {
     // Redirect if not logged in
-    if (!localStorage.getItem("access_token")) {
+    if (!localStorage.getItem("token")) {
       navigate("/login");
       return;
     }
@@ -160,7 +160,7 @@ function DashboardPage() {
                 <span className="stat-icon">
                   {lastPrediction
                     ? getRiskIcon(lastPrediction.risk_level)
-                    : "❔"}
+                    : "⚠️"}
                 </span>
                 <strong>
                   {lastPrediction?.risk_level ||

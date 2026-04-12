@@ -91,7 +91,7 @@ function SignupPage() {
       });
 
       // Store token and user data
-      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("token", response.data.access_token);
       localStorage.setItem(
         "user",
         JSON.stringify({ name: response.data.username })

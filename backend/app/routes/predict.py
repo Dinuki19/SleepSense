@@ -19,17 +19,17 @@ def get_risk_level(prediction: str):
     return "Unknown"
 
 # ----------------- AI Prediction + Save -----------------
-@router.post("/")  # Frontend POST /predict
+@router.post("/")
 async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
     try:
-        # Make prediction
         prediction_label, input_df = make_prediction(data)
-        if not prediction_label:
+
+        # ✅ FIXED: use "is None" not "if not"
+        if prediction_label is None:
             raise HTTPException(status_code=500, detail="Prediction returned None")
 
         risk_level = get_risk_level(prediction_label)
 
-        # Prepare document
         prediction_doc = {
             "user_id": user["sub"],
             "user_name": user.get("name"),
@@ -39,15 +39,18 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
             "timestamp": datetime.utcnow() + timedelta(hours=5, minutes=30)
         }
 
-        # Save to MongoDB
         coll = get_predictions_collection()
         result = await coll.insert_one(prediction_doc)
-        prediction_doc["_id"] = str(result.inserted_id)  # Convert ObjectId to string for frontend
+        prediction_doc["_id"] = str(result.inserted_id)
 
         return prediction_doc
 
+    # ✅ FIXED: re-raise HTTP exceptions before catching generic ones
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
+
 
 # ----------------- Fetch recent predictions for user -----------------
 @router.get("/predictions")
@@ -61,6 +64,7 @@ async def get_user_predictions(user: dict = Depends(get_current_user), limit: in
         predictions.append(pred)
 
     return predictions
+
 
 # ----------------- Delete a prediction -----------------
 @router.delete("/prediction/{id}")
@@ -78,6 +82,7 @@ async def delete_prediction(id: str, user: dict = Depends(get_current_user)):
 
     return {"message": "Prediction deleted successfully"}
 
+
 # ----------------- Fetch single prediction for view -----------------
 @router.get("/prediction/{id}")
 async def get_prediction(id: str, user: dict = Depends(get_current_user)):
@@ -91,5 +96,5 @@ async def get_prediction(id: str, user: dict = Depends(get_current_user)):
     if not pred:
         raise HTTPException(status_code=404, detail="Prediction not found")
 
-    pred["_id"] = str(pred["_id"])  # Convert ObjectId to string for frontend
+    pred["_id"] = str(pred["_id"])
     return pred

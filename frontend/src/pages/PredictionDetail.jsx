@@ -1,9 +1,8 @@
-// PredictionDetail.jsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/api";
-import SleepChart from "../components/SleepChart"; // your chart component
-import "../styles/PredictionDetail.css"; 
+import SleepChart from "../components/SleepChart";
+import "../styles/PredictionDetail.css";
 
 function PredictionDetail() {
   const { id } = useParams();
@@ -13,23 +12,29 @@ function PredictionDetail() {
 
   useEffect(() => {
     const fetchPrediction = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("You must be logged in to view predictions.");
+        navigate("/login");
+        return;
+      }
+
       try {
-        // Fetch the access token from localStorage
-        const token = localStorage.getItem("access_token");
-
-        if (!token) {
-          alert("You must be logged in to view predictions");
-          navigate("/login"); // redirect to login if no token
-          return;
-        }
-
-        // Make the GET request with Authorization header
         const res = await API.get(`/predict/prediction/${id}`);
         setPrediction(res.data);
       } catch (error) {
-        console.error(error);
-        alert(error.response?.data?.detail || "Prediction not found or error fetching data");
-        navigate(-1); // go back if error occurs
+        console.error("Error fetching prediction:", error);
+        if (error.response?.status === 401) {
+          alert("Session expired. Please log in again.");
+          navigate("/login");
+        } else if (error.response?.status === 404) {
+          alert("Prediction not found.");
+          navigate(-1);
+        } else {
+          alert(error.response?.data?.detail || "Error fetching prediction.");
+          navigate(-1);
+        }
       } finally {
         setLoading(false);
       }
@@ -38,36 +43,51 @@ function PredictionDetail() {
     fetchPrediction();
   }, [id, navigate]);
 
-  if (loading) return <p style={{ textAlign: "center", marginTop: "50px" }}>Loading...</p>;
+  if (loading) return (
+    <p style={{ textAlign: "center", marginTop: "50px" }}>Loading...</p>
+  );
+
   if (!prediction) return null;
 
   const { prediction: result, input, timestamp } = prediction;
 
-  // Determine CSS class for prediction type
+  const normalised = result?.toLowerCase();
+
   const getPredictionClass = () => {
-    if (result === "Sleep Apnea") return "apnea-text";
-    if (result === "Insomnia") return "insomnia-text";
-    if (result === "Healthy") return "healthy-text";
+    if (normalised === "sleep apnea") return "apnea-text";
+    if (normalised === "insomnia") return "insomnia-text";
+    if (normalised === "healthy") return "healthy-text";
     return "";
+  };
+
+  const getDisplayLabel = () => {
+    if (normalised === "sleep apnea") return "Sleep Apnea";
+    if (normalised === "insomnia") return "Insomnia";
+    if (normalised === "healthy") return "Healthy";
+    return result;
   };
 
   return (
     <div className="prediction-detail-page">
       <div className="prediction-detail-container">
-        <h1 className={getPredictionClass()}>{result}</h1>
+
+        <h1 className={getPredictionClass()}>{getDisplayLabel()}</h1>
+
         <p style={{ textAlign: "center", color: "#64748b", marginBottom: "20px" }}>
           Date & Time: {new Date(timestamp).toLocaleString()}
         </p>
 
         {/* User Inputs */}
         <div className="prediction-card-detail">
-          <h3>User Inputs:</h3>
+          <h3>User Inputs</h3>
           <ul>
-            {Object.entries(input).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key.replace(/_/g, " ")}:</strong> {value}
-              </li>
-            ))}
+            {Object.entries(input)
+              .filter(([, value]) => value !== null && value !== "")
+              .map(([key, value]) => (
+                <li key={key}>
+                  <strong>{key.replace(/_/g, " ")}:</strong> {value}
+                </li>
+              ))}
           </ul>
         </div>
 
@@ -78,8 +98,9 @@ function PredictionDetail() {
 
         {/* Back Button */}
         <button className="button-back" onClick={() => navigate(-1)}>
-          Back
+          ← Back
         </button>
+
       </div>
     </div>
   );

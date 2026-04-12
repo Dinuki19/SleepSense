@@ -12,15 +12,12 @@ pipeline = model_package["pipeline"]
 label_encoder = model_package["label_encoder"]
 
 def make_prediction(data: SleepInput):
-    """
-    Make a sleep disorder prediction using the input data.
-    """
 
     # ✅ Calculate BMI and category
     bmi_value = calculate_bmi(data.Height, data.Weight)
     bmi_category = get_bmi_category(bmi_value)
 
-    # ✅ Heart rate (FIXED)
+    # ✅ Heart rate
     if data.Heart_Rate is not None:
         heart_rate = data.Heart_Rate
     else:
@@ -41,7 +38,7 @@ def make_prediction(data: SleepInput):
             bmi_category
         )
 
-    # ✅ Daily steps (FIXED)
+    # ✅ Daily steps
     if data.Daily_Steps is not None:
         daily_steps = data.Daily_Steps
     else:
@@ -51,7 +48,9 @@ def make_prediction(data: SleepInput):
             data.Physical_Activity_Level
         )
 
-    # ✅ Prepare input DataFrame
+    # ✅ FIXED: Column order now exactly matches training data
+    # Training order: Gender, Age, Occupation, Sleep Duration, Quality of Sleep,
+    # Physical Activity, Stress Level, BMI Category, Heart Rate, Daily Steps, Systolic, Diastolic
     input_df = pd.DataFrame([{
         "Gender": data.Gender,
         "Age": data.Age,
@@ -61,22 +60,33 @@ def make_prediction(data: SleepInput):
         "Physical Activity Level (minutes/day)": data.Physical_Activity_Level,
         "Stress Level (scale: 1-10)": data.Stress_Level,
         "BMI Category": bmi_category,
-        "Systolic": systolic,
-        "Diastolic": diastolic,
-        "Heart Rate (bpm)": heart_rate,
-        "Daily Steps": daily_steps
+        "Heart Rate (bpm)": heart_rate,       # ✅ moved up
+        "Daily Steps": daily_steps,            # ✅ moved up
+        "Systolic": systolic,                  # ✅ moved down
+        "Diastolic": diastolic                 # ✅ moved down
     }])
 
-    # Debug
-    print("BMI:", bmi_value)
-    print("BMI Category:", bmi_category)
+    # Debug logs
+    print("=== PREDICTION DEBUG ===")
+    print("BMI:", bmi_value, "| BMI Category:", bmi_category)
     print("Heart Rate:", heart_rate)
-    print("Systolic:", systolic, "Diastolic:", diastolic)
+    print("Systolic:", systolic, "| Diastolic:", diastolic)
     print("Daily Steps:", daily_steps)
-    print("Model Input:\n", input_df)
+    print("Input columns:", input_df.columns.tolist())
+    print("Input values:", input_df.values)
+    print("========================")
 
     # ✅ Predict
     prediction_encoded = pipeline.predict(input_df)[0]
     prediction_label = label_encoder.inverse_transform([prediction_encoded])[0]
+
+    print("Raw Encoded:", prediction_encoded)
+    print("Prediction Label:", prediction_label)
+
+    # ✅ Map "None" string to "Healthy"
+    if prediction_label == "None":
+        prediction_label = "Healthy"
+
+    print("Final Label:", prediction_label)
 
     return prediction_label, input_df
