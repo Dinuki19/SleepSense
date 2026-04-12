@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/ResultPage.css";
-import SleepChart from "../components/SleepChart";
 
 function SleepApneaPage() {
   const location = useLocation();
@@ -26,27 +25,34 @@ function SleepApneaPage() {
   };
 
   return (
-    <div className="result-page apnea">
+    <div className="rp-page rp-page--apnea">
       <Header />
 
-      <div className="result-container">
-        <h1 className="apnea-text">Sleep Apnea Risk 😷</h1>
+      <div className="rp-container">
 
-        <div className="result-card">
-          <p>You may be at risk of sleep apnea.</p>
+        {/* ── Hero Banner ── */}
+        <div className="rp-hero rp-hero--apnea">
+          <div className="rp-hero__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            </svg>
+          </div>
+          <div>
+            <h1 className="rp-hero__title">Sleep Apnea Risk 😷</h1>
+            <p className="rp-hero__sub">You may be at risk of sleep apnea based on your inputs.</p>
+          </div>
         </div>
 
-        <div className="result-card">
-          <h3>What is Sleep Apnea?</h3>
-          <p>
-            Sleep apnea is a condition where breathing repeatedly stops and
-            starts during sleep. It can reduce oxygen levels and lead to
-            serious health problems if untreated.
+        {/* ── Cards ── */}
+        <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.05s" }}>
+          <div className="rp-card__label">What is Sleep Apnea?</div>
+          <p className="rp-card__body">
+            Sleep apnea is a condition where breathing repeatedly stops and starts during sleep. It can reduce oxygen levels and lead to serious health problems if untreated.
           </p>
         </div>
 
-        <div className="result-card">
-          <h3>Learn More</h3>
+        <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.1s" }}>
+          <div className="rp-card__label">Learn More</div>
           <iframe
             width="100%"
             height="250"
@@ -56,14 +62,14 @@ function SleepApneaPage() {
           ></iframe>
         </div>
 
-        <div className="result-card">
-          <h3>Why this result?</h3>
-          <p>{getExplanation()}</p>
+        <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.15s" }}>
+          <div className="rp-card__label">Why this result?</div>
+          <p className="rp-card__body">{getExplanation()}</p>
         </div>
 
-        <div className="result-card">
-          <h3>Recommendations</h3>
-          <ul>
+        <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.2s" }}>
+          <div className="rp-card__label">Recommendations</div>
+          <ul className="rp-list rp-list--apnea">
             <li>Consult a medical professional</li>
             <li>Maintain a healthy weight</li>
             <li>Avoid alcohol before sleep</li>
@@ -71,22 +77,32 @@ function SleepApneaPage() {
           </ul>
         </div>
 
-        <div className="result-card">
-          <h3>Your Input Summary</h3>
-          <SleepChart userInput={userInput} />
-          <ul>
-            <li>Sleep Duration: {userInput?.Sleep_Duration ?? "-"} hours</li>
-            <li>Stress Level: {userInput?.Stress_Level ?? "-"}</li>
-            <li>Quality of Sleep: {userInput?.Quality_of_Sleep ?? "-"}</li>
-            <li>
-              Physical Activity: {userInput?.Physical_Activity_Level ?? "-"} min/day
-            </li>
-          </ul>
+        <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.25s" }}>
+          <div className="rp-card__label">Your Input Summary</div>
+          <div className="rp-summary-grid">
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Sleep Duration</span>
+              <span className="rp-summary-val rp-summary-val--apnea">{userInput?.Sleep_Duration ?? "-"} hrs</span>
+            </div>
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Stress Level</span>
+              <span className="rp-summary-val rp-summary-val--apnea">{userInput?.Stress_Level ?? "-"}</span>
+            </div>
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Quality of Sleep</span>
+              <span className="rp-summary-val rp-summary-val--apnea">{userInput?.Quality_of_Sleep ?? "-"}</span>
+            </div>
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Physical Activity</span>
+              <span className="rp-summary-val rp-summary-val--apnea">{userInput?.Physical_Activity_Level ?? "-"} min/day</span>
+            </div>
+          </div>
         </div>
 
-        <button className="button" onClick={() => navigate("/predict")}>
+        <button className="rp-btn rp-btn--apnea" onClick={() => navigate("/predict")}>
           Try Again
         </button>
+
       </div>
 
       <Footer />

@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/ResultPage.css";
-import SleepChart from "../components/SleepChart";
 
 function InsomniaPage() {
   const location = useLocation();
@@ -28,27 +27,34 @@ function InsomniaPage() {
   };
 
   return (
-    <div className="result-page insomnia">
+    <div className="rp-page rp-page--insomnia">
       <Header />
 
-      <div className="result-container">
-        <h1 className="insomnia-text">Insomnia Detected 😴</h1>
+      <div className="rp-container">
 
-        <div className="result-card">
-          <p>You may be experiencing insomnia based on your inputs.</p>
+        {/* ── Hero Banner ── */}
+        <div className="rp-hero rp-hero--insomnia">
+          <div className="rp-hero__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </div>
+          <div>
+            <h1 className="rp-hero__title">Insomnia Detected 😴</h1>
+            <p className="rp-hero__sub">You may be experiencing insomnia based on your inputs.</p>
+          </div>
         </div>
 
-        <div className="result-card">
-          <h3>What is Insomnia?</h3>
-          <p>
-            Insomnia is a sleep disorder where people have trouble falling
-            asleep, staying asleep, or getting restful sleep. It can lead to
-            fatigue, poor concentration, and mood changes.
+        {/* ── Cards ── */}
+        <div className="rp-card rp-card--insomnia rp-animate" style={{ animationDelay: "0.05s" }}>
+          <div className="rp-card__label">What is Insomnia?</div>
+          <p className="rp-card__body">
+            Insomnia is a sleep disorder where people have trouble falling asleep, staying asleep, or getting restful sleep. It can lead to fatigue, poor concentration, and mood changes.
           </p>
         </div>
 
-        <div className="result-card">
-          <h3>Learn More</h3>
+        <div className="rp-card rp-card--insomnia rp-animate" style={{ animationDelay: "0.1s" }}>
+          <div className="rp-card__label">Learn More</div>
           <iframe
             width="100%"
             height="250"
@@ -58,36 +64,47 @@ function InsomniaPage() {
           ></iframe>
         </div>
 
-        <div className="result-card">
-          <h3>Why this result?</h3>
-          <p>{getExplanation()}</p>
+        <div className="rp-card rp-card--insomnia rp-animate" style={{ animationDelay: "0.15s" }}>
+          <div className="rp-card__label">Why this result?</div>
+          <p className="rp-card__body">{getExplanation()}</p>
         </div>
 
-        <div className="result-card">
-          <h3>Recommendations</h3>
-          <ul>
+        <div className="rp-card rp-card--insomnia rp-animate" style={{ animationDelay: "0.2s" }}>
+          <div className="rp-card__label">Recommendations</div>
+          <ul className="rp-list rp-list--insomnia">
             <li>Maintain a consistent sleep schedule</li>
             <li>Avoid screens before bedtime</li>
             <li>Practice relaxation techniques</li>
             <li>Reduce caffeine intake</li>
           </ul>
         </div>
-        <div className="result-card">
-          <h3>Your Input Summary</h3>
-          <SleepChart userInput={userInput} />
-          <ul>
-            <li>Sleep Duration: {userInput?.Sleep_Duration ?? "-"} hours</li>
-            <li>Stress Level: {userInput?.Stress_Level ?? "-"}</li>
-            <li>Quality of Sleep: {userInput?.Quality_of_Sleep ?? "-"}</li>
-            <li>
-              Physical Activity: {userInput?.Physical_Activity_Level ?? "-"} min/day
-            </li>
-          </ul>
+
+        <div className="rp-card rp-card--insomnia rp-animate" style={{ animationDelay: "0.25s" }}>
+          <div className="rp-card__label">Your Input Summary</div>
+          <div className="rp-summary-grid">
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Sleep Duration</span>
+              <span className="rp-summary-val rp-summary-val--insomnia">{userInput?.Sleep_Duration ?? "-"} hrs</span>
+            </div>
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Stress Level</span>
+              <span className="rp-summary-val rp-summary-val--insomnia">{userInput?.Stress_Level ?? "-"}</span>
+            </div>
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Quality of Sleep</span>
+              <span className="rp-summary-val rp-summary-val--insomnia">{userInput?.Quality_of_Sleep ?? "-"}</span>
+            </div>
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Physical Activity</span>
+              <span className="rp-summary-val rp-summary-val--insomnia">{userInput?.Physical_Activity_Level ?? "-"} min/day</span>
+            </div>
+          </div>
         </div>
 
-        <button className="button" onClick={() => navigate("/predict")}>
+        <button className="rp-btn rp-btn--insomnia" onClick={() => navigate("/predict")}>
           Try Again
         </button>
+
       </div>
 
       <Footer />

@@ -102,90 +102,120 @@ function DashboardPage() {
     }
   };
 
+  const riskLevel =
+    lastPrediction?.risk_level || getRiskLevel(lastPrediction?.prediction);
+
+  const getPredictionBadgeClass = (pred) => {
+    const n = pred?.toLowerCase();
+    if (n === "healthy") return "db-pred-badge db-pred-badge--healthy";
+    if (n === "insomnia") return "db-pred-badge db-pred-badge--insomnia";
+    if (n === "sleep apnea") return "db-pred-badge db-pred-badge--apnea";
+    return "db-pred-badge";
+  };
+
+  const getRiskClass = (level) => {
+    if (level === "High") return "db-stat-val db-stat-val--high";
+    if (level === "Moderate") return "db-stat-val db-stat-val--moderate";
+    if (level === "Low") return "db-stat-val db-stat-val--low";
+    return "db-stat-val";
+  };
+
+  // Initial letter for avatar
+  const avatarLetter = username.charAt(0).toUpperCase();
+
   return (
-    <div className="dashboard-page">
+    <div className="db-page">
       <Header />
 
-      <div className="dashboard-layout">
-        {/* LEFT COLUMN */}
-        <div className="dashboard-left">
-          <div className="welcome-banner">
-            <h2>Welcome back, {username}!</h2>
-            <p>Here's your sleep health overview.</p>
+      <div className="db-layout">
+
+        {/* ── LEFT COLUMN ── */}
+        <div className="db-col">
+
+          {/* Welcome */}
+          <div className="db-welcome">
+            <div className="db-welcome-text">
+              <h2>Welcome back, {username}!</h2>
+              <p>Here's your sleep health overview.</p>
+            </div>
+            <div className="db-avatar">{avatarLetter}</div>
           </div>
 
-          {/* Start Prediction Card */}
-          <div className="prediction-card">
-            <div className="prediction-card-text">
-              <h3>Start New Sleep Prediction</h3>
-              <p>
-                Enter your latest sleep and lifestyle data to receive AI-based insights.
-              </p>
-              <button
-                className="btn-start"
-                onClick={() => navigate("/predict")}
-              >
+          {/* Hero Card */}
+          <div className="db-hero">
+            <div className="db-hero-text">
+              <h3>Start a New Sleep Prediction</h3>
+              <p>Enter your latest sleep and lifestyle data to receive AI-based insights.</p>
+              <button className="db-hero-btn" onClick={() => navigate("/predict")}>
                 Start Prediction
               </button>
             </div>
-            <div className="prediction-card-illustration">
-              <div className="illustration-circle large" />
-              <div className="illustration-circle small" />
-              <div className="illustration-icon brain">🧠</div>
-              <div className="illustration-icon person">🛌</div>
+            <div className="db-hero-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
             </div>
           </div>
 
           {/* Stats Row */}
-          <div className="stats-row">
-            <div className="stat-card">
-              <span className="stat-label">Total Predictions</span>
-              <div className="stat-value">
-                <span className="stat-icon bars">📊</span>
-                <strong>{totalPredictions}</strong>
+          <div className="db-stats">
+            <div className="db-stat">
+              <div className="db-stat-top">
+                <span className="db-stat-label">Total Predictions</span>
+                <div className="db-stat-dot db-stat-dot--blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="18" y="3" width="4" height="18" /><rect x="10" y="8" width="4" height="13" /><rect x="2" y="13" width="4" height="8" />
+                  </svg>
+                </div>
               </div>
+              <div className="db-stat-val">{totalPredictions}</div>
+              <div className="db-stat-sub">All time</div>
             </div>
 
-            <div className="stat-card">
-              <span className="stat-label">Last Result</span>
-              <div className="stat-value">
-                <span className="stat-icon">🛏️</span>
-                <strong>{lastPrediction?.prediction || "N/A"}</strong>
+            <div className="db-stat">
+              <div className="db-stat-top">
+                <span className="db-stat-label">Last Result</span>
+                <div className="db-stat-dot db-stat-dot--green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </svg>
+                </div>
               </div>
+              <div className="db-stat-val db-stat-val--sm">
+                {lastPrediction?.prediction || "N/A"}
+              </div>
+              <div className="db-stat-sub">Most recent</div>
             </div>
 
-            <div className="stat-card">
-              <span className="stat-label">Risk Level</span>
-              <div className="stat-value">
-                <span className="stat-icon">
-                  {lastPrediction
-                    ? getRiskIcon(lastPrediction.risk_level)
-                    : "⚠️"}
-                </span>
-                <strong>
-                  {lastPrediction?.risk_level ||
-                    getRiskLevel(lastPrediction?.prediction)}
-                </strong>
+            <div className="db-stat">
+              <div className="db-stat-top">
+                <span className="db-stat-label">Risk Level</span>
+                <div className="db-stat-dot db-stat-dot--amber">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                </div>
               </div>
+              <div className={getRiskClass(riskLevel)}>{riskLevel}</div>
+              <div className="db-stat-sub">Based on last result</div>
             </div>
           </div>
 
           {/* Table */}
-          <div className="table-card">
-            <div className="table-card-header">
+          <div className="db-table-card">
+            <div className="db-table-head">
               <h4>Recent Predictions</h4>
-              <span className="dots">•••</span>
+              <span className="db-count-badge">{totalPredictions} records</span>
             </div>
 
-            <table className="predictions-table">
+            <table className="db-table">
               <thead>
                 <tr>
-                  <th>Date</th>
+                  <th>Date & Time</th>
                   <th>Prediction</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-
               <tbody>
                 {predictions.map((p) => (
                   <tr key={p._id}>
@@ -206,25 +236,26 @@ function DashboardPage() {
                         .replace(" AM", " A.M.")
                         .replace(" PM", " P.M.")}
                     </td>
-
-                    <td>{p.prediction}</td>
-
                     <td>
-                      <button
-                        className="btn-view"
-                        onClick={() =>
-                          navigate(`/prediction/${p._id}`)
-                        }
-                      >
-                        View &rsaquo;
-                      </button>
-
-                      <button
-                        className="btn-delete"
-                        onClick={() => handleDelete(p._id)}
-                      >
-                        Remove
-                      </button>
+                      <span className={getPredictionBadgeClass(p.prediction)}>
+                        {p.prediction}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="db-actions">
+                        <button
+                          className="db-btn-view"
+                          onClick={() => navigate(`/prediction/${p._id}`)}
+                        >
+                          View &rsaquo;
+                        </button>
+                        <button
+                          className="db-btn-delete"
+                          onClick={() => handleDelete(p._id)}
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -233,15 +264,12 @@ function DashboardPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="dashboard-right">
-          <div className="info-card">
+        {/* ── RIGHT COLUMN ── */}
+        <div className="db-col">
+          <div className="db-info-card">
             <h4>What is Sleep Disorder?</h4>
-            <p>
-              Learn about sleep disorders, their causes, and how they can affect your health.
-            </p>
-
-            <div className="video-wrapper">
+            <p>Learn about sleep disorders, their causes, and how they can affect your health.</p>
+            <div className="db-video-wrapper">
               <iframe
                 src="https://www.youtube.com/embed/k-GG1drfPu4"
                 title="Sleep Disorders"
@@ -251,7 +279,20 @@ function DashboardPage() {
               />
             </div>
           </div>
+
+          <div className="db-tip-card">
+            <div className="db-tip-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" />
+              </svg>
+            </div>
+            <div>
+              <h5>Sleep Tip</h5>
+              <p>Maintain a consistent sleep schedule — go to bed and wake up at the same time every day, even on weekends.</p>
+            </div>
+          </div>
         </div>
+
       </div>
 
       <Footer />

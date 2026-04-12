@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/api";
-import SleepChart from "../components/SleepChart";
 import "../styles/PredictionDetail.css";
 
 function PredictionDetail() {
@@ -43,9 +42,13 @@ function PredictionDetail() {
     fetchPrediction();
   }, [id, navigate]);
 
-  if (loading) return (
-    <p style={{ textAlign: "center", marginTop: "50px" }}>Loading...</p>
-  );
+  if (loading)
+    return (
+      <div className="loading-screen">
+        <div className="loading-spinner" />
+        <p>Loading prediction...</p>
+      </div>
+    );
 
   if (!prediction) return null;
 
@@ -54,9 +57,9 @@ function PredictionDetail() {
   const normalised = result?.toLowerCase();
 
   const getPredictionClass = () => {
-    if (normalised === "sleep apnea") return "apnea-text";
-    if (normalised === "insomnia") return "insomnia-text";
-    if (normalised === "healthy") return "healthy-text";
+    if (normalised === "sleep apnea") return "apnea";
+    if (normalised === "insomnia") return "insomnia";
+    if (normalised === "healthy") return "healthy";
     return "";
   };
 
@@ -67,38 +70,82 @@ function PredictionDetail() {
     return result;
   };
 
+  const getBannerIcon = () => {
+    if (normalised === "healthy")
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
+        </svg>
+      );
+    if (normalised === "insomnia")
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      );
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+      </svg>
+    );
+  };
+
+  const getBadgeLabel = () => {
+    if (normalised === "healthy") return "No disorder detected";
+    if (normalised === "insomnia") return "Sleep disorder detected";
+    if (normalised === "sleep apnea") return "Breathing sleep disorder detected";
+    return "Result available";
+  };
+
+  const inputEntries = Object.entries(input).filter(
+
+    ([, value]) => value !== null && value !== ""
+  );
+
+  const predClass = getPredictionClass();
+
   return (
-    <div className="prediction-detail-page">
-      <div className="prediction-detail-container">
+    <div className="pd-page">
+      <div className="pd-container">
 
-        <h1 className={getPredictionClass()}>{getDisplayLabel()}</h1>
+        {/* ── Result Banner ── */}
+        <div className={`pd-banner pd-banner--${predClass}`}>
+          <div className="pd-banner__icon">{getBannerIcon()}</div>
+          <div className="pd-banner__text">
+            <h1 className="pd-banner__title">{getDisplayLabel()}</h1>
+            <p className="pd-banner__sub">{getBadgeLabel()}</p>
+          </div>
+        </div>
 
-        <p style={{ textAlign: "center", color: "#64748b", marginBottom: "20px" }}>
-          Date & Time: {new Date(timestamp).toLocaleString()}
-        </p>
+        {/* ── Timestamp ── */}
+        <div className="pd-timestamp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+          </svg>
+          {new Date(timestamp).toLocaleString()}
+        </div>
 
-        {/* User Inputs */}
-        <div className="prediction-card-detail">
-          <h3>User Inputs</h3>
-          <ul>
-            {Object.entries(input)
-              .filter(([, value]) => value !== null && value !== "")
-              .map(([key, value]) => (
-                <li key={key}>
-                  <strong>{key.replace(/_/g, " ")}:</strong> {value}
-                </li>
+        {/* ── All Inputs ── */}
+        {inputEntries.length > 0 && (
+          <>
+            <p className="pd-section-label">User inputs</p>
+            <div className="pd-card pd-inputs-grid">
+              {inputEntries.map(([key, value]) => (
+                <div key={key} className="pd-input-item">
+                  <span className="pd-input-key">{key.replace(/_/g, " ")}</span>
+                  <span className="pd-input-val">{value}</span>
+                </div>
               ))}
-          </ul>
-        </div>
+            </div>
+          </>
+        )}
 
-        {/* Chart */}
-        <div className="prediction-chart">
-          <SleepChart userInput={input} />
-        </div>
-
-        {/* Back Button */}
-        <button className="button-back" onClick={() => navigate(-1)}>
-          ← Back
+        {/* ── Back Button ── */}
+        <button className="pd-back-fab" onClick={() => navigate(-1)}>
+          ← Back to Predictions
         </button>
 
       </div>

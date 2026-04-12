@@ -1,143 +1,208 @@
-/* Base Page */
-.prediction-detail-page {
+/* ─────────────────────────────────────────
+   PredictionDetail.css
+───────────────────────────────────────── */
+
+/* Page */
+.pd-page {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #eef2f7; /* same as dashboard background */
-  transition: all 0.3s ease;
+  background: #eef2f7;
+  padding-bottom: 80px;
 }
 
 /* Container */
-.prediction-detail-container {
-  max-width: 900px;
-  margin: auto;
+.pd-container {
+  max-width: 860px;
+  margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* Prediction Title */
-.prediction-detail-container h1 {
-  text-align: center;
-  margin-bottom: 25px;
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-/* Prediction colors */
-h1.insomnia-text {
-  color: #0284c7; /* blue for insomnia */
-}
-
-h1.apnea-text {
-  color: #dc2626; /* red for sleep apnea */
-}
-
-h1.healthy-text {
-  color: #16a34a; /* green for healthy */
-}
-
-/* Cards */
-.prediction-card-detail {
-  background: #fff;
-  padding: 22px;
-  border-radius: 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.prediction-card-detail:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
-}
-
-/* Card titles */
-.prediction-card-detail h3 {
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-/* Lists for inputs */
-.prediction-card-detail ul {
-  padding-left: 20px;
-}
-
-.prediction-card-detail li {
-  margin-bottom: 6px;
-}
-
-/* Chart container */
-.prediction-chart {
-  margin-top: 20px;
-  padding: 15px;
-  background: #f1f5f9;
-  border-radius: 14px;
-}
-
-/* Buttons */
-.button-back {
-  display: block;
-  margin: 25px auto 0;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  background: #191a89;
-  color: white;
-  transition: all 0.3s ease;
-}
-
-.button-back:hover {
-  background: #4338ca;
-}
-
-/* Sidebar (optional video / info) */
-.prediction-detail-layout {
+/* ── Loading ── */
+.loading-screen {
+  min-height: 100vh;
   display: flex;
-  gap: 30px;
-  max-width: 1200px;
-  margin: auto;
-  padding: 40px 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: #64748b;
+  font-size: 0.95rem;
 }
 
-.prediction-main {
-  flex: 2;
+.loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #dde3ed;
+  border-top-color: #185fa5;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
 }
 
-.prediction-sidebar {
-  flex: 1;
-  position: sticky;
-  top: 100px;
-  height: fit-content;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-/* Video card */
-.video-card {
-  background: white;
-  padding-bottom: 60%;
+/* ── Banner ── */
+.pd-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
   border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 1.6rem 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid;
 }
 
-.video-card h3 {
-  margin-bottom: 10px;
+.pd-banner--healthy  { background: #eaf3de; border-color: #c0dd97; }
+.pd-banner--insomnia { background: #e6f1fb; border-color: #b5d4f4; }
+.pd-banner--apnea    { background: #fcebeb; border-color: #f7c1c1; }
+
+.pd-banner__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.video-card iframe {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
+.pd-banner--healthy  .pd-banner__icon { background: #c0dd97; color: #27500a; }
+.pd-banner--insomnia .pd-banner__icon { background: #b5d4f4; color: #0c447c; }
+.pd-banner--apnea    .pd-banner__icon { background: #f7c1c1; color: #791f1f; }
+
+.pd-banner__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.pd-banner__title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.pd-banner--healthy  .pd-banner__title { color: #27500a; }
+.pd-banner--insomnia .pd-banner__title { color: #0c447c; }
+.pd-banner--apnea    .pd-banner__title { color: #791f1f; }
+
+.pd-banner__sub {
+  font-size: 13px;
+  margin: 0;
+}
+
+.pd-banner--healthy  .pd-banner__sub { color: #3b6d11; }
+.pd-banner--insomnia .pd-banner__sub { color: #185fa5; }
+.pd-banner--apnea    .pd-banner__sub { color: #a32d2d; }
+
+/* ── Timestamp ── */
+.pd-timestamp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 1.75rem;
+}
+
+.pd-timestamp svg {
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+/* ── Section label ── */
+.pd-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Card ── */
+.pd-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.75rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.pd-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Inputs grid ── */
+.pd-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 24px;
+}
+
+.pd-input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid #f1f5f9;
+}
+
+.pd-input-key {
+  font-size: 12px;
+  color: #94a3b8;
+  text-transform: capitalize;
+}
+
+.pd-input-val {
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* ── Floating back button ── */
+.pd-back-fab {
+  position: fixed;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #185fa5;
+  color: #ffffff;
   border: none;
+  border-radius: 30px;
+  padding: 13px 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(24, 95, 165, 0.35);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+  z-index: 100;
 }
 
-/* Mobile Responsive */
-@media (max-width: 900px) {
-  .prediction-detail-layout {
-    flex-direction: column;
+.pd-back-fab:hover {
+  background: #0c447c;
+  box-shadow: 0 6px 18px rgba(24, 95, 165, 0.45);
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.pd-back-fab:active {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .pd-container {
+    padding: 24px 14px;
   }
 
-  .prediction-sidebar {
-    position: static;
+  .pd-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-banner__title {
+    font-size: 1.35rem;
   }
 }
