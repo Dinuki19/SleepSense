@@ -97,7 +97,7 @@ function SignupPage() {
         JSON.stringify({ name: response.data.username })
       );
 
-      navigate("/dashboard");
+      navigate("/login");
     } catch (err) {
       console.error(err);
       setErrors({ ...errors, email: err.response?.data?.detail || "Signup failed" });
