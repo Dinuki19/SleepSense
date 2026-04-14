@@ -98,3 +98,19 @@ async def get_prediction(id: str, user: dict = Depends(get_current_user)):
 
     pred["_id"] = str(pred["_id"])
     return pred
+
+# ----------------- FULL HISTORY (FOR HISTORY PAGE) -----------------
+@router.get("/history")
+async def get_prediction_history(user: dict = Depends(get_current_user)):
+    coll = get_predictions_collection()
+
+    preds_cursor = coll.find(
+        {"user_id": user["sub"]}
+    ).sort("timestamp", -1)  # NO LIMIT
+
+    predictions = []
+    async for pred in preds_cursor:
+        pred["_id"] = str(pred["_id"])
+        predictions.append(pred)
+
+    return predictions
