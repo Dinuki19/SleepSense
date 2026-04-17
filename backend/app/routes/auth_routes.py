@@ -1,9 +1,11 @@
 # app/routes/auth_routes.py
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from datetime import datetime
 from app.models.user import UserCreate, UserLogin
 from app.database.db import get_users_collection
 from app.auth import hash_password, verify_password, create_access_token
+from bson import ObjectId
+from app.auth import get_current_user
 
 router = APIRouter()
 
@@ -49,3 +51,53 @@ async def login(user: UserLogin):
     token = create_access_token(token_data)
     return {"token": token, "token_type": "bearer", "username": db_user["name"]}
 
+# Get user profile
+@router.get("/me")
+async def get_profile(user: dict = Depends(get_current_user)):
+    users_collection = get_users_collection()
+
+    db_user = await users_collection.find_one(
+        {"_id": ObjectId(user["sub"])}
+    )
+
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return {
+        "name": db_user["name"],
+        "email": db_user["email"],
+        "created_at": db_user["created_at"]
+    }
+
+# ----------------- RESET PASSWORD -----------------
+@router.put("/reset-password")
+async def reset_password(data: dict):
+    users_collection = get_users_collection()
+
+    user = await users_collection.find_one({"email": data["email"]})
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    hashed_password = hash_password(data["newPassword"])
+
+    await users_collection.update_one(
+        {"email": data["email"]},
+        {"$set": {"password": hashed_password}}
+    )
+
+    return {"message": "Password reset successfully"}
+
+# ----------------- DELETE ACCOUNT -----------------
+@router.delete("/delete-account")
+async def delete_account(user: dict = Depends(get_current_user)):
+    users_collection = get_users_collection()
+
+    result = await users_collection.delete_one(
+        {"_id": ObjectId(user["sub"])}
+    )
+
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return {"message": "Account deleted successfully"}

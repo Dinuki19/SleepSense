@@ -9,7 +9,7 @@ import InsomniaPage from "./pages/Insomnia";
 import HealthyPage from "./pages/Healthy";
 import PredictionDetail from "./pages/PredictionDetail";
 import HistoryPage from "./pages/HistoryPage";
-
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
         <Route path="/healthy" element={<HealthyPage />} />
         <Route path="/prediction/:id" element={<PredictionDetail />} />
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
     
       </Routes>
     </BrowserRouter>
