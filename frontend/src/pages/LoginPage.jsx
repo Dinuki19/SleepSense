@@ -102,6 +102,12 @@ navigate("/dashboard");
                 required
               />
             </div>
+            <p
+  className="forgot-password"
+  onClick={() => navigate("/forgot-password")}
+>
+  Forgot Password?
+</p>
 
             {errors.login && <span className="error login-error">{errors.login}</span>}
 

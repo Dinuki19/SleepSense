@@ -86,28 +86,7 @@ function ProfilePage() {
           </div>
         )}
 
-        {/* 🔐 RESET PASSWORD */}
-        <div className="card">
-          <h3>Reset Password</h3>
-
-          <input
-            type="email"
-            value={email}
-            disabled
-            placeholder="Email"
-          />
-
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="New Password"
-          />
-
-          <button onClick={handleResetPassword}>
-            Reset Password
-          </button>
-        </div>
+      
 
         {/* 🗑 DELETE ACCOUNT */}
         <div className="card danger">

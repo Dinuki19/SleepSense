@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background: #b9d2ea;
+  background: #1c5a98;
 }
 
 /* Left side: logo + title */
@@ -17,13 +17,14 @@
 .header-logo {
   width: 32px;
   height: auto;
+  filter: brightness(0) invert(1);
 }
 
 /* Title */
 .header-title {
   font-size: 22px;
   font-weight: 600;
-  color: rgb(3, 14, 74);
+  color: var(--clr-white);
 }
 
 /* Right side menu */
@@ -36,7 +37,7 @@
 /* Links */
 .header-link {
   text-decoration: none;
-  color: rgb(3, 14, 74); 
+  color: var(--clr-white);
   font-weight: 500;
   font-size: 0.95rem;
   transition: color 0.2s ease;
@@ -44,5 +45,5 @@
 }
 
 .header-link:hover {
-  color: #4357d7;
+  color: #040720;
 }
