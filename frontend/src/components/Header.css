@@ -1,33 +1,50 @@
+/* =========================
+   HEADER CONTAINER
+========================= */
 .header-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  background: #1c5a98;
+  padding: 18px 40px;
+
+  /* Glass + blend with background */
+  background: rgba(221, 238, 242, 0.91);
+  backdrop-filter: blur(12px);
+
+  /* Separation from page */
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(46, 96, 176, 0.15);
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-/* Left side: logo + title */
+/* =========================
+   LEFT SIDE (LOGO + TITLE)
+========================= */
 .header-left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* Logo size */
+/* Logo */
 .header-logo {
   width: 32px;
   height: auto;
-  filter: brightness(0) invert(1);
 }
 
 /* Title */
 .header-title {
   font-size: 22px;
   font-weight: 600;
-  color: var(--clr-white);
+  color: #041228;
 }
 
-/* Right side menu */
+/* =========================
+   MENU
+========================= */
 .header-menu {
   display: flex;
   align-items: center;
@@ -37,13 +54,13 @@
 /* Links */
 .header-link {
   text-decoration: none;
-  color: var(--clr-white);
+  color: #041228;
   font-weight: 500;
   font-size: 0.95rem;
-  transition: color 0.2s ease;
+  transition: 0.2s ease;
   cursor: pointer;
 }
 
 .header-link:hover {
-  color: #040720;
+  color: #2e60b0;
 }

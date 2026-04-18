@@ -1,28 +1,116 @@
+/* ================= PROFILE BASE ================= */
 .profile-container {
-  padding: 20px;
-  max-width: 600px;
-  margin: auto;
+  --pf-bg: #f8fafc;
+  --pf-card: #ffffff;
+  --pf-border: rgba(0,0,0,0.08);
+  --pf-text: #1a202c;
+  --pf-muted: #64748b;
+
+  --pf-blue: #3b82f6;
+  --pf-blue-soft: rgba(59,130,246,0.08);
+
+  --pf-danger: #ef4444;
+  --pf-danger-soft: rgba(239,68,68,0.10);
+
+  min-height: 100vh;
+  padding: 30px 16px 60px;
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  color: var(--pf-text);
 }
 
-.card {
-  background: white;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* ================= HEADER TITLE ================= */
+.profile-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  animation: pfFadeDown 0.5s ease;
 }
 
-.card input {
+/* ================= CARD ================= */
+.profile-card {
+  background: var(--pf-card);
+  max-width: 720px;
+  margin: 16px auto;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid var(--pf-border);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  transition: all 0.25s ease;
+  animation: pfSlideUp 0.5s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+}
+
+/* ================= SECTION HEADINGS ================= */
+.profile-card h3 {
+  margin-bottom: 14px;
+  font-size: 16px;
+  color: var(--pf-text);
+}
+
+/* ================= TEXT ================= */
+.profile-card p {
+  margin: 6px 0;
+  color: var(--pf-muted);
+  font-size: 14px;
+}
+
+/* ================= BUTTONS ================= */
+.profile-btn {
   width: 100%;
-  padding: 8px;
-  margin: 8px 0;
-}
-
-.card button {
-  padding: 8px 12px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
   cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
 }
 
-.danger {
-  border: 1px solid red;
+/* primary button */
+.profile-btn-primary {
+  background: var(--pf-blue);
+  color: white;
+}
+
+.profile-btn-primary:hover {
+  background: #2563eb;
+}
+
+/* danger button */
+.profile-btn-danger {
+  background: var(--pf-danger);
+  color: white;
+}
+
+.profile-btn-danger:hover {
+  background: #dc2626;
+}
+
+
+/* ================= ANIMATIONS ================= */
+@keyframes pfFadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pfSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

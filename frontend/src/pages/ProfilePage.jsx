@@ -7,42 +7,61 @@ import "../styles/ProfilePage.css";
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
-  const [email, setEmail] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+  const [stats, setStats] = useState(null);
 
   const navigate = useNavigate();
 
-  // 📥 Load user profile
   useEffect(() => {
     fetchProfile();
+    fetchStats();
   }, []);
 
+  // 👤 USER INFO
   const fetchProfile = async () => {
     try {
       const res = await API.get("/auth/me");
       setUser(res.data);
-      setEmail(res.data.email);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // 🔐 Reset password
-  const handleResetPassword = async () => {
+  // 📊 STATS + INSIGHTS
+  const fetchStats = async () => {
     try {
-      await API.put("/auth/reset-password", {
-        email,
-        newPassword,
-      });
+      const res = await API.get("/predict/history");
+      const data = res.data || [];
 
-      alert("Password reset successful");
-      setNewPassword("");
+      const total = data.length;
+      const lastPrediction = data.length > 0 ? data[0] : null;
+
+      const counts = {
+        Healthy: data.filter((p) => p.prediction === "Healthy").length,
+        Insomnia: data.filter((p) => p.prediction === "Insomnia").length,
+        Apnea: data.filter((p) => p.prediction === "Sleep Apnea").length,
+      };
+
+      const mostCommon = Object.keys(counts).reduce((a, b) =>
+        counts[a] > counts[b] ? a : b
+      );
+
+      const healthyRate = total
+        ? ((counts.Healthy / total) * 100).toFixed(1)
+        : 0;
+
+      setStats({
+        total,
+        lastPrediction,
+        mostCommon,
+        counts,
+        healthyRate,
+      });
     } catch (err) {
-      alert(err.response?.data?.detail || "Error resetting password");
+      console.log(err);
     }
   };
 
-  // 🗑 Delete account
+  // 🗑 DELETE ACCOUNT
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete your account?"
@@ -60,7 +79,7 @@ function ProfilePage() {
     }
   };
 
-  // 🚪 Logout
+  // 🚪 LOGOUT
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -71,12 +90,12 @@ function ProfilePage() {
       <Header />
 
       <div className="profile-container">
-        <h2>Profile Page</h2>
+        <h2 className="profile-title">Profile</h2>
 
         {/* 👤 USER INFO */}
         {user && (
-          <div className="card">
-            <h3>User Information</h3>
+          <div className="profile-card">
+            <h3>Account Information</h3>
             <p><b>Name:</b> {user.name}</p>
             <p><b>Email:</b> {user.email}</p>
             <p>
@@ -86,19 +105,65 @@ function ProfilePage() {
           </div>
         )}
 
-      
+        {/* 📊 SUMMARY */}
+        {stats && (
+          <div className="profile-card">
+            <h3>Activity Summary</h3>
+            <p><b>Total Predictions:</b> {stats.total}</p>
+            <p><b>Healthy:</b> {stats.counts.Healthy}</p>
+            <p><b>Insomnia:</b> {stats.counts.Insomnia}</p>
+            <p><b>Sleep Apnea:</b> {stats.counts.Apnea}</p>
+          </div>
+        )}
 
-        {/* 🗑 DELETE ACCOUNT */}
-        <div className="card danger">
+        {/* 🧠 INSIGHTS */}
+        {stats && (
+          <div className="profile-card">
+            <h3>AI Insights</h3>
+
+            <p>
+              <b>Most Common Condition:</b> {stats.mostCommon}
+            </p>
+
+            {stats.lastPrediction && (
+              <p>
+                <b>Latest Prediction:</b>{" "}
+                {stats.lastPrediction.prediction}
+              </p>
+            )}
+
+            <p>
+              <b>Healthy Rate:</b> {stats.healthyRate}%
+            </p>
+          </div>
+        )}
+
+        {/* ⚙ SYSTEM INFO */}
+        <div className="profile-card">
+          <h3>System Info</h3>
+          <p><b>App:</b> SleepSense AI</p>
+          <p><b>Version:</b> 1.0</p>
+          <p><b>Model:</b> Machine Learning Classification</p>
+          <p><b>Status:</b> Active</p>
+        </div>
+
+        {/* ⚠ DANGER ZONE */}
+        <div className="profile-card">
           <h3>Danger Zone</h3>
-          <button onClick={handleDelete}>
+          <button
+            className="profile-btn profile-btn-danger"
+            onClick={handleDelete}
+          >
             Delete Account
           </button>
         </div>
 
         {/* 🚪 LOGOUT */}
-        <div className="card">
-          <button onClick={handleLogout}>
+        <div className="profile-card">
+          <button
+            className="profile-btn profile-btn-primary"
+            onClick={handleLogout}
+          >
             Logout
           </button>
         </div>

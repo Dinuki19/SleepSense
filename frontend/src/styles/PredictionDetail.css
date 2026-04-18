@@ -164,10 +164,8 @@
 
 /* ── Floating back button ── */
 .pd-back-fab {
-  position: fixed;
-  bottom: 1.75rem;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
+  margin: 2.5rem auto 1rem; /* pushes it lower + centers it */
   background: #185fa5;
   color: #ffffff;
   border: none;
@@ -179,7 +177,6 @@
   box-shadow: 0 4px 14px rgba(24, 95, 165, 0.35);
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
   white-space: nowrap;
-  z-index: 100;
 }
 
 .pd-back-fab:hover {
