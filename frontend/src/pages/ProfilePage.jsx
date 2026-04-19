@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../api/api";
 import { useNavigate } from "react-router-dom";
 import "../styles/ProfilePage.css";
+import { confirmDelete } from "../utils/confirm";
 
 function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -60,21 +61,21 @@ function ProfilePage() {
   };
 
   // 🗑 DELETE ACCOUNT
-  const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete your account?"
-    );
+ const handleDelete = async () => {
+  const confirmed = await confirmDelete(
+    "Are you sure you want to delete your account? This action cannot be undone."
+  );
 
-    if (!confirmDelete) return;
+  if (!confirmed) return;
 
-    try {
-      await API.delete("/auth/delete-account");
-      localStorage.removeItem("token");
-      navigate("/login");
-    } catch (err) {
-      alert("Error deleting account");
-    }
-  };
+  try {
+    await API.delete("/auth/delete-account");
+    localStorage.removeItem("token");
+    navigate("/login");
+  } catch (err) {
+    alert("Error deleting account");
+  }
+};
 
   // 🚪 LOGOUT
   const handleLogout = () => {

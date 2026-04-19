@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/DashboardPage.css";
 import API from "../api/api";
 import { jwtDecode } from "jwt-decode";
+import { confirmDelete } from "../utils/confirm";
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -80,26 +81,26 @@ function DashboardPage() {
   };
 
   // ----------------- Delete Function -----------------
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this prediction?"
+ const handleDelete = async (id) => {
+  const confirm = await confirmDelete(
+    "Are you sure you want to delete this prediction?"
+  );
+
+  if (!confirm) return;
+
+  try {
+    await API.delete(
+      `http://127.0.0.1:8000/predict/prediction/${id}`
     );
-    if (!confirmDelete) return;
 
-    try {
-      await API.delete(
-        `http://127.0.0.1:8000/predict/prediction/${id}`
-      );
-
-      // Remove only deleted prediction
-      setPredictions((prev) =>
-        prev.filter((p) => p._id !== id)
-      );
-    } catch (err) {
-      console.error("Delete failed:", err);
-    }
-  };
-
+    // Remove only deleted prediction
+    setPredictions((prev) =>
+      prev.filter((p) => p._id !== id)
+    );
+  } catch (err) {
+    console.error("Delete failed:", err);
+  }
+};
   const riskLevel =
     lastPrediction?.risk_level || getRiskLevel(lastPrediction?.prediction);
 
