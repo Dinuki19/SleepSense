@@ -23,35 +23,48 @@ async def signup(user: UserCreate):
         "name": user.name,
         "email": user.email,
         "password": hash_password(user.password),
+        "role": "user",   # ✅ ADD THIS (default role)
         "created_at": datetime.utcnow()
     }
 
     await users_collection.insert_one(new_user)
 
     return {
-    "message": "User created successfully",
-    "username": user.name
+        "message": "User created successfully",
+        "username": user.name
     }
+
 
 # ----------------- LOGIN -----------------
 @router.post("/login")
 async def login(user: UserLogin):
     users_collection = get_users_collection()
     db_user = await users_collection.find_one({"email": user.email})
+
     if not db_user:
         raise HTTPException(status_code=401, detail="User not found")
+
     if not verify_password(user.password, db_user["password"]):
         raise HTTPException(status_code=401, detail="Incorrect password")
 
     token_data = {
         "sub": str(db_user["_id"]),
         "email": db_user["email"],
-        "name": db_user["name"]
+        "name": db_user["name"],
+        "role": db_user.get("role", "user")   # ✅ ADD THIS (VERY IMPORTANT)
     }
-    token = create_access_token(token_data)
-    return {"token": token, "token_type": "bearer", "username": db_user["name"]}
 
-# Get user profile
+    token = create_access_token(token_data)
+
+    return {
+        "token": token,
+        "token_type": "bearer",
+        "username": db_user["name"],
+        "role": db_user.get("role", "user")   # ✅ OPTIONAL (frontend use)
+    }
+
+
+# ----------------- GET USER PROFILE -----------------
 @router.get("/me")
 async def get_profile(user: dict = Depends(get_current_user)):
     users_collection = get_users_collection()
@@ -66,8 +79,10 @@ async def get_profile(user: dict = Depends(get_current_user)):
     return {
         "name": db_user["name"],
         "email": db_user["email"],
+        "role": db_user.get("role", "user"),   # ✅ ADD THIS
         "created_at": db_user["created_at"]
     }
+
 
 # ----------------- RESET PASSWORD -----------------
 @router.put("/reset-password")
@@ -87,6 +102,7 @@ async def reset_password(data: dict):
     )
 
     return {"message": "Password reset successfully"}
+
 
 # ----------------- DELETE ACCOUNT -----------------
 @router.delete("/delete-account")

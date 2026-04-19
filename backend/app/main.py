@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.predict import router as predict_router
 from app.routes.auth_routes import router as auth_router
+from app.routes.admin_routes import router as admin_router
 
 app = FastAPI(title="SleepSense Prediction API")
 
@@ -22,3 +23,6 @@ app.include_router(auth_router, prefix="/auth", tags=["auth"])
 
 # Predict routes
 app.include_router(predict_router, prefix="/predict", tags=["predict"])
+
+# Admin routes
+app.include_router(admin_router)

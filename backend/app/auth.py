@@ -38,3 +38,12 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     if not payload or "sub" not in payload:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
     return payload
+
+# Admin dependency 
+def get_current_admin(user: dict = Depends(get_current_user)):
+    if user.get("role") != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin access required"
+        )
+    return user
