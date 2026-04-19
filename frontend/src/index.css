@@ -7,6 +7,18 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior: none; 
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 /* =========================
    ROOT VARIABLES
 ========================= */
@@ -38,14 +50,20 @@
    BODY
 ========================= */
 body {
-  background:#e9eef3;;
+  background: #e9eef3;
   min-height: 100vh;
+
+  display: flex;              
+  flex-direction: column;    
 }
 
 /* Root container */
 #root {
   width: 100%;
   min-height: 100vh;
+
+  display: flex;              /* ADD */
+  flex-direction: column;     /* ADD */
 }
 
 /* =========================

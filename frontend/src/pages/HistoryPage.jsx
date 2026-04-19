@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import API from "../api/api";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/HistoryPage.css";
 
 import {
@@ -106,7 +104,7 @@ function HistoryPage() {
 
   return (
     <>
-      <Header />
+      
 
       <div className="history-container">
         <div className="history-hero">
@@ -255,7 +253,7 @@ function HistoryPage() {
         </div>
       </div>
 
-      <Footer />
+     
     </>
   );
 }

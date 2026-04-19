@@ -1,6 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/ResultPage.css";
 
 function SleepApneaPage() {
@@ -26,7 +24,7 @@ function SleepApneaPage() {
 
   return (
     <div className="rp-page rp-page--apnea">
-      <Header />
+      
 
       <div className="rp-container">
 
@@ -105,7 +103,7 @@ function SleepApneaPage() {
 
       </div>
 
-      <Footer />
+      
     </div>
   );
 }

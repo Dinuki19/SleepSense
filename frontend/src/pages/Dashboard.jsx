@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/DashboardPage.css";
 import API from "../api/api";
 import { jwtDecode } from "jwt-decode";
@@ -125,7 +123,7 @@ function DashboardPage() {
 
   return (
     <div className="db-page">
-      <Header />
+     
 
       <div className="db-layout">
 
@@ -295,7 +293,7 @@ function DashboardPage() {
 
       </div>
 
-      <Footer />
+     
     </div>
   );
 }

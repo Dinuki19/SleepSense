@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/SignupPage.css";
 import API from "../api/api";
 
@@ -107,7 +105,7 @@ function SignupPage() {
 
   return (
     <div className="signup-page">
-      <Header />
+      
 
       <div className="signup-container">
         <div className="signup-card">
@@ -174,7 +172,7 @@ function SignupPage() {
         </div>
       </div>
 
-      <Footer />
+      
     </div>
   );
 }

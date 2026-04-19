@@ -1,8 +1,6 @@
 import { useState } from "react";
 import API from "../api/api";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/ForgotPasswordPage.css";
 
 function ForgotPasswordPage() {
@@ -32,7 +30,7 @@ function ForgotPasswordPage() {
 
   return (
     <div className="forgot-page">
-      <Header />
+      
 
       <div className="forgot-container">
         <div className="forgot-card">
@@ -61,7 +59,7 @@ function ForgotPasswordPage() {
         </div>
       </div>
 
-      <Footer />
+      
     </div>
   );
 }

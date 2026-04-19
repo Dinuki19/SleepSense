@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/SleepPredictionPage.css";
 
 function SleepPredictionPage() {
@@ -87,7 +85,7 @@ function SleepPredictionPage() {
 
   return (
     <div className="sleep-prediction-page">
-      <Header />
+      
 
       <div className="sleep-form-container">
         <form onSubmit={handleSubmit}>
@@ -258,7 +256,7 @@ function SleepPredictionPage() {
         </form>
       </div>
 
-      <Footer />
+      
     </div>
   );
 }

@@ -1,6 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/ResultPage.css";
 
 function HealthyPage() {
@@ -15,7 +13,7 @@ function HealthyPage() {
 
   return (
     <div className="rp-page rp-page--healthy">
-      <Header />
+      
 
       <div className="rp-container">
 
@@ -93,7 +91,6 @@ function HealthyPage() {
 
       </div>
 
-      <Footer />
     </div>
   );
 }

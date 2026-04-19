@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import illustrationLeft from "../assets/Landing_illustration.svg";
 import illustrationRight from "../assets/Sleep.svg";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/LandingPage.css";
 import {
   Moon,
@@ -104,7 +102,7 @@ function LandingPage() {
 
   return (
     <div className="landing-root">
-      <Header />
+      
 
       {/* Hero Section */}
       <section className="hero">
@@ -277,7 +275,7 @@ function LandingPage() {
 
       </main>
 
-      <Footer />
+     
     </div>
   );
 }

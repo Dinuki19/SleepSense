@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/api";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/PredictionDetail.css";
 
 function PredictionDetail() {
@@ -46,23 +44,13 @@ function PredictionDetail() {
 
   if (loading)
     return (
-      <>
-        <Header />
-        <div className="loading-screen">
-          <div className="loading-spinner" />
-          <p>Loading prediction...</p>
-        </div>
-        <Footer />
-      </>
+      <div className="loading-screen">
+        <div className="loading-spinner" />
+        <p>Loading prediction...</p>
+      </div>
     );
 
-  if (!prediction)
-    return (
-      <>
-        <Header />
-        <Footer />
-      </>
-    );
+  if (!prediction) return null;
 
   const { prediction: result, input, timestamp } = prediction;
 
@@ -121,55 +109,49 @@ function PredictionDetail() {
   const predClass = getPredictionClass();
 
   return (
-    <>
-      <Header />
+    <div className="pd-page">
+      <div className="pd-container">
 
-      <div className="pd-page">
-        <div className="pd-container">
-
-          {/* Result Banner */}
-          <div className={`pd-banner pd-banner--${predClass}`}>
-            <div className="pd-banner__icon">{getBannerIcon()}</div>
-            <div className="pd-banner__text">
-              <h1 className="pd-banner__title">{getDisplayLabel()}</h1>
-              <p className="pd-banner__sub">{getBadgeLabel()}</p>
-            </div>
+        {/* Result Banner */}
+        <div className={`pd-banner pd-banner--${predClass}`}>
+          <div className="pd-banner__icon">{getBannerIcon()}</div>
+          <div className="pd-banner__text">
+            <h1 className="pd-banner__title">{getDisplayLabel()}</h1>
+            <p className="pd-banner__sub">{getBadgeLabel()}</p>
           </div>
-
-          {/* Timestamp */}
-          <div className="pd-timestamp">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-            {new Date(timestamp).toLocaleString()}
-          </div>
-
-          {/* Inputs */}
-          {inputEntries.length > 0 && (
-            <>
-              <p className="pd-section-label">User inputs</p>
-              <div className="pd-card pd-inputs-grid">
-                {inputEntries.map(([key, value]) => (
-                  <div key={key} className="pd-input-item">
-                    <span className="pd-input-key">{key.replace(/_/g, " ")}</span>
-                    <span className="pd-input-val">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Back Button */}
-          <button className="pd-back-fab" onClick={() => navigate(-1)}>
-            ← Back to Predictions
-          </button>
-
         </div>
-      </div>
 
-      <Footer />
-    </>
+        {/* Timestamp */}
+        <div className="pd-timestamp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          {new Date(timestamp).toLocaleString()}
+        </div>
+
+        {/* Inputs */}
+        {inputEntries.length > 0 && (
+          <>
+            <p className="pd-section-label">User inputs</p>
+            <div className="pd-card pd-inputs-grid">
+              {inputEntries.map(([key, value]) => (
+                <div key={key} className="pd-input-item">
+                  <span className="pd-input-key">{key.replace(/_/g, " ")}</span>
+                  <span className="pd-input-val">{value}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Back Button */}
+        <button className="pd-back-fab" onClick={() => navigate(-1)}>
+          ← Back to Predictions
+        </button>
+
+      </div>
+    </div>
   );
 }
 

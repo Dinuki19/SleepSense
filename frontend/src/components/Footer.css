@@ -3,5 +3,6 @@
   padding: 20px;
   background: rgba(221, 238, 242, 0.91);
   color: #041228;
-  margin-top: 0%;
+
+  margin-top: auto;   /* 🔥 THIS FIXES FOOTER POSITION */
 }

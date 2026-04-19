@@ -162,10 +162,9 @@
   font-weight: 500;
 }
 
-/* ── Floating back button ── */
 .pd-back-fab {
   display: block;
-  margin: 2.5rem auto 1rem; /* pushes it lower + centers it */
+  margin: 2.5rem auto 1rem;
   background: #185fa5;
   color: #ffffff;
   border: none;
@@ -182,11 +181,11 @@
 .pd-back-fab:hover {
   background: #0c447c;
   box-shadow: 0 6px 18px rgba(24, 95, 165, 0.45);
-  transform: translateX(-50%) translateY(-2px);
+  transform: translateY(-2px);
 }
 
 .pd-back-fab:active {
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
 
 /* ── Mobile ── */

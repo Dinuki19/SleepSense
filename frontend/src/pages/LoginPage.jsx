@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/LoginPage.css";
 import API from "../api/api";
 
@@ -73,7 +71,7 @@ navigate("/dashboard");
 
   return (
     <div className="login-page">
-      <Header />
+      
 
       <div className="login-container">
         <div className="login-card">
@@ -121,7 +119,7 @@ navigate("/dashboard");
         </div>
       </div>
 
-      <Footer />
+      
     </div>
   );
 }

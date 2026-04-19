@@ -1,6 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import "../styles/ResultPage.css";
 
 function InsomniaPage() {
@@ -28,7 +26,7 @@ function InsomniaPage() {
 
   return (
     <div className="rp-page rp-page--insomnia">
-      <Header />
+      
 
       <div className="rp-container">
 
@@ -107,7 +105,7 @@ function InsomniaPage() {
 
       </div>
 
-      <Footer />
+      
     </div>
   );
 }
