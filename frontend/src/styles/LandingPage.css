@@ -193,6 +193,21 @@ body {
   transform: translateY(-2px);
 }
 
+.btn--admin {
+  background: #4f6ef7;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  margin-left: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn--admin:hover {
+  background: #3a59e0;
+}
+
 /* ═══════════════════════════════════════════════════
    MAIN BODY — light
    ═══════════════════════════════════════════════════ */

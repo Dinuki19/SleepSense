@@ -17,6 +17,10 @@ import PredictionDetail from "./pages/PredictionDetail";
 import HistoryPage from "./pages/HistoryPage";
 import ProfilePage from "./pages/ProfilePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import AdminLogin from "./admin/pages/AdminLogin";
+import AdminDashboard from "./admin/pages/AdminDashboard";
+import Users from "./admin/pages/Users";
+import Predictions from "./admin/pages/Predictions";
 
 function App() {
   return (
@@ -40,6 +44,10 @@ function App() {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/predictions" element={<Predictions />} />
         </Routes>
       </div>
 

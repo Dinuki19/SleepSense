@@ -147,6 +147,13 @@ function LandingPage() {
             >
               Login
             </button>
+              <button
+    className="btn btn--admin"
+    onClick={() => navigate("/admin")}
+  >
+    Admin Login
+  </button>
+
           </div>
         </div>
 

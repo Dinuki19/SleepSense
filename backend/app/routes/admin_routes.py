@@ -54,17 +54,18 @@ async def get_all_predictions(admin: dict = Depends(get_current_admin)):
     return predictions
 
 
-# ----------------- DASHBOARD STATS -----------------
+# ----------------- DASHBOARD STATS (UPDATED FOR CHARTS) -----------------
 @router.get("/stats")
 async def get_dashboard_stats(admin: dict = Depends(get_current_admin)):
     users_collection = get_users_collection()
     predictions_collection = get_predictions_collection()
 
+    # ----------------- BASIC COUNTS -----------------
     total_users = await users_collection.count_documents({})
     total_predictions = await predictions_collection.count_documents({})
 
-    # Group by prediction label
-    pipeline = [
+    # ----------------- PREDICTION DISTRIBUTION -----------------
+    prediction_pipeline = [
         {
             "$group": {
                 "_id": "$prediction",
@@ -73,15 +74,60 @@ async def get_dashboard_stats(admin: dict = Depends(get_current_admin)):
         }
     ]
 
-    disorder_stats = []
-    async for item in predictions_collection.aggregate(pipeline):
-        disorder_stats.append({
+    prediction_stats = []
+    async for item in predictions_collection.aggregate(prediction_pipeline):
+        prediction_stats.append({
             "label": item["_id"],
             "count": item["count"]
         })
 
+    # ----------------- RISK LEVEL DISTRIBUTION -----------------
+    risk_pipeline = [
+        {
+            "$group": {
+                "_id": "$risk_level",
+                "count": {"$sum": 1}
+            }
+        }
+    ]
+
+    risk_stats = []
+    async for item in predictions_collection.aggregate(risk_pipeline):
+        risk_stats.append({
+            "label": item["_id"],
+            "count": item["count"]
+        })
+
+    # ----------------- PREDICTIONS OVER TIME -----------------
+    time_pipeline = [
+        {
+            "$group": {
+                "_id": {
+                    "$dateToString": {
+                        "format": "%Y-%m-%d",
+                        "date": "$timestamp"
+                    }
+                },
+                "count": {"$sum": 1}
+            }
+        },
+        {"$sort": {"_id": 1}}
+    ]
+
+    time_stats = []
+    async for item in predictions_collection.aggregate(time_pipeline):
+        time_stats.append({
+            "date": item["_id"],
+            "count": item["count"]
+        })
+
+    # ----------------- FINAL RESPONSE -----------------
     return {
         "total_users": total_users,
         "total_predictions": total_predictions,
-        "disorder_stats": disorder_stats
+
+        # chart data
+        "prediction_stats": prediction_stats,
+        "risk_stats": risk_stats,
+        "predictions_over_time": time_stats
     }

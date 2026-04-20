@@ -1,0 +1,15 @@
+/* Main container */
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f6fb;
+  font-family: Arial, sans-serif;
+}
+
+/* Right side content area */
+.admin-content {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+  background: #f4f6fb;
+}
