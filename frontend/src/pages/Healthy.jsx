@@ -5,7 +5,9 @@ function HealthyPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { userInput } = location.state || {};
+  // ✅ NEW: use backend result instead of userInput
+  const { result } = location.state || {};
+  const input = result?.input || {};
 
   const getExplanation = () => {
     return "Your sleep duration, stress level, and activity levels are within a healthy range.";
@@ -13,7 +15,6 @@ function HealthyPage() {
 
   return (
     <div className="rp-page rp-page--healthy">
-      
 
       <div className="rp-container">
 
@@ -34,7 +35,9 @@ function HealthyPage() {
         {/* ── Cards ── */}
         <div className="rp-card rp-card--healthy rp-animate" style={{ animationDelay: "0.05s" }}>
           <div className="rp-card__label">Overview</div>
-          <p className="rp-card__body">Great job! Your sleep patterns look healthy. Maintaining good sleep habits helps improve energy, focus, and overall well-being.</p>
+          <p className="rp-card__body">
+            Great job! Your sleep patterns look healthy. Maintaining good sleep habits helps improve energy, focus, and overall well-being.
+          </p>
         </div>
 
         <div className="rp-card rp-card--healthy rp-animate" style={{ animationDelay: "0.1s" }}>
@@ -54,34 +57,87 @@ function HealthyPage() {
         </div>
 
         <div className="rp-card rp-card--healthy rp-animate" style={{ animationDelay: "0.2s" }}>
-          <div className="rp-card__label">Keep It Up</div>
-          <ul className="rp-list rp-list--healthy">
-            <li>Maintain your current routine</li>
-            <li>Exercise regularly</li>
-            <li>Manage stress effectively</li>
-            <li>Keep consistent sleep timing</li>
-          </ul>
-        </div>
+  <div className="rp-card__label">Keep It Up</div>
 
+  <ul className="rp-list rp-list--healthy">
+    {result?.recommendations?.length > 0 ? (
+      result.recommendations.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))
+    ) : (
+      <>
+        <li>Maintain your current routine</li>
+        <li>Exercise regularly</li>
+        <li>Manage stress effectively</li>
+        <li>Keep consistent sleep timing</li>
+      </>
+    )}
+  </ul>
+</div>
+
+        {/* ── UPDATED INPUT SUMMARY ── */}
         <div className="rp-card rp-card--healthy rp-animate" style={{ animationDelay: "0.25s" }}>
-          <div className="rp-card__label">Your Input Summary</div>
+          <div className="rp-card__label">Your Health Insights</div>
+
           <div className="rp-summary-grid">
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Sleep Duration</span>
-              <span className="rp-summary-val rp-summary-val--healthy">{userInput?.Sleep_Duration ?? "-"} hrs</span>
+              <span className="rp-summary-val rp-summary-val--healthy">
+                {input["Sleep Duration (hours)"] ?? "-"} hrs
+              </span>
             </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Sleep Quality</span>
+              <span className="rp-summary-val rp-summary-val--healthy">
+                {input["Quality of Sleep (scale: 1-10)"] ?? "-"} /10
+              </span>
+            </div>
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Stress Level</span>
-              <span className="rp-summary-val rp-summary-val--healthy">{userInput?.Stress_Level ?? "-"}</span>
+              <span className="rp-summary-val rp-summary-val--healthy">
+                {input["Stress Level (scale: 1-10)"] ?? "-"} /10
+              </span>
             </div>
-            <div className="rp-summary-item">
-              <span className="rp-summary-key">Quality of Sleep</span>
-              <span className="rp-summary-val rp-summary-val--healthy">{userInput?.Quality_of_Sleep ?? "-"}</span>
-            </div>
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Physical Activity</span>
-              <span className="rp-summary-val rp-summary-val--healthy">{userInput?.Physical_Activity_Level ?? "-"} min/day</span>
+              <span className="rp-summary-val rp-summary-val--healthy">
+                {input["Physical Activity Level (minutes/day)"] ?? "-"} min/day
+              </span>
             </div>
+
+            {/* Optional but useful extras */}
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Heart Rate</span>
+              <span className="rp-summary-val">
+                {input["Heart Rate (bpm)"] ?? "-"} bpm
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Daily Steps</span>
+              <span className="rp-summary-val">
+                {input["Daily Steps"] ?? "-"}
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Blood Pressure</span>
+              <span className="rp-summary-val">
+                {input["Systolic"] ?? "-"} / {input["Diastolic"] ?? "-"}
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">BMI Category</span>
+              <span className="rp-summary-val">
+                {input["BMI Category"] ?? "-"}
+              </span>
+            </div>
+
           </div>
         </div>
 

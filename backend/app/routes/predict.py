@@ -8,7 +8,7 @@ from bson import ObjectId
 
 router = APIRouter()
 
-# ----------------- Helper: Risk Level Mapping -----------------
+
 def get_risk_level(prediction: str):
     if prediction == "Sleep Apnea":
         return "High"
@@ -18,13 +18,14 @@ def get_risk_level(prediction: str):
         return "Low"
     return "Unknown"
 
-# ----------------- AI Prediction + Save -----------------
+
 @router.post("/")
 async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
     try:
-        prediction_label, input_df = make_prediction(data)
 
-        # ✅ FIXED: use "is None" not "if not"
+        # 🆕 UPDATED UNPACKING
+        prediction_label, input_df, recommendations = make_prediction(data)
+
         if prediction_label is None:
             raise HTTPException(status_code=500, detail="Prediction returned None")
 
@@ -36,6 +37,7 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
             "input": input_df.to_dict(orient="records")[0],
             "prediction": prediction_label,
             "risk_level": risk_level,
+            "recommendations": recommendations,  # 🆕 ADDED
             "timestamp": datetime.utcnow() + timedelta(hours=5, minutes=30)
         }
 
@@ -45,18 +47,16 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
 
         return prediction_doc
 
-    # ✅ FIXED: re-raise HTTP exceptions before catching generic ones
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
 
 
-# ----------------- Fetch recent predictions for user -----------------
 @router.get("/predictions")
-async def get_user_predictions(user: dict = Depends(get_current_user), limit: int = 5):
+async def get_user_predictions(user: dict = Depends(get_current_user)):
     coll = get_predictions_collection()
-    preds_cursor = coll.find({"user_id": user["sub"]}).sort("timestamp", -1).limit(limit)
+    preds_cursor = coll.find({"user_id": user["sub"]}).sort("timestamp", -1)
 
     predictions = []
     async for pred in preds_cursor:
@@ -66,10 +66,10 @@ async def get_user_predictions(user: dict = Depends(get_current_user), limit: in
     return predictions
 
 
-# ----------------- Delete a prediction -----------------
 @router.delete("/prediction/{id}")
 async def delete_prediction(id: str, user: dict = Depends(get_current_user)):
     coll = get_predictions_collection()
+
     try:
         obj_id = ObjectId(id)
     except Exception:
@@ -83,30 +83,29 @@ async def delete_prediction(id: str, user: dict = Depends(get_current_user)):
     return {"message": "Prediction deleted successfully"}
 
 
-# ----------------- Fetch single prediction for view -----------------
 @router.get("/prediction/{id}")
 async def get_prediction(id: str, user: dict = Depends(get_current_user)):
     coll = get_predictions_collection()
+
     try:
         obj_id = ObjectId(id)
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid ID format")
 
     pred = await coll.find_one({"_id": obj_id, "user_id": user["sub"]})
+
     if not pred:
         raise HTTPException(status_code=404, detail="Prediction not found")
 
     pred["_id"] = str(pred["_id"])
     return pred
 
-# ----------------- FULL HISTORY (FOR HISTORY PAGE) -----------------
+
 @router.get("/history")
 async def get_prediction_history(user: dict = Depends(get_current_user)):
     coll = get_predictions_collection()
 
-    preds_cursor = coll.find(
-        {"user_id": user["sub"]}
-    ).sort("timestamp", -1)  # NO LIMIT
+    preds_cursor = coll.find({"user_id": user["sub"]}).sort("timestamp", -1)
 
     predictions = []
     async for pred in preds_cursor:

@@ -5,18 +5,23 @@ function InsomniaPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { userInput } = location.state || {};
+  // ✅ NEW: get full backend response
+  const { result } = location.state || {};
+  const input = result?.input || {};
 
   const getExplanation = () => {
     let reasons = [];
 
-    if (userInput?.Sleep_Duration < 6)
+    if (input["Sleep Duration (hours)"] < 6)
       reasons.push("Low sleep duration");
-    if (userInput?.Stress_Level > 7)
+
+    if (input["Stress Level (scale: 1-10)"] > 7)
       reasons.push("High stress level");
-    if (userInput?.Quality_of_Sleep < 5)
+
+    if (input["Quality of Sleep (scale: 1-10)"] < 5)
       reasons.push("Poor sleep quality");
-    if (userInput?.Physical_Activity_Level < 30)
+
+    if (input["Physical Activity Level (minutes/day)"] < 30)
       reasons.push("Low physical activity");
 
     return reasons.length > 0
@@ -26,7 +31,6 @@ function InsomniaPage() {
 
   return (
     <div className="rp-page rp-page--insomnia">
-      
 
       <div className="rp-container">
 
@@ -68,34 +72,88 @@ function InsomniaPage() {
         </div>
 
         <div className="rp-card rp-card--insomnia rp-animate" style={{ animationDelay: "0.2s" }}>
-          <div className="rp-card__label">Recommendations</div>
-          <ul className="rp-list rp-list--insomnia">
-            <li>Maintain a consistent sleep schedule</li>
-            <li>Avoid screens before bedtime</li>
-            <li>Practice relaxation techniques</li>
-            <li>Reduce caffeine intake</li>
-          </ul>
-        </div>
+  <div className="rp-card__label">Recommendations</div>
 
+  <ul className="rp-list rp-list--insomnia">
+    {result?.recommendations?.length > 0 ? (
+      result.recommendations.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))
+    ) : (
+      <>
+        <li>Maintain a consistent sleep schedule</li>
+        <li>Avoid screens before bedtime</li>
+        <li>Practice relaxation techniques</li>
+        <li>Reduce caffeine intake</li>
+      </>
+    )}
+  </ul>
+</div>
+
+        {/* ── Updated Summary ── */}
         <div className="rp-card rp-card--insomnia rp-animate" style={{ animationDelay: "0.25s" }}>
-          <div className="rp-card__label">Your Input Summary</div>
+          <div className="rp-card__label">Your Health Insights</div>
+
           <div className="rp-summary-grid">
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Sleep Duration</span>
-              <span className="rp-summary-val rp-summary-val--insomnia">{userInput?.Sleep_Duration ?? "-"} hrs</span>
+              <span className="rp-summary-val rp-summary-val--insomnia">
+                {input["Sleep Duration (hours)"] ?? "-"} hrs
+              </span>
             </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Sleep Quality</span>
+              <span className="rp-summary-val rp-summary-val--insomnia">
+                {input["Quality of Sleep (scale: 1-10)"] ?? "-"} /10
+              </span>
+            </div>
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Stress Level</span>
-              <span className="rp-summary-val rp-summary-val--insomnia">{userInput?.Stress_Level ?? "-"}</span>
+              <span className="rp-summary-val rp-summary-val--insomnia">
+                {input["Stress Level (scale: 1-10)"] ?? "-"} /10
+              </span>
             </div>
-            <div className="rp-summary-item">
-              <span className="rp-summary-key">Quality of Sleep</span>
-              <span className="rp-summary-val rp-summary-val--insomnia">{userInput?.Quality_of_Sleep ?? "-"}</span>
-            </div>
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Physical Activity</span>
-              <span className="rp-summary-val rp-summary-val--insomnia">{userInput?.Physical_Activity_Level ?? "-"} min/day</span>
+              <span className="rp-summary-val rp-summary-val--insomnia">
+                {input["Physical Activity Level (minutes/day)"] ?? "-"} min/day
+              </span>
             </div>
+
+            {/* Optional insights (VERY GOOD for your project) */}
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Heart Rate</span>
+              <span className="rp-summary-val">
+                {input["Heart Rate (bpm)"] ?? "-"} bpm
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Daily Steps</span>
+              <span className="rp-summary-val">
+                {input["Daily Steps"] ?? "-"}
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Blood Pressure</span>
+              <span className="rp-summary-val">
+                {input["Systolic"] ?? "-"} / {input["Diastolic"] ?? "-"}
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">BMI Category</span>
+              <span className="rp-summary-val">
+                {input["BMI Category"] ?? "-"}
+              </span>
+            </div>
+
           </div>
         </div>
 
@@ -105,7 +163,6 @@ function InsomniaPage() {
 
       </div>
 
-      
     </div>
   );
 }

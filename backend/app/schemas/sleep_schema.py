@@ -7,11 +7,12 @@ class SleepInput(BaseModel):
     Age: int
     Occupation: str
     Sleep_Duration: float
-    Quality_of_Sleep: float
     Physical_Activity_Level: int
-    Stress_Level: int
     Height: float
     Weight: float
+
+    Quality_of_Sleep: Optional[float] = None
+    Stress_Level: Optional[int] = None
 
     # Optional features
     Heart_Rate: Optional[int] = None

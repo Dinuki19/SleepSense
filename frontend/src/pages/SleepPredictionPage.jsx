@@ -12,9 +12,7 @@ function SleepPredictionPage() {
     Occupation: "",
     Other_Occupation: "",
     Sleep_Duration: "",
-    Quality_of_Sleep: "",
     Physical_Activity_Level: "",
-    Stress_Level: "",
     Height: "",
     Weight: "",
     Heart_Rate: "",
@@ -49,9 +47,7 @@ function SleepPredictionPage() {
           ? formData.Other_Occupation
           : formData.Occupation,
       Sleep_Duration: Number(formData.Sleep_Duration),
-      Quality_of_Sleep: Number(formData.Quality_of_Sleep),
       Physical_Activity_Level: Number(formData.Physical_Activity_Level),
-      Stress_Level: Number(formData.Stress_Level),
       Height: Number(formData.Height),
       Weight: Number(formData.Weight),
       Heart_Rate: formData.Heart_Rate ? Number(formData.Heart_Rate) : null,
@@ -66,11 +62,11 @@ function SleepPredictionPage() {
       const prediction = result.prediction?.toLowerCase();
 
       if (prediction === "insomnia") {
-        navigate("/insomnia", { state: { userInput: formData } });
+        navigate("/insomnia", { state: { result } });
       } else if (prediction === "sleep apnea") {
-        navigate("/sleep-apnea", { state: { userInput: formData } });
+        navigate("/sleep-apnea", { state: { result } });
       } else {
-        navigate("/healthy", { state: { userInput: formData } });
+        navigate("/healthy", { state: { result } });
       }
     } catch (err) {
       console.error("Prediction failed:", err);
@@ -157,16 +153,7 @@ function SleepPredictionPage() {
             required
           />
 
-          <input
-            type="number"
-            name="Quality_of_Sleep"
-            placeholder="Quality of Sleep (1-10)"
-            value={formData.Quality_of_Sleep}
-            onChange={handleChange}
-            min="1"
-            max="10"
-            required
-          />
+          
 
           <input
             type="number"
@@ -178,16 +165,6 @@ function SleepPredictionPage() {
             required
           />
 
-          <input
-            type="number"
-            name="Stress_Level"
-            placeholder="Stress Level (1-10)"
-            value={formData.Stress_Level}
-            onChange={handleChange}
-            min="1"
-            max="10"
-            required
-          />
 
           {/* Body */}
           <input

@@ -5,16 +5,20 @@ function SleepApneaPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { userInput } = location.state || {};
+  // ✅ FIX: use backend result instead of userInput
+  const { result } = location.state || {};
+  const input = result?.input || {};
 
   const getExplanation = () => {
     let reasons = [];
 
-    if (userInput?.Sleep_Duration < 5)
+    if (input["Sleep Duration (hours)"] < 5)
       reasons.push("Very low sleep duration");
-    if (userInput?.Stress_Level > 8)
+
+    if (input["Stress Level (scale: 1-10)"] > 8)
       reasons.push("High stress level");
-    if (userInput?.Physical_Activity_Level < 20)
+
+    if (input["Physical Activity Level (minutes/day)"] < 20)
       reasons.push("Very low physical activity");
 
     return reasons.length > 0
@@ -24,7 +28,6 @@ function SleepApneaPage() {
 
   return (
     <div className="rp-page rp-page--apnea">
-      
 
       <div className="rp-container">
 
@@ -65,35 +68,88 @@ function SleepApneaPage() {
           <p className="rp-card__body">{getExplanation()}</p>
         </div>
 
-        <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.2s" }}>
-          <div className="rp-card__label">Recommendations</div>
-          <ul className="rp-list rp-list--apnea">
-            <li>Consult a medical professional</li>
-            <li>Maintain a healthy weight</li>
-            <li>Avoid alcohol before sleep</li>
-            <li>Sleep on your side instead of your back</li>
-          </ul>
-        </div>
+      <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.2s" }}>
+  <div className="rp-card__label">Recommendations</div>
 
+  <ul className="rp-list rp-list--apnea">
+    {result?.recommendations?.length > 0 ? (
+      result.recommendations.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))
+    ) : (
+      <>
+        <li>Consult a medical professional</li>
+        <li>Maintain a healthy weight</li>
+        <li>Avoid alcohol before sleep</li>
+        <li>Sleep on your side instead of your back</li>
+      </>
+    )}
+  </ul>
+</div>
+
+        {/* ── UPDATED SUMMARY ── */}
         <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.25s" }}>
-          <div className="rp-card__label">Your Input Summary</div>
+          <div className="rp-card__label">Your Health Insights</div>
+
           <div className="rp-summary-grid">
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Sleep Duration</span>
-              <span className="rp-summary-val rp-summary-val--apnea">{userInput?.Sleep_Duration ?? "-"} hrs</span>
+              <span className="rp-summary-val rp-summary-val--apnea">
+                {input["Sleep Duration (hours)"] ?? "-"} hrs
+              </span>
             </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Sleep Quality</span>
+              <span className="rp-summary-val rp-summary-val--apnea">
+                {input["Quality of Sleep (scale: 1-10)"] ?? "-"} /10
+              </span>
+            </div>
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Stress Level</span>
-              <span className="rp-summary-val rp-summary-val--apnea">{userInput?.Stress_Level ?? "-"}</span>
+              <span className="rp-summary-val rp-summary-val--apnea">
+                {input["Stress Level (scale: 1-10)"] ?? "-"} /10
+              </span>
             </div>
-            <div className="rp-summary-item">
-              <span className="rp-summary-key">Quality of Sleep</span>
-              <span className="rp-summary-val rp-summary-val--apnea">{userInput?.Quality_of_Sleep ?? "-"}</span>
-            </div>
+
             <div className="rp-summary-item">
               <span className="rp-summary-key">Physical Activity</span>
-              <span className="rp-summary-val rp-summary-val--apnea">{userInput?.Physical_Activity_Level ?? "-"} min/day</span>
+              <span className="rp-summary-val rp-summary-val--apnea">
+                {input["Physical Activity Level (minutes/day)"] ?? "-"} min/day
+              </span>
             </div>
+
+            {/* Optional extras (very good for project marks) */}
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Heart Rate</span>
+              <span className="rp-summary-val">
+                {input["Heart Rate (bpm)"] ?? "-"} bpm
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Daily Steps</span>
+              <span className="rp-summary-val">
+                {input["Daily Steps"] ?? "-"}
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">Blood Pressure</span>
+              <span className="rp-summary-val">
+                {input["Systolic"] ?? "-"} / {input["Diastolic"] ?? "-"}
+              </span>
+            </div>
+
+            <div className="rp-summary-item">
+              <span className="rp-summary-key">BMI Category</span>
+              <span className="rp-summary-val">
+                {input["BMI Category"] ?? "-"}
+              </span>
+            </div>
+
           </div>
         </div>
 
@@ -103,7 +159,6 @@ function SleepApneaPage() {
 
       </div>
 
-      
     </div>
   );
 }
