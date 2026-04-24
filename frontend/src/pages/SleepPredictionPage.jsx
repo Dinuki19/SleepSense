@@ -6,6 +6,9 @@ import "../styles/SleepPredictionPage.css";
 function SleepPredictionPage() {
   const navigate = useNavigate();
 
+  // ✅ ADDED loading state (ONLY NEW CHANGE)
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     Gender: "",
     Age: "",
@@ -32,10 +35,16 @@ function SleepPredictionPage() {
     e.preventDefault();
     setError("");
 
+    // ✅ PREVENT MULTIPLE CLICKS
+    if (loading) return;
+
+    setLoading(true);
+
     const token = localStorage.getItem("token");
     if (!token) {
       alert("You are not logged in. Please log in first.");
       navigate("/login");
+      setLoading(false);
       return;
     }
 
@@ -70,19 +79,21 @@ function SleepPredictionPage() {
       }
     } catch (err) {
       console.error("Prediction failed:", err);
+
       if (err.response?.status === 401) {
         alert("Session expired. Please log in again.");
         navigate("/login");
       } else {
         setError("Prediction failed. Please check your inputs and try again.");
       }
+    } finally {
+      // ✅ ALWAYS RESET LOADING
+      setLoading(false);
     }
   };
 
   return (
     <div className="sleep-prediction-page">
-      
-
       <div className="sleep-form-container">
         <form onSubmit={handleSubmit}>
           <h2>Sleep Disorder Prediction</h2>
@@ -153,8 +164,6 @@ function SleepPredictionPage() {
             required
           />
 
-          
-
           <input
             type="number"
             name="Physical_Activity_Level"
@@ -164,7 +173,6 @@ function SleepPredictionPage() {
             min="0"
             required
           />
-
 
           {/* Body */}
           <input
@@ -229,11 +237,12 @@ function SleepPredictionPage() {
             max="200"
           />
 
-          <button type="submit">Predict</button>
+          {/* ✅ UPDATED BUTTON */}
+          <button type="submit" disabled={loading}>
+            {loading ? "Predicting..." : "Predict"}
+          </button>
         </form>
       </div>
-
-      
     </div>
   );
 }

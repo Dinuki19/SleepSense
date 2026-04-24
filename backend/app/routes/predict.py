@@ -6,6 +6,9 @@ from app.database.db import get_predictions_collection
 from app.auth import get_current_user
 from bson import ObjectId
 
+from app.services.llm_service import generate_llm_recommendations
+import asyncio  # ✅ ADD ONLY THIS
+
 router = APIRouter()
 
 
@@ -23,7 +26,9 @@ def get_risk_level(prediction: str):
 async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
     try:
 
-        # 🆕 UPDATED UNPACKING
+        # ---------------------------
+        # 1. ML MODEL (UNCHANGED)
+        # ---------------------------
         prediction_label, input_df, recommendations = make_prediction(data)
 
         if prediction_label is None:
@@ -31,13 +36,36 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
 
         risk_level = get_risk_level(prediction_label)
 
+        # default always ML recommendations
+        final_recommendations = recommendations
+
+        # ---------------------------
+        # 2. LLM (FIXED: NON-BLOCKING)
+        # ---------------------------
+        try:
+            llm_recs = await asyncio.to_thread(
+                generate_llm_recommendations,
+                prediction_label,
+                input_df.to_dict(orient="records")[0]
+            )
+
+            # only replace if valid
+            if isinstance(llm_recs, list) and len(llm_recs) > 0:
+                final_recommendations = llm_recs
+
+        except Exception as e:
+            print("LLM failed, using rule-based fallback:", e)
+
+        # ---------------------------
+        # 3. SAVE RESULT (UNCHANGED)
+        # ---------------------------
         prediction_doc = {
             "user_id": user["sub"],
             "user_name": user.get("name"),
             "input": input_df.to_dict(orient="records")[0],
             "prediction": prediction_label,
             "risk_level": risk_level,
-            "recommendations": recommendations,  # 🆕 ADDED
+            "recommendations": final_recommendations,
             "timestamp": datetime.utcnow() + timedelta(hours=5, minutes=30)
         }
 
