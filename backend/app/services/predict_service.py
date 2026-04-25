@@ -61,6 +61,7 @@ def make_prediction(data: SleepInput):
             data.Physical_Activity_Level
         )
 
+    
     # 🆕 5. Sleep Quality
     sleep_quality = calculate_sleep_quality(
         data.Sleep_Duration,
@@ -77,6 +78,8 @@ def make_prediction(data: SleepInput):
         systolic,
         diastolic
     )
+
+
 
     # ✅ 7. DataFrame
     input_df = pd.DataFrame([{

@@ -6,6 +6,8 @@ from app.database.db import get_users_collection
 from app.auth import hash_password, verify_password, create_access_token
 from bson import ObjectId
 from app.auth import get_current_user
+from app.database.db import get_predictions_collection
+
 
 router = APIRouter()
 
@@ -108,12 +110,21 @@ async def reset_password(data: dict):
 @router.delete("/delete-account")
 async def delete_account(user: dict = Depends(get_current_user)):
     users_collection = get_users_collection()
+    predictions_collection = get_predictions_collection()
 
-    result = await users_collection.delete_one(
-        {"_id": ObjectId(user["sub"])}
-    )
+    user_id = user["sub"]
+
+    # ✅ STEP 1: delete related predictions
+    await predictions_collection.delete_many({
+        "user_id": user_id
+    })
+
+    # ✅ STEP 2: delete user
+    result = await users_collection.delete_one({
+        "_id": ObjectId(user_id)
+    })
 
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="User not found")
 
-    return {"message": "Account deleted successfully"}
+    return {"message": "Account and related predictions deleted successfully"}

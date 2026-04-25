@@ -44,6 +44,10 @@ function InsomniaPage() {
           <div>
             <h1 className="rp-hero__title">Insomnia Detected 😴</h1>
             <p className="rp-hero__sub">You may be experiencing insomnia based on your inputs.</p>
+            <p className="rp-warning">
+    ⚠️ This is an AI-based prediction and not a medical diagnosis.  
+    If you are having persistent sleep difficulties, please consult a healthcare professional.
+  </p>
           </div>
         </div>
 

@@ -3,6 +3,7 @@ from app.auth import get_current_admin
 from app.database.db import get_users_collection, get_predictions_collection
 from bson import ObjectId
 
+
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
 
@@ -43,8 +44,19 @@ async def delete_user(user_id: str, admin: dict = Depends(get_current_admin)):
 @router.get("/predictions")
 async def get_all_predictions(admin: dict = Depends(get_current_admin)):
     predictions_collection = get_predictions_collection()
+    users_collection = get_users_collection()
 
-    cursor = predictions_collection.find().sort("timestamp", -1)
+    # Step 1: get all existing users
+    users_cursor = users_collection.find({}, {"_id": 1})
+
+    valid_user_ids = []
+    async for user in users_cursor:
+        valid_user_ids.append(str(user["_id"]))
+
+    # Step 2: only show predictions from existing users
+    cursor = predictions_collection.find({
+        "user_id": {"$in": valid_user_ids}
+    }).sort("timestamp", -1)
 
     predictions = []
     async for pred in cursor:
@@ -60,10 +72,17 @@ async def get_dashboard_stats(admin: dict = Depends(get_current_admin)):
     users_collection = get_users_collection()
     predictions_collection = get_predictions_collection()
 
+    users_cursor = users_collection.find({}, {"_id": 1})
+
+    valid_user_ids = []
+    async for user in users_cursor:
+         valid_user_ids.append(str(user["_id"]))
+    
     # ----------------- BASIC COUNTS -----------------
     total_users = await users_collection.count_documents({})
-    total_predictions = await predictions_collection.count_documents({})
-
+    total_predictions = await predictions_collection.count_documents({
+    "user_id": {"$in": valid_user_ids}
+    })
     # ----------------- PREDICTION DISTRIBUTION -----------------
     prediction_pipeline = [
         {

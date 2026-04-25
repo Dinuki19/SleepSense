@@ -28,7 +28,7 @@ function HealthyPage() {
           </div>
           <div>
             <h1 className="rp-hero__title">You Are Healthy 🎉</h1>
-            <p className="rp-hero__sub">Your sleep patterns look great — keep it up!</p>
+            <p className="rp-hero__sub">Your sleep patterns look great , keep it up!</p>
           </div>
         </div>
 

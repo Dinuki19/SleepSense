@@ -127,6 +127,33 @@
   color: #64748b;
 }
 
+.rp-warning {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  color: #b42318;
+  opacity: 0.9;
+  position: relative;
+  padding-left: 0px;
+}
+
+/* small warning icon accent */
+.rp-warning::before {
+  
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 14px;
+  color: inherit;
+}
+
+/* subtle emphasis (not a box) */
+.rp-warning strong {
+  font-weight: 600;
+}
+
 /* ── Cards ── */
 .rp-card {
   background: #ffffff;

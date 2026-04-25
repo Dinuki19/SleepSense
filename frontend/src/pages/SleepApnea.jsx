@@ -41,6 +41,10 @@ function SleepApneaPage() {
           <div>
             <h1 className="rp-hero__title">Sleep Apnea Risk 😷</h1>
             <p className="rp-hero__sub">You may be at risk of sleep apnea based on your inputs.</p>
+            <p className="rp-warning">
+    ⚠️ This is an AI-based prediction and not a medical diagnosis.  
+    If you are having persistent sleep difficulties, please consult a healthcare professional.
+  </p>
           </div>
         </div>
 

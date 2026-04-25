@@ -179,11 +179,11 @@ function SleepPredictionPage() {
             type="number"
             step="0.01"
             name="Height"
-            placeholder="Height (m)"
+            placeholder="Height (cm)"
             value={formData.Height}
             onChange={handleChange}
-            min="0.5"
-            max="3"
+            min="50"
+            max="300"
             required
           />
 
@@ -237,9 +237,9 @@ function SleepPredictionPage() {
             max="200"
           />
 
-          {/* ✅ UPDATED BUTTON */}
-          <button type="submit" disabled={loading}>
-            {loading ? "Predicting..." : "Predict"}
+         
+        <button type="submit" disabled={loading}> 
+          {loading ? "Predicting..." : "Predict"} 
           </button>
         </form>
       </div>

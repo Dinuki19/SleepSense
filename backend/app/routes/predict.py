@@ -7,7 +7,7 @@ from app.auth import get_current_user
 from bson import ObjectId
 
 from app.services.llm_service import generate_llm_recommendations
-import asyncio  # ✅ ADD ONLY THIS
+import asyncio  
 
 router = APIRouter()
 
@@ -26,9 +26,9 @@ def get_risk_level(prediction: str):
 async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
     try:
 
-        # ---------------------------
+       
         # 1. ML MODEL (UNCHANGED)
-        # ---------------------------
+        
         prediction_label, input_df, recommendations = make_prediction(data)
 
         if prediction_label is None:
@@ -39,9 +39,9 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
         # default always ML recommendations
         final_recommendations = recommendations
 
-        # ---------------------------
-        # 2. LLM (FIXED: NON-BLOCKING)
-        # ---------------------------
+        
+        # 2. LLM 
+        
         try:
             llm_recs = await asyncio.to_thread(
                 generate_llm_recommendations,
@@ -56,9 +56,9 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
         except Exception as e:
             print("LLM failed, using rule-based fallback:", e)
 
-        # ---------------------------
+        
         # 3. SAVE RESULT (UNCHANGED)
-        # ---------------------------
+       
         prediction_doc = {
             "user_id": user["sub"],
             "user_name": user.get("name"),

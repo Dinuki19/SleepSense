@@ -266,6 +266,7 @@ function DashboardPage() {
         {/* ── RIGHT COLUMN ── */}
         <div className="db-col">
           <div className="db-info-card">
+            
             <h4>What is Sleep Disorder?</h4>
             <p>Learn about sleep disorders, their causes, and how they can affect your health.</p>
             <div className="db-video-wrapper">

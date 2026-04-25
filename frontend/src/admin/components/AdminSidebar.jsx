@@ -48,25 +48,7 @@ function AdminSidebar() {
           </svg>
           Predictions
         </NavLink>
-
-        <span className="sidebar-section-label" style={{ marginTop: "12px" }}>System</span>
-
-        <NavLink to="/admin/reports" className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-          </svg>
-          Reports
-        </NavLink>
-
-        <NavLink to="/admin/settings" className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-          </svg>
-          Settings
-        </NavLink>
-      </nav>
+        </nav>
 
       {/* Footer */}
       <div className="sidebar-footer">
