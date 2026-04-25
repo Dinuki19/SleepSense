@@ -20,7 +20,7 @@ function HistoryPage() {
   const [predictions, setPredictions] = useState([]);
   const [filter, setFilter] = useState("All");
 
-  // 📥 Load data
+  //  Load data
   useEffect(() => {
     fetchData();
   }, []);
@@ -47,7 +47,7 @@ function HistoryPage() {
     }
   };
 
-  // 📊 Summary
+  //  Summary
   const total = predictions.length;
 
   const counts = {
@@ -56,7 +56,7 @@ function HistoryPage() {
     Apnea: predictions.filter((p) => p.prediction === "Sleep Apnea").length,
   };
 
-  // 🥧 Pie chart data
+  //  Pie chart data
   const pieData = [
     { name: "Healthy", value: counts.Healthy },
     { name: "Insomnia", value: counts.Insomnia },
@@ -79,7 +79,7 @@ function HistoryPage() {
       value: p.value,
     }));
 
-  // 🔍 Filter system
+  //  Filter system
   const filtered =
     filter === "All"
       ? predictions
@@ -113,7 +113,7 @@ function HistoryPage() {
           <p className="history-subtitle">Track your sleep health patterns over time</p>
         </div>
 
-        {/* 📊 Summary */}
+        {/*  Summary */}
         <div className="summary-cards">
           <div className="card card-total">
             <span className="card-number">{total}</span>
@@ -135,7 +135,7 @@ function HistoryPage() {
 
         {/* Charts Row */}
         <div className="charts-row">
-          {/* 🥧 Pie Chart */}
+          {/*  Pie Chart */}
           <div className="chart-container">
             <h3>Prediction Distribution</h3>
             <ResponsiveContainer width="100%" height={300}>
@@ -151,7 +151,7 @@ function HistoryPage() {
             </ResponsiveContainer>
           </div>
 
-          {/* 📈 Line Chart */}
+          {/*  Line Chart */}
           <div className="chart-container">
             <h3>Prediction Type Over Time</h3>
             <ResponsiveContainer width="100%" height={300}>
@@ -195,7 +195,7 @@ function HistoryPage() {
           </div>
         </div>
 
-        {/* 🔍 Filter */}
+        {/* Filter */}
         <div className="filter-section">
           <span className="filter-label">Filter by:</span>
           <div className="filter-tabs">
@@ -215,7 +215,7 @@ function HistoryPage() {
           </div>
         </div>
 
-        {/* 📋 List */}
+        {/* Prediction List */}
         <div className="prediction-list">
           {filtered.length === 0 ? (
             <div className="empty-state">

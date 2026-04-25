@@ -439,6 +439,7 @@
 }
 
 /* ── Responsive ── */
+
 @media (max-width: 1024px) {
   .db-layout {
     grid-template-columns: 1fr;
@@ -463,5 +464,83 @@
 
   .db-hero-icon {
     display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .db-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .db-page {
+    overflow-x: hidden;
+  }
+
+  .db-welcome-text h2 {
+    font-size: 1.1rem;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 390px) {
+  .db-layout {
+    padding: 12px;
+    gap: 14px;
+  }
+
+  .db-welcome-text h2 {
+    font-size: 1.2rem;
+  }
+
+  .db-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .db-hero {
+    padding: 18px;
+  }
+
+  .db-hero-text h3 {
+    font-size: 1rem;
+  }
+
+  .db-hero-text p {
+    font-size: 12px;
+    max-width: 100%;
+  }
+
+  .db-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .db-stat {
+    padding: 14px 16px;
+  }
+
+  .db-stat-val {
+    font-size: 1.3rem;
+  }
+
+  .db-table-card {
+    overflow-x: auto;
+  }
+
+  .db-table {
+    min-width: 500px;
+  }
+
+  .db-info-card {
+    padding: 16px;
+  }
+
+  .db-video-wrapper {
+    padding-bottom: 56%;
   }
 }

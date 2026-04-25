@@ -13,3 +13,35 @@
   overflow-y: auto;
   background: #f4f6fb;
 }
+
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 14px;
+  right: 16px;      
+  left: unset;      
+  z-index: 300;
+  background: #181f5a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: flex;   
+  }
+
+  .admin-content {
+    padding: 16px;
+    padding-top: 60px;
+    width: 100%;
+  }
+}

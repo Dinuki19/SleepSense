@@ -27,7 +27,7 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
     try:
 
        
-        # 1. ML MODEL (UNCHANGED)
+        # 1. ML MODEL 
         
         prediction_label, input_df, recommendations = make_prediction(data)
 
@@ -57,7 +57,7 @@ async def predict(data: SleepInput, user: dict = Depends(get_current_user)):
             print("LLM failed, using rule-based fallback:", e)
 
         
-        # 3. SAVE RESULT (UNCHANGED)
+        # 3. SAVE RESULT 
        
         prediction_doc = {
             "user_id": user["sub"],

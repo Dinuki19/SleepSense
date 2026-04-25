@@ -26,7 +26,7 @@ function App() {
   return (
     <BrowserRouter>
       
-      {/* 🔥 Global Header */}
+      
       <Header />
 
       {/* 🔥 Main Content Area */}
@@ -51,7 +51,7 @@ function App() {
         </Routes>
       </div>
 
-      {/* 🔥 Global Footer */}
+      
       <Footer />
 
     </BrowserRouter>

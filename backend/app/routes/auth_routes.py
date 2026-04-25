@@ -25,7 +25,7 @@ async def signup(user: UserCreate):
         "name": user.name,
         "email": user.email,
         "password": hash_password(user.password),
-        "role": "user",   # ✅ ADD THIS (default role)
+        "role": "user",   
         "created_at": datetime.utcnow()
     }
 
@@ -53,7 +53,7 @@ async def login(user: UserLogin):
         "sub": str(db_user["_id"]),
         "email": db_user["email"],
         "name": db_user["name"],
-        "role": db_user.get("role", "user")   # ✅ ADD THIS (VERY IMPORTANT)
+        "role": db_user.get("role", "user")   
     }
 
     token = create_access_token(token_data)
@@ -62,7 +62,7 @@ async def login(user: UserLogin):
         "token": token,
         "token_type": "bearer",
         "username": db_user["name"],
-        "role": db_user.get("role", "user")   # ✅ OPTIONAL (frontend use)
+        "role": db_user.get("role", "user")   
     }
 
 
@@ -81,7 +81,7 @@ async def get_profile(user: dict = Depends(get_current_user)):
     return {
         "name": db_user["name"],
         "email": db_user["email"],
-        "role": db_user.get("role", "user"),   # ✅ ADD THIS
+        "role": db_user.get("role", "user"),   
         "created_at": db_user["created_at"]
     }
 
@@ -114,12 +114,12 @@ async def delete_account(user: dict = Depends(get_current_user)):
 
     user_id = user["sub"]
 
-    # ✅ STEP 1: delete related predictions
+    # delete related predictions
     await predictions_collection.delete_many({
         "user_id": user_id
     })
 
-    # ✅ STEP 2: delete user
+    # delete user
     result = await users_collection.delete_one({
         "_id": ObjectId(user_id)
     })

@@ -251,7 +251,7 @@ function LandingPage() {
                 <h3 className="article-card__title">{a.title}</h3>
                 <p className="article-card__desc">{a.description}</p>
 
-                {/* ✅ FIXED LINK */}
+                {/* FIXED LINK */}
                 <a
                   href={a.url}
                   target="_blank"

@@ -5,7 +5,7 @@ function InsomniaPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ NEW: get full backend response
+  //  get full backend response
   const { result } = location.state || {};
   const input = result?.input || {};
 

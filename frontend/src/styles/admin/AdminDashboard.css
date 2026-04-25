@@ -165,3 +165,51 @@
 .tooltip-value strong {
   font-weight: 700;
 }
+
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .dashboard-title {
+    font-size: 18px;
+  }
+
+  .stat-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 16px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 13px;
+  }
+
+  .stat-cards-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 14px 16px;
+  }
+
+  .stat-card-value {
+    font-size: 22px;
+  }
+
+  .chart-box {
+    padding: 14px;
+  }
+}

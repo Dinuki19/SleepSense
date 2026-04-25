@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "../../styles/admin/AdminSidebar.css";
 
-function AdminSidebar() {
+function AdminSidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -10,7 +10,7 @@ function AdminSidebar() {
   };
 
   return (
-    <div className="admin-sidebar">
+    <div className={`admin-sidebar ${isOpen ? "sidebar-open" : ""}`}>
 
       {/* Brand */}
       <div className="sidebar-brand">
@@ -25,7 +25,7 @@ function AdminSidebar() {
       <nav className="sidebar-nav">
         <span className="sidebar-section-label">Main</span>
 
-        <NavLink to="/admin/dashboard" className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}>
+        <NavLink to="/admin/dashboard" onClick={onClose} className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
             <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
@@ -33,7 +33,7 @@ function AdminSidebar() {
           Dashboard
         </NavLink>
 
-        <NavLink to="/admin/users" className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}>
+        <NavLink to="/admin/users" onClick={onClose} className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
             <circle cx="9" cy="7" r="4"/>
@@ -42,13 +42,13 @@ function AdminSidebar() {
           Users
         </NavLink>
 
-        <NavLink to="/admin/predictions" className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}>
+        <NavLink to="/admin/predictions" onClick={onClose} className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
           </svg>
           Predictions
         </NavLink>
-        </nav>
+      </nav>
 
       {/* Footer */}
       <div className="sidebar-footer">

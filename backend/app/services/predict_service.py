@@ -10,8 +10,6 @@ from app.services.sleep_stress_service import (
     calculate_sleep_quality,
     calculate_stress_level
 )
-
-# 🆕 ADD THIS IMPORT
 from app.services.recommendation_service import get_recommendations
 
 # Load model once
@@ -22,11 +20,11 @@ label_encoder = model_package["label_encoder"]
 
 def make_prediction(data: SleepInput):
 
-    # ✅ 1. BMI
+    # 1. BMI
     bmi_value = calculate_bmi(data.Height, data.Weight)
     bmi_category = get_bmi_category(bmi_value)
 
-    # ✅ 2. Heart Rate
+    #  2. Heart Rate
     if data.Heart_Rate is not None:
         heart_rate = data.Heart_Rate
     else:
@@ -38,7 +36,7 @@ def make_prediction(data: SleepInput):
             data.Physical_Activity_Level
         )
 
-    # ✅ 3. Blood Pressure
+    #  3. Blood Pressure
     if data.Systolic is not None and data.Diastolic is not None:
         systolic = data.Systolic
         diastolic = data.Diastolic
@@ -51,7 +49,7 @@ def make_prediction(data: SleepInput):
             bmi_category
         )
 
-    # ✅ 4. Daily Steps
+    #  4. Daily Steps
     if data.Daily_Steps is not None:
         daily_steps = data.Daily_Steps
     else:
@@ -62,7 +60,7 @@ def make_prediction(data: SleepInput):
         )
 
     
-    # 🆕 5. Sleep Quality
+    #  5. Sleep Quality
     sleep_quality = calculate_sleep_quality(
         data.Sleep_Duration,
         data.Physical_Activity_Level,
@@ -70,7 +68,7 @@ def make_prediction(data: SleepInput):
         daily_steps
     )
 
-    # 🆕 6. Stress Level
+    #  6. Stress Level
     stress_level = calculate_stress_level(
         data.Sleep_Duration,
         heart_rate,
@@ -81,7 +79,7 @@ def make_prediction(data: SleepInput):
 
 
 
-    # ✅ 7. DataFrame
+    #  7. DataFrame
     input_df = pd.DataFrame([{
         "Gender": data.Gender,
         "Age": data.Age,
@@ -97,7 +95,7 @@ def make_prediction(data: SleepInput):
         "Diastolic": diastolic
     }])
 
-    # 🔍 DEBUG
+    # DEBUG
     print("=== PREDICTION DEBUG ===")
     print("BMI:", bmi_value, "| BMI Category:", bmi_category)
     print("Heart Rate:", heart_rate)
@@ -107,18 +105,18 @@ def make_prediction(data: SleepInput):
     print("Stress Level:", stress_level)
     print("========================")
 
-    # ✅ 8. Predict
+    #  8. Predict
     prediction_encoded = pipeline.predict(input_df)[0]
     prediction_label = label_encoder.inverse_transform([prediction_encoded])[0]
 
-    # ✅ FIX LABEL
+    # FIX LABEL
     if prediction_label == "None":
         prediction_label = "Healthy"
 
     print("Final Label:", prediction_label)
 
-    # 🆕 9. GENERATE RECOMMENDATIONS (NEW ADDITION ONLY)
+    #  9. GENERATE RECOMMENDATIONS (NEW ADDITION ONLY)
     recommendations = get_recommendations(prediction_label, input_df)
 
-    # ✅ RETURN UPDATED STRUCTURE (SAFE)
+    # RETURN UPDATED STRUCTURE (SAFE)
     return prediction_label, input_df, recommendations
