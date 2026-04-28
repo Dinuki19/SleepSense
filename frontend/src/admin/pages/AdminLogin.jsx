@@ -10,7 +10,7 @@ function AdminLogin() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("/auth/login", {
+      const res = await axios.post("http://127.0.0.1:8000/auth/login", {
         email,
         password,
       });
