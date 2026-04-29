@@ -5,7 +5,7 @@ function HealthyPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ NEW: use backend result instead of userInput
+  //  use backend result instead of userInput
   const { result } = location.state || {};
   const input = result?.input || {};
 

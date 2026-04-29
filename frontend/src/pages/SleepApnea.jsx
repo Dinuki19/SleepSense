@@ -5,7 +5,7 @@ function SleepApneaPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // ✅ FIX: use backend result instead of userInput
+  //  use backend result instead of userInput
   const { result } = location.state || {};
   const input = result?.input || {};
 
