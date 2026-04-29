@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "../styles/LoginPage.css";
 import API from "../api/api";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -17,14 +18,15 @@ function LoginPage() {
     login: "",
   });
 
+
+  const [toast, setToast] = useState("");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Reset login error when user types
     setErrors({ ...errors, login: "" });
 
-    // Optional: live email validation
     if (name === "email") {
       setErrors({
         ...errors,
@@ -38,10 +40,8 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Reset login error before submit
     setErrors({ ...errors, login: "" });
 
-    // Optional: final check before API call
     if (!formData.email || !formData.password) {
       setErrors({ ...errors, login: "Please fill in all fields" });
       return;
@@ -49,17 +49,17 @@ function LoginPage() {
 
     try {
       const response = await API.post("/auth/login", {
-  email: formData.email,
-  password: formData.password,
-});
+        email: formData.email,
+        password: formData.password,
+      });
 
-localStorage.setItem("token", response.data.token);
-localStorage.setItem(
-  "user",
-  JSON.stringify({ name: response.data.username })
-);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ name: response.data.username })
+      );
 
-navigate("/dashboard");
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
       setErrors({
@@ -69,9 +69,29 @@ navigate("/dashboard");
     }
   };
 
+  //Toast trigger from signup redirect
+  useEffect(() => {
+    if (location.state?.message) {
+      setToast(location.state.message);
+
+      const timer = setTimeout(() => {
+        setToast("");
+        window.history.replaceState({}, document.title);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [location.state]);
+
   return (
     <div className="login-page">
+
       
+      {toast && (
+        <div className="toast-notification">
+          ✔ {toast}
+        </div>
+      )}
 
       <div className="login-container">
         <div className="login-card">
@@ -100,14 +120,17 @@ navigate("/dashboard");
                 required
               />
             </div>
-            <p
-  className="forgot-password"
-  onClick={() => navigate("/forgot-password")}
->
-  Forgot Password?
-</p>
 
-            {errors.login && <span className="error login-error">{errors.login}</span>}
+            <p
+              className="forgot-password"
+              onClick={() => navigate("/forgot-password")}
+            >
+              Forgot Password?
+            </p>
+
+            {errors.login && (
+              <span className="error login-error">{errors.login}</span>
+            )}
 
             <button type="submit">Login</button>
           </form>
@@ -118,8 +141,6 @@ navigate("/dashboard");
           </p>
         </div>
       </div>
-
-      
     </div>
   );
 }

@@ -29,9 +29,10 @@ function SignupPage() {
       case "name":
         setErrors({
           ...errors,
-          name: value.trim().split(" ").length < 2
-            ? "Please enter at least first and last name"
-            : "",
+          name:
+            value.trim().split(" ").length < 2
+              ? "Please enter at least first and last name"
+              : "",
         });
         break;
       case "email":
@@ -45,9 +46,13 @@ function SignupPage() {
       case "password":
         setErrors({
           ...errors,
-          password: value.length < 8 ? "Password must be at least 8 characters" : "",
+          password:
+            value.length < 8
+              ? "Password must be at least 8 characters"
+              : "",
           confirmPassword:
-            formData.confirmPassword && formData.confirmPassword !== value
+            formData.confirmPassword &&
+            formData.confirmPassword !== value
               ? "Passwords do not match"
               : "",
         });
@@ -56,7 +61,9 @@ function SignupPage() {
         setErrors({
           ...errors,
           confirmPassword:
-            value !== formData.password ? "Passwords do not match" : "",
+            value !== formData.password
+              ? "Passwords do not match"
+              : "",
         });
         break;
       default:
@@ -80,33 +87,39 @@ function SignupPage() {
 
     setErrors(finalErrors);
 
-     if (Object.keys(finalErrors).length === 0) {
-    try {
-      const response = await API.post("/auth/signup", {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
+    if (Object.keys(finalErrors).length === 0) {
+      try {
+        const response = await API.post("/auth/signup", {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        });
 
-      // Store token and user data
-      localStorage.setItem("token", response.data.access_token);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ name: response.data.username })
-      );
+        // Store token and user data
+        localStorage.setItem("token", response.data.access_token);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ name: response.data.username })
+        );
 
-      navigate("/login");
-    } catch (err) {
-      console.error(err);
-      setErrors({ ...errors, email: err.response?.data?.detail || "Signup failed" });
+        
+        navigate("/login", {
+          state: {
+            message: "Account created successfully! Please log in.",
+          },
+        });
+      } catch (err) {
+        console.error(err);
+        setErrors({
+          ...errors,
+          email: err.response?.data?.detail || "Signup failed",
+        });
+      }
     }
-  }
-};
+  };
 
   return (
     <div className="signup-page">
-      
-
       <div className="signup-container">
         <div className="signup-card">
           <h2>Create an Account</h2>
@@ -121,7 +134,9 @@ function SignupPage() {
                 onChange={handleChange}
                 required
               />
-              {errors.name && <span className="error">{errors.name}</span>}
+              {errors.name && (
+                <span className="error">{errors.name}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -133,7 +148,9 @@ function SignupPage() {
                 onChange={handleChange}
                 required
               />
-              {errors.email && <span className="error">{errors.email}</span>}
+              {errors.email && (
+                <span className="error">{errors.email}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -145,7 +162,9 @@ function SignupPage() {
                 onChange={handleChange}
                 required
               />
-              {errors.password && <span className="error">{errors.password}</span>}
+              {errors.password && (
+                <span className="error">{errors.password}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -158,7 +177,9 @@ function SignupPage() {
                 required
               />
               {errors.confirmPassword && (
-                <span className="error">{errors.confirmPassword}</span>
+                <span className="error">
+                  {errors.confirmPassword}
+                </span>
               )}
             </div>
 
@@ -167,12 +188,13 @@ function SignupPage() {
 
           <p className="login-link">
             Already have an account?{" "}
-            <span onClick={() => navigate("/login")}>Login</span>
+            
+            <span onClick={() => navigate("/login")}>
+              Login
+            </span>
           </p>
         </div>
       </div>
-
-      
     </div>
   );
 }
