@@ -3,9 +3,17 @@ from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
+import os
+from dotenv import load_dotenv
 
-#Password hashing
+# Load environment variables
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+# Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
@@ -13,7 +21,6 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 # JWT
-SECRET_KEY = "YOUR_SECRET_KEY_HERE"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
@@ -39,7 +46,7 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
     return payload
 
-# Admin dependency 
+# Admin dependency
 def get_current_admin(user: dict = Depends(get_current_user)):
     if user.get("role") != "admin":
         raise HTTPException(

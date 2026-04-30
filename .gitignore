@@ -14,6 +14,3 @@ frontend/build/
 
 # Environment variables
 backend/.env
-
-# ML model files
-backend/app/model/best_sleep_model.pkl
