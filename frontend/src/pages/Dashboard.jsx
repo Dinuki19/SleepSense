@@ -16,7 +16,7 @@ function DashboardPage() {
       const token = localStorage.getItem("token");
 
       const res = await API.get(
-        "http://127.0.0.1:8000/predict/predictions",
+        "/predict/predictions",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -90,7 +90,7 @@ function DashboardPage() {
 
   try {
     await API.delete(
-      `http://127.0.0.1:8000/predict/prediction/${id}`
+      `/predict/prediction/${id}`
     );
 
     // Remove only deleted prediction
