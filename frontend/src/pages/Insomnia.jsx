@@ -128,7 +128,7 @@ function InsomniaPage() {
               </span>
             </div>
 
-            {/* Optional insights (VERY GOOD for your project) */}
+            
 
             <div className="rp-summary-item">
               <span className="rp-summary-key">Heart Rate</span>

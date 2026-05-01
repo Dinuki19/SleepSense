@@ -148,7 +148,7 @@ Open browser and go to frontend URL
 
 # 🚫 Important Notes
 
-- `.venv`, `node_modules`, `.git`, and `.env` are NOT included in submission
+- `.venv`, `node_modules`, `.git`, `.env`, and `__pycache__` are NOT included in submission
 - Use `requirements.txt` and `package.json` to reinstall dependencies
 - All sensitive keys are stored in environment variables
 

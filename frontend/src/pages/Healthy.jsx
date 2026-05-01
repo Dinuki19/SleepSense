@@ -109,7 +109,7 @@ function HealthyPage() {
               </span>
             </div>
 
-            {/* Optional but useful extras */}
+            
             <div className="rp-summary-item">
               <span className="rp-summary-key">Heart Rate</span>
               <span className="rp-summary-val">

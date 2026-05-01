@@ -6,7 +6,7 @@ import "../styles/SleepPredictionPage.css";
 function SleepPredictionPage() {
   const navigate = useNavigate();
 
-  //  ADDED loading state (ONLY NEW CHANGE)
+  //  ADDED loading state 
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({

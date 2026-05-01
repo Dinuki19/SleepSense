@@ -15,7 +15,7 @@ function ProfilePage() {
     fetchStats();
   }, []);
 
-  // 👤 USER INFO
+  // USER INFO
   const fetchProfile = async () => {
     try {
       const res = await API.get("/auth/me");
@@ -25,7 +25,7 @@ function ProfilePage() {
     }
   };
 
-  // 📊 STATS + INSIGHTS
+  // STATS + INSIGHTS
   const fetchStats = async () => {
     try {
       const res = await API.get("/predict/history");
@@ -60,7 +60,7 @@ function ProfilePage() {
     }
   };
 
-  // 🗑 DELETE ACCOUNT
+  // DELETE ACCOUNT
  const handleDelete = async () => {
   const confirmed = await confirmDelete(
     "Are you sure you want to delete your account? This action cannot be undone."
@@ -77,19 +77,19 @@ function ProfilePage() {
   }
 };
 
-  // 🚪 LOGOUT
+  // LOGOUT
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
 
-  // Helper: initials from name
+  // initials from name
   const getInitials = (name) =>
     name
       ? name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
       : "??";
 
-  // Helper: condition pill colours
+  // condition pill colours
   const conditionStyle = (condition) => {
     if (condition === "Healthy")
       return { background: "#eef8f0", color: "#3b7d5a" };

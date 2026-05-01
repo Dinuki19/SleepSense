@@ -1,4 +1,3 @@
-# app/routes/auth_routes.py
 from fastapi import APIRouter, Depends, HTTPException, status
 from datetime import datetime
 from app.models.user import UserCreate, UserLogin

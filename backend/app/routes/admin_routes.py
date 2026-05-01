@@ -46,14 +46,14 @@ async def get_all_predictions(admin: dict = Depends(get_current_admin)):
     predictions_collection = get_predictions_collection()
     users_collection = get_users_collection()
 
-    # Step 1: get all existing users
+    # get all existing users
     users_cursor = users_collection.find({}, {"_id": 1})
 
     valid_user_ids = []
     async for user in users_cursor:
         valid_user_ids.append(str(user["_id"]))
 
-    # Step 2: only show predictions from existing users
+    # only show predictions from existing users
     cursor = predictions_collection.find({
         "user_id": {"$in": valid_user_ids}
     }).sort("timestamp", -1)
@@ -66,7 +66,7 @@ async def get_all_predictions(admin: dict = Depends(get_current_admin)):
     return predictions
 
 
-# ----------------- DASHBOARD STATS (UPDATED FOR CHARTS) -----------------
+# ----------------- DASHBOARD STATS -----------------
 @router.get("/stats")
 async def get_dashboard_stats(admin: dict = Depends(get_current_admin)):
     users_collection = get_users_collection()

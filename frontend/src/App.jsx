@@ -29,7 +29,7 @@ function App() {
       
       <Header />
 
-      {/* 🔥 Main Content Area */}
+      
       <div className="main-content">
         <Routes>
           <Route path="/" element={<LandingPage />} />

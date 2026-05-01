@@ -125,7 +125,7 @@ function SleepApneaPage() {
               </span>
             </div>
 
-            {/* Optional extras (very good for project marks) */}
+            
             <div className="rp-summary-item">
               <span className="rp-summary-key">Heart Rate</span>
               <span className="rp-summary-val">
