@@ -16,7 +16,6 @@ function AdminLayout({ children }) {
         ☰
       </button>
 
-      {/* OVERLAY — closes sidebar when clicking outside */}
       {sidebarOpen && (
         <div
           className="sidebar-overlay"
@@ -24,10 +23,9 @@ function AdminLayout({ children }) {
         />
       )}
 
-      {/* LEFT SIDEBAR */}
+     
       <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* MAIN CONTENT AREA */}
       <div className="admin-content">
         {children}
       </div>

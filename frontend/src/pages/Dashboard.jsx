@@ -26,7 +26,7 @@ function DashboardPage() {
       const decoded = jwtDecode(token);
       const loggedUserId = decoded.sub;
 
-      // Filter + Sort predictions (latest first)
+      // Filter + Sort predictions
       const filteredPredictions = res.data
         .filter((p) => String(p.user_id) === String(loggedUserId))
         .sort(

@@ -6,7 +6,7 @@ import "../styles/SleepPredictionPage.css";
 function SleepPredictionPage() {
   const navigate = useNavigate();
 
-  //  ADDED loading state 
+  
   const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ function SleepPredictionPage() {
     e.preventDefault();
     setError("");
 
-    //  PREVENT MULTIPLE CLICKS
+    
     if (loading) return;
 
     setLoading(true);
@@ -87,7 +87,7 @@ function SleepPredictionPage() {
         setError("Prediction failed. Please check your inputs and try again.");
       }
     } finally {
-      // ALWAYS RESET LOADING
+      
       setLoading(false);
     }
   };

@@ -9,7 +9,7 @@ def estimate_daily_steps(age: int, occupation: str, physical_activity: int):
     # Physical activity effect
     steps += physical_activity * 50
 
-    # Occupation effect (simple logic)
+    # Occupation effect 
     if occupation.lower() in ["student", "teacher"]:
         steps += 1000
     elif occupation.lower() in ["engineer", "developer"]:
@@ -19,4 +19,4 @@ def estimate_daily_steps(age: int, occupation: str, physical_activity: int):
     if age > 50:
         steps -= 1000
 
-    return max(2000, steps)  # minimum safety
+    return max(2000, steps)  

@@ -83,13 +83,13 @@ function ProfilePage() {
     navigate("/login");
   };
 
-  // initials from name
+ 
   const getInitials = (name) =>
     name
       ? name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
       : "??";
 
-  // condition pill colours
+  
   const conditionStyle = (condition) => {
     if (condition === "Healthy")
       return { background: "#eef8f0", color: "#3b7d5a" };

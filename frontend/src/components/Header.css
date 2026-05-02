@@ -1,6 +1,4 @@
-/* =========================
-   HEADER CONTAINER
-========================= */
+/* HEADER CONTAINER */
 .header-nav {
   display: flex;
   justify-content: space-between;
@@ -18,9 +16,7 @@
   
 }
 
-/* =========================
-   LEFT SIDE (LOGO + TITLE)
-========================= */
+/* LEFT SIDE (LOGO + TITLE) */
 .header-left {
   display: flex;
   align-items: center;
@@ -40,9 +36,7 @@
   color: #041228;
 }
 
-/* =========================
-   MENU
-========================= */
+/* MENU */
 .header-menu {
   display: flex;
   align-items: center;

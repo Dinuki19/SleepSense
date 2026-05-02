@@ -31,7 +31,7 @@ html, body {
   --primary: #2e60b0;
   --secondary: #3638bc;
 
-  /* LIGHT BLUE BACKGROUND (UPDATED) */
+  /* LIGHT BLUE BACKGROUND */
   --background-light: #eaf3ff;
 
   --text-dark: #1E293B;
@@ -62,8 +62,8 @@ body {
   width: 100%;
   min-height: 100vh;
 
-  display: flex;              /* ADD */
-  flex-direction: column;     /* ADD */
+  display: flex;              
+  flex-direction: column;     
 }
 
 /* =========================

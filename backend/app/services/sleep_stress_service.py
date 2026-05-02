@@ -19,7 +19,7 @@ def calculate_sleep_quality(sleep_duration, physical_activity, heart_rate, steps
     else:
         score += 1
 
-    # Heart rate (optional influence)
+    # Heart rate 
     if heart_rate < 70:
         score += 2
     else:

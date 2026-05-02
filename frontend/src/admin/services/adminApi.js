@@ -4,7 +4,7 @@ const API = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
 
-// Attach token automatically
+
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-// APIs
+
 export const getStats = () => API.get("/admin/stats");
 export const getUsers = () => API.get("/admin/users");
 export const deleteUser = (id) => API.delete(`/admin/users/${id}`);

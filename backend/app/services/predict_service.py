@@ -109,14 +109,14 @@ def make_prediction(data: SleepInput):
     prediction_encoded = pipeline.predict(input_df)[0]
     prediction_label = label_encoder.inverse_transform([prediction_encoded])[0]
 
-    # FIX LABEL
+  
     if prediction_label == "None":
         prediction_label = "Healthy"
 
     print("Final Label:", prediction_label)
 
-    #  9. GENERATE RECOMMENDATIONS (NEW ADDITION ONLY)
+    #  9. GENERATE RECOMMENDATIONS 
     recommendations = get_recommendations(prediction_label, input_df)
 
-    # RETURN UPDATED STRUCTURE (SAFE)
+   
     return prediction_label, input_df, recommendations

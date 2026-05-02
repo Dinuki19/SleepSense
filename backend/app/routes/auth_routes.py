@@ -15,7 +15,7 @@ router = APIRouter()
 async def signup(user: UserCreate):
     users_collection = get_users_collection()
 
-    # check if user exists
+    
     existing_user = await users_collection.find_one({"email": user.email})
     if existing_user:
         raise HTTPException(status_code=400, detail="User already exists")

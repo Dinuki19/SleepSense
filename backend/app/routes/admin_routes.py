@@ -117,7 +117,7 @@ async def get_dashboard_stats(admin: dict = Depends(get_current_admin)):
             "count": item["count"]
         })
 
-    # ----------------- PREDICTIONS OVER TIME -----------------
+    # -------PREDICTIONS OVER TIME ---------
     time_pipeline = [
         {
             "$group": {
