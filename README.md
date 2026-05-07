@@ -52,14 +52,6 @@ A full-stack web application that predicts sleep disorders (No Disorder, Insomni
 
 ---
 
-# 📁 Project Structure
-
-```
-backend/
-frontend/
-```
-
----
 
 # ⚙️ Backend Setup
 
