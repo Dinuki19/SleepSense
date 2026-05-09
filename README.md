@@ -1,4 +1,4 @@
-# 💤 Sleep Disorder Prediction System
+# 💤 SleepSense - Personalized Sleep Disorder Prediction System
 
 A full-stack web application that predicts sleep disorders (No Disorder, Insomnia, or Sleep Apnea) based on user health and lifestyle data using a trained Machine Learning model. It also provides personalized recommendations using the Google Gemini API.
 
@@ -28,7 +28,7 @@ A full-stack web application that predicts sleep disorders (No Disorder, Insomni
 ## 🤖 Machine Learning Model (Prediction Engine)
 - XGBoost classification model
 - Trained on sleep health and lifestyle dataset
-- Uses 12 input features to predict sleep disorder outcomes
+- Uses 11 input features to predict sleep disorder outcomes
 - Predicts the following classes:
   - No Disorder
   - Insomnia
@@ -143,18 +143,6 @@ Open browser and go to frontend URL
 - `.venv`, `node_modules`, `.git`, `.env`, and `__pycache__` are NOT included in submission
 - Use `requirements.txt` and `package.json` to reinstall dependencies
 - All sensitive keys are stored in environment variables
-
----
-
-# 🔐 Environment Variables
-
-Backend requires a `.env` file with:
-
-```
-MONGO_URI=MongoDB connection string
-GEMINI_API_KEY=Google Gemini API key
-SECRET_KEY=JWT secret key
-```
 
 ---
 
