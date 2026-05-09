@@ -89,7 +89,7 @@ function LoginPage() {
       
       {toast && (
         <div className="toast-notification">
-          ✔ {toast}
+           {toast}
         </div>
       )}
 

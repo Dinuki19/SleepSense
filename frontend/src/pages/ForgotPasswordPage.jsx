@@ -6,12 +6,17 @@ import "../styles/ForgotPasswordPage.css";
 function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [message, setMessage] = useState(""); 
+  const [error, setError] = useState("");     
 
   const navigate = useNavigate();
 
   const handleReset = async () => {
+    setMessage("");
+    setError("");
+
     if (!email || !newPassword) {
-      alert("Please fill all fields");
+      setError("Please fill all fields");
       return;
     }
 
@@ -21,20 +26,25 @@ function ForgotPasswordPage() {
         newPassword,
       });
 
-      alert("Password reset successful ✅");
-      navigate("/");
+      setMessage("Password reset successfully ✅");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+
     } catch (err) {
-      alert(err.response?.data?.detail || "Error");
+      setError(err.response?.data?.detail || "Something went wrong");
     }
   };
 
   return (
     <div className="forgot-page">
-      
-
       <div className="forgot-container">
         <div className="forgot-card">
           <h2>Forgot Password</h2>
+
+          {message && <p className="success-msg">{message}</p>}
+          {error && <p className="error-msg">{error}</p>}
 
           <input
             type="email"
@@ -50,16 +60,11 @@ function ForgotPasswordPage() {
 
           <button onClick={handleReset}>Reset Password</button>
 
-          <p
-            className="back-login"
-            onClick={() => navigate("/login")}
-          >
+          <p className="back-login" onClick={() => navigate("/login")}>
             Back to Login
           </p>
         </div>
       </div>
-
-      
     </div>
   );
 }
