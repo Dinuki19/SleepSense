@@ -23,6 +23,18 @@ A full-stack web application that predicts sleep disorders (No Disorder, Insomni
 
 ---
 
+# ✨ Features
+
+- Sleep disorder prediction using Machine Learning
+- JWT-based user authentication
+- Personalized AI-generated sleep recommendations
+- Real-time prediction system
+- Secure password hashing with bcrypt
+- Responsive full-stack web application
+- Admin and user functionality
+
+---
+
 # 🧠 Core Components
 
 ## 🤖 Machine Learning Model (Prediction Engine)
@@ -62,19 +74,19 @@ cd backend
 
 ### Step 2: Create virtual environment
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
 ### Step 3: Activate virtual environment
 
 **Windows:**
 ```bash
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 
 **Mac/Linux:**
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 ### Step 4: Install dependencies
@@ -82,7 +94,9 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Step 5: Create `.env` file inside backend folder
+### Step 5: Verify `.env` configuration
+Ensure the `.env` file inside the backend folder contains the required environment variables:
+
 ```env
 MONGO_URI=your_mongo_connection_string
 GEMINI_API_KEY=your_gemini_api_key
@@ -138,14 +152,6 @@ Open browser and go to frontend URL
 
 ---
 
-# 🚫 Important Notes
-
-- `.venv`, `node_modules`, `.git`, `.env`, and `__pycache__` are NOT included in submission
-- Use `requirements.txt` and `package.json` to reinstall dependencies
-- All sensitive keys are stored in environment variables
-
----
-
 # 📌 Disclaimer
 
-This project is developed for academic purposes and demonstrates integration of Machine Learning with full-stack web development.
+This project was developed for academic purposes and demonstrates the integration of Machine Learning with full-stack web development technologies.

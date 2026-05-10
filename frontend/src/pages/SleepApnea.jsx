@@ -31,7 +31,7 @@ function SleepApneaPage() {
 
       <div className="rp-container">
 
-        {/* ── Hero Banner ── */}
+        {/*Hero Banner*/}
         <div className="rp-hero rp-hero--apnea">
           <div className="rp-hero__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -48,7 +48,7 @@ function SleepApneaPage() {
           </div>
         </div>
 
-        {/* ── Cards ── */}
+        {/* Cards */}
         <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.05s" }}>
           <div className="rp-card__label">What is Sleep Apnea?</div>
           <p className="rp-card__body">
@@ -91,7 +91,7 @@ function SleepApneaPage() {
   </ul>
 </div>
 
-        {/* ── UPDATED SUMMARY ── */}
+        {/* UPDATED SUMMARY */}
         <div className="rp-card rp-card--apnea rp-animate" style={{ animationDelay: "0.25s" }}>
           <div className="rp-card__label">Your Health Insights</div>
 

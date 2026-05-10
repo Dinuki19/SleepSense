@@ -69,7 +69,7 @@ function LoginPage() {
     }
   };
 
-  //Toast trigger from signup redirect
+  
   useEffect(() => {
     if (location.state?.message) {
       setToast(location.state.message);

@@ -104,7 +104,7 @@ function ProfilePage() {
 
       <div className="profile-container">
 
-        {/* ── Banner ─────────────────────────────────────────── */}
+        {/* Banner */}
         {user && (
           <div className="profile-banner">
             <div className="profile-avatar">{getInitials(user.name)}</div>
@@ -127,7 +127,7 @@ function ProfilePage() {
           </div>
         )}
 
-        {/* ── Stats Row ──────────────────────────────────────── */}
+        {/*Stats Row */}
         {stats && (
           <div className="profile-stats-row">
             <div className="stat-box">
@@ -149,7 +149,7 @@ function ProfilePage() {
           </div>
         )}
 
-        {/* ── Account Info ───────────────────────────────────── */}
+        {/*Account Info*/}
         {user && (
           <>
             <p className="section-label">Account information</p>
@@ -181,7 +181,7 @@ function ProfilePage() {
           </>
         )}
 
-        {/* ── Activity Summary ───────────────────────────────── */}
+        {/* Activity Summary */}
         {stats && (
           <>
             <p className="section-label">Activity summary</p>
@@ -220,7 +220,7 @@ function ProfilePage() {
           </>
         )}
 
-        {/* ── AI Insights ────────────────────────────────────── */}
+        {/* AI Insights */}
         {stats && (
           <>
             <p className="section-label">AI insights</p>
@@ -268,7 +268,7 @@ function ProfilePage() {
           </>
         )}
 
-        {/* ── System Info ────────────────────────────────────── */}
+        {/* System Info */}
         <p className="section-label">System info</p>
         <div className="profile-card">
           <div className="card-header">
@@ -300,7 +300,7 @@ function ProfilePage() {
           </div>
         </div>
 
-        {/* ── Danger Zone ────────────────────────────────────── */}
+        {/*Danger Zone*/}
         <p className="section-label">Danger zone</p>
         <div className="profile-card profile-card--danger">
           <div className="card-header">
@@ -325,7 +325,7 @@ function ProfilePage() {
           </button>
         </div>
 
-        {/* ── Logout ─────────────────────────────────────────── */}
+        {/* Logout */}
         <div className="profile-card profile-card--logout">
           <div className="card-header">
             <div className="card-icon card-icon--indigo">
