@@ -1,6 +1,6 @@
 # 💤 SleepSense - Personalized Sleep Disorder Prediction System
 
-A full-stack web application that predicts sleep disorders (No Disorder, Insomnia, or Sleep Apnea) based on user health and lifestyle data using a trained Machine Learning model. It also provides personalized recommendations using the Google Gemini API.
+A full-stack web application that predicts sleep disorders (No Disorder, Insomnia, or Sleep Apnea) based on user health and lifestyle data using a trained Machine Learning model. The system also provides personalized recommendations using the Google Gemini API.
 
 ---
 
@@ -8,45 +8,45 @@ A full-stack web application that predicts sleep disorders (No Disorder, Insomni
 
 ## Backend
 - FastAPI (Python)
-- Machine Learning: XGBoost (classification model)
+- XGBoost Machine Learning Model
 - MongoDB (PyMongo)
 - JWT Authentication
 - Google Gemini API
-- bcrypt password hashing
-- Uvicorn server
+- bcrypt Password Hashing
+- Uvicorn Server
 
 ## Frontend
 - React (Vite)
 - Axios
 - React Router DOM
-- CSS for styling
+- CSS
 
 ---
 
 # ✨ Features
 
 - Sleep disorder prediction using Machine Learning
-- JWT-based user authentication
 - Personalized AI-generated sleep recommendations
-- Real-time prediction system
+- JWT-based authentication system
 - Secure password hashing with bcrypt
+- Real-time prediction functionality
 - Responsive full-stack web application
-- Admin and user functionality
+- Admin and user functionalities
 
 ---
 
 # 🧠 Core Components
 
-## 🤖 Machine Learning Model (Prediction Engine)
+## 🤖 Machine Learning Prediction Engine
 - XGBoost classification model
-- Trained on sleep health and lifestyle dataset
-- Uses 11 input features to predict sleep disorder outcomes
-- Predicts the following classes:
+- Trained using sleep health and lifestyle data
+- Uses 11 input features for prediction
+- Predicts:
   - No Disorder
   - Insomnia
   - Sleep Apnea
-- Hyperparameter tuned for improved accuracy
-- Integrated with FastAPI backend for real-time predictions via REST API
+- Hyperparameter tuned model
+- Integrated with FastAPI backend through REST APIs
 
 ## 🔐 Authentication System
 - User registration and login
@@ -54,48 +54,78 @@ A full-stack web application that predicts sleep disorders (No Disorder, Insomni
 - Secure password hashing using bcrypt
 
 ## 🤖 AI Recommendation System
-- Uses Google Gemini API
-- Generates personalized sleep improvement suggestions
-- Based on predicted disorder and user lifestyle inputs
+- Integrated with Google Gemini API
+- Generates personalized sleep improvement recommendations
+- Recommendations are based on prediction outcomes and lifestyle data
 
 ## 🌐 Full Stack Communication
-- React frontend communicates with FastAPI backend via REST APIs
-- Real-time prediction and response system
+- React frontend communicates with FastAPI backend using REST APIs
+- Real-time prediction and response handling
 
 ---
 
+# ⚙️ System Requirements
 
-# ⚙️ Backend Setup
+Before running the project, ensure the following software is installed on the system:
 
-### Step 1: Navigate to backend
-```bash
-cd backend
-```
+- Python 3.12 or above
+- pip package manager
+- Node.js 18 LTS or above
+- npm package manager
 
-### Step 2: Create virtual environment
+---
+
+# 🚀 Project Setup and Execution Guide
+
+## Step 1: Create Python Virtual Environment
+
+Open a terminal in the project root directory and run:
+
 ```bash
 python -m venv .venv
 ```
 
-### Step 3: Activate virtual environment
+---
 
-**Windows:**
+## Step 2: Activate the Virtual Environment
+
+### Windows (PowerShell)
+
 ```bash
-.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 ```
 
-**Mac/Linux:**
+### Windows (Command Prompt)
+
+```bash
+.\.venv\Scripts\activate.bat
+```
+
+### macOS/Linux
+
 ```bash
 source .venv/bin/activate
 ```
 
-### Step 4: Install dependencies
+---
+
+# ⚙️ Backend Setup
+
+## Step 3: Navigate to Backend Directory
+
+```bash
+cd backend
+```
+
+## Step 4: Install Backend Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 5: Verify `.env` configuration
-Ensure the `.env` file inside the backend folder contains the required environment variables:
+## Step 5: Configure Environment Variables
+
+Ensure the `.env` file inside the backend directory contains the required environment variables:
 
 ```env
 MONGO_URI=your_mongo_connection_string
@@ -103,13 +133,15 @@ GEMINI_API_KEY=your_gemini_api_key
 SECRET_KEY=your_jwt_secret_key
 ```
 
-### Step 6: Run backend server
+## Step 6: Start the Backend Server
+
 ```bash
 uvicorn app.main:app --reload
 ```
 
-Backend runs at:
-```
+The backend server will run at:
+
+```text
 http://127.0.0.1:8000
 ```
 
@@ -117,41 +149,44 @@ http://127.0.0.1:8000
 
 # 🌐 Frontend Setup
 
-### Step 1: Navigate to frontend
+## Step 7: Open a Separate Terminal and Navigate to Frontend Directory
+
 ```bash
 cd frontend
 ```
 
-### Step 2: Install dependencies
+## Step 8: Install Frontend Dependencies
+
 ```bash
 npm install
 ```
 
-### Step 3: Run frontend
+## Step 9: Start the Frontend Server
+
 ```bash
 npm run dev
 ```
 
-Frontend runs at:
-```
+The frontend application will run at:
+
+```text
 http://localhost:5173
 ```
 
 ---
 
-# ▶️ How to Run Full Project
+# ▶️ Running the Application
 
-### Step 1
-Start backend server
+Open the following URL in a supported web browser:
 
-### Step 2
-Start frontend server
+```text
+http://localhost:5173
+```
 
-### Step 3
-Open browser and go to frontend URL
+Ensure both backend and frontend servers remain active while using the application.
 
 ---
 
 # 📌 Disclaimer
 
-This project was developed for academic purposes and demonstrates the integration of Machine Learning with full-stack web development technologies.
+This project was developed for academic purposes to demonstrate the integration of Machine Learning techniques with full-stack web development technologies.
