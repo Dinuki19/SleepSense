@@ -52,7 +52,12 @@ function PredictionDetail() {
 
   if (!prediction) return null;
 
-  const { prediction: result, input, timestamp } = prediction;
+  const {
+  prediction: result,
+  input,
+  timestamp,
+  recommendations
+  } = prediction;
 
   const normalised = result?.toLowerCase();
 
@@ -144,7 +149,24 @@ function PredictionDetail() {
             </div>
           </>
         )}
+        
 
+        {/* Recommendations */}
+        {recommendations?.length > 0 && (
+        <>
+        <p className="pd-section-label">
+        <i className="ti ti-clipboard-list" aria-hidden="true" style={{ fontSize: 15 }} />
+        Recommendations
+        </p>
+    <div className="pd-card">
+      <ul className="pd-recommendation-list">
+        {recommendations.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+    </>
+     )}
         {/* Back Button */}
         <button className="pd-back-fab" onClick={() => navigate(-1)}>
           ← Back to Predictions

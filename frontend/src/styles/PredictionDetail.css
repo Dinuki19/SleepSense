@@ -165,7 +165,7 @@
 .pd-back-fab {
   display: block;
   margin: 2.5rem auto 1rem;
-  background: #185fa5;
+  background: #0c2a49;
   color: #ffffff;
   border: none;
   border-radius: 30px;
@@ -186,6 +186,39 @@
 
 .pd-back-fab:active {
   transform: translateY(0);
+}
+
+/* ── Recommendations ── */
+.pd-recommendation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pd-recommendation-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px 15px;
+  background: #f8fafc;
+  border-radius: 10px;
+  border: 0.5px solid #e2e8f0;
+  font-size: 14px;
+  color: #1e293b;
+  line-height: 1.55;
+}
+
+.pd-recommendation-list li::before {
+  content: "";
+  min-width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #021d37;
+  flex-shrink: 0;
+  margin-top: 6px;
 }
 
 /* ── Mobile ── */
