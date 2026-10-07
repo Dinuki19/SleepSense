@@ -190,3 +190,13 @@ Ensure both backend and frontend servers remain active while using the applicati
 # 📌 Disclaimer
 
 This project was developed for academic purposes to demonstrate the integration of Machine Learning techniques with full-stack web development technologies.
+
+---
+
+# 📄 Final Year Project Report
+
+**SleepSense: Personalized Sleep Disorder Prediction Using Advanced Machine Learning Techniques**
+
+This project was completed as an individual final-year project for the BSc (Hons) Data Science degree.
+
+📄 [View the Final Year Project Report](docs/Final_Report.pdf)
